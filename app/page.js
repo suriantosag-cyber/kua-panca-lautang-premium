@@ -12,12 +12,33 @@ export default function Home() {
   const [news, setNews] = useState(null);
   const [loading, setLoading] = useState(true);
   const [gallery, setGallery] = useState([]);
-
+  const [adminNews, setAdminNews] = useState([]);
+  
   useEffect(() => {
-    fetch('/api/kemenag').then(r => r.json()).then(setNews).catch(() => setNews({ ok:false })).finally(() => setLoading(false));
-    fetch('/api/gallery').then(r => r.json()).then(result => { if (result.ok) setGallery(result.data || []); }).catch(() => setGallery([]));
-  }, []);
+  fetch('/api/kemenag')
+    .then(r => r.json())
+    .then(setNews)
+    .catch(() => setNews({ ok: false }))
+    .finally(() => setLoading(false));
 
+  fetch('/api/news')
+    .then(r => r.json())
+    .then(result => {
+      if (result.ok) {
+        setAdminNews(result.data || []);
+      }
+    })
+    .catch(() => setAdminNews([]));
+
+  fetch('/api/gallery')
+    .then(r => r.json())
+    .then(result => {
+      if (result.ok) {
+        setGallery(result.data || []);
+      }
+    })
+    .catch(() => setGallery([]));
+}, []);
   return <>
     <header className="top">
       <div className="wrap nav">
@@ -50,7 +71,92 @@ export default function Home() {
 
       <section id="kegiatan" className="section" style={{paddingTop:0}}><div className="wrap"><div className="sectionHead"><div><h2>Kegiatan</h2><p>Program dan aktivitas penyuluhan untuk masyarakat.</p></div></div><div className="grid3">{features.map(([i,t,d])=><article className="card" key={t}><div className="icon">{i}</div><h3>{t}</h3><p>{d}</p></article>)}</div></div></section>
 
-      <section id="berita" className="section news"><div className="wrap"><div className="sectionHead"><div><h2>1 Berita Terbaru Kemenag</h2><p>Diambil langsung dari situs resmi Kementerian Agama Republik Indonesia — tanpa Google News.</p></div></div><article className="newsCard"><div>{loading ? <><span className="tag">Memuat berita</span><h3>Sedang mengambil berita terbaru dari Kemenag…</h3><p>Mohon tunggu sebentar.</p></> : <><span className="tag">Kemenag RI</span><h3>{news?.title || 'Berita Kemenag sedang diperbarui'}</h3><p>Sumber: {news?.source || 'Kementerian Agama Republik Indonesia'}</p><div className="newsDate">{news?.date || 'Pembaruan otomatis setiap hari'}</div></>}</div>{news?.url && <a className="newsBtn" href={news.url} target="_blank" rel="noreferrer">Baca di Kemenag ↗</a>}</article></div></section>
+      <section id="berita" className="section news">
+  <div className="wrap">
+
+    <div className="sectionHead">
+      <div>
+        <h2>Berita & Informasi</h2>
+        <p>
+          Berita kegiatan KUA Panca Lautang dan informasi terbaru
+          Kementerian Agama Republik Indonesia.
+        </p>
+      </div>
+    </div>
+
+    {/* BERITA YANG DITAMBAHKAN DARI ADMIN */}
+    {adminNews.length > 0 && (
+      <div>
+        {adminNews.map((item) => (
+          <article className="newsCard" key={item.id}>
+            <div>
+              <span className="tag">Berita KUA Panca Lautang</span>
+
+              <h3>{item.title}</h3>
+
+              <p>
+                {item.content}
+              </p>
+
+              <div className="newsDate">
+                {item.created_at
+                  ? new Date(item.created_at).toLocaleDateString('id-ID', {
+                      day: 'numeric',
+                      month: 'long',
+                      year: 'numeric'
+                    })
+                  : ''}
+              </div>
+            </div>
+          </article>
+        ))}
+      </div>
+    )}
+
+    {/* BERITA KEMENAG */}
+    <article className="newsCard">
+      <div>
+        {loading ? (
+          <>
+            <span className="tag">Memuat berita</span>
+            <h3>Sedang mengambil berita terbaru dari Kemenag…</h3>
+            <p>Mohon tunggu sebentar.</p>
+          </>
+        ) : (
+          <>
+            <span className="tag">Kemenag RI</span>
+
+            <h3>
+              {news?.title || 'Berita Kemenag sedang diperbarui'}
+            </h3>
+
+            <p>
+              Sumber:{' '}
+              {news?.source ||
+                'Kementerian Agama Republik Indonesia'}
+            </p>
+
+            <div className="newsDate">
+              {news?.date || 'Pembaruan otomatis setiap hari'}
+            </div>
+          </>
+        )}
+      </div>
+
+      {news?.url && (
+        <a
+          className="newsBtn"
+          href={news.url}
+          target="_blank"
+          rel="noreferrer"
+        >
+          Baca di Kemenag ↗
+        </a>
+      )}
+    </article>
+
+  </div>
+</section>
 
       <section id="materi" className="section"><div className="wrap"><div className="sectionHead"><div><h2>Materi Dakwah</h2><p>Ruang untuk materi pilihan yang bermanfaat bagi keluarga dan masyarakat.</p></div></div><div className="grid3"><div className="card"><div className="icon">💍</div><h3>Pernikahan & keluarga</h3><p>Materi seputar persiapan pernikahan, keluarga sakinah, dan pembinaan pasangan.</p></div><div className="card"><div className="icon">🕋</div><h3>Ibadah & akhlak</h3><p>Materi keagamaan singkat yang relevan untuk pembinaan sehari-hari.</p></div><div className="card"><div className="icon">🌱</div><h3>Moderasi & kemasyarakatan</h3><p>Materi tentang kerukunan, kepedulian sosial, dan kehidupan bermasyarakat.</p></div></div></div></section>
 
