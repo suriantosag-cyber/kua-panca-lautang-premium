@@ -151,3 +151,70 @@ export async function DELETE(request) {
     );
   }
 }
+export async function POST(request) {
+  try {
+    const supabase = getSupabaseAdmin();
+
+    const formData = await request.formData();
+    const file = formData.get('file');
+
+    if (!file || typeof file.arrayBuffer !== 'function') {
+      return NextResponse.json(
+        { ok: false, error: 'File foto tidak ditemukan.' },
+        { status: 400 }
+      );
+    }
+
+    const imageExtensions = ['.jpg', '.jpeg', '.png', '.webp', '.gif'];
+    const originalName = file.name || 'foto';
+    const lowerName = originalName.toLowerCase();
+
+    if (!imageExtensions.some((ext) => lowerName.endsWith(ext))) {
+      return NextResponse.json(
+        { ok: false, error: 'File harus berupa gambar.' },
+        { status: 400 }
+      );
+    }
+
+    const safeName = originalName.replace(/[^a-zA-Z0-9._-]/g, '-');
+    const fileName = `${Date.now()}-${safeName}`;
+    const path = `${GALLERY_FOLDER}/${fileName}`;
+
+    const buffer = Buffer.from(await file.arrayBuffer());
+
+    const { error } = await supabase.storage
+      .from(BUCKET)
+      .upload(path, buffer, {
+        contentType: file.type || 'application/octet-stream',
+        upsert: false
+      });
+
+    if (error) {
+      return NextResponse.json(
+        { ok: false, error: error.message },
+        { status: 500 }
+      );
+    }
+
+    const { data: publicUrl } = supabase.storage
+      .from(BUCKET)
+      .getPublicUrl(path);
+
+    return NextResponse.json({
+      ok: true,
+      data: {
+        name: fileName,
+        path,
+        url: publicUrl.publicUrl
+      }
+    });
+  } catch (error) {
+    return NextResponse.json(
+      {
+        ok: false,
+        error: error.message || 'Gagal mengunggah foto.'
+      },
+      { status: 500 }
+    );
+  }
+}
