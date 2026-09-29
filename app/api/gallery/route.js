@@ -83,3 +83,71 @@ export async function GET() {
     );
   }
 }
+export async function DELETE(request) {
+  try {
+    const supabase = getSupabaseAdmin();
+
+    const body = await request.json();
+    const path = body?.path;
+
+    if (!path) {
+      return NextResponse.json(
+        { ok: false, error: 'Path foto tidak ditemukan.' },
+        { status: 400 }
+      );
+    }
+
+    // Hanya izinkan penghapusan file di folder Galeri.
+    if (!path.startsWith(`${GALLERY_FOLDER}/`)) {
+      return NextResponse.json(
+        { ok: false, error: 'Path file tidak valid.' },
+        { status: 400 }
+      );
+    }
+
+    const fileName = path.split('/').pop()?.toLowerCase() || '';
+
+    const imageExtensions = [
+      '.jpg',
+      '.jpeg',
+      '.png',
+      '.webp',
+      '.gif'
+    ];
+
+    const isImage = imageExtensions.some((ext) =>
+      fileName.endsWith(ext)
+    );
+
+    if (!isImage) {
+      return NextResponse.json(
+        { ok: false, error: 'Hanya file gambar yang boleh dihapus dari Galeri.' },
+        { status: 400 }
+      );
+    }
+
+    const { error } = await supabase.storage
+      .from(BUCKET)
+      .remove([path]);
+
+    if (error) {
+      return NextResponse.json(
+        { ok: false, error: error.message },
+        { status: 500 }
+      );
+    }
+
+    return NextResponse.json({
+      ok: true,
+      message: 'Foto berhasil dihapus.'
+    });
+  } catch (error) {
+    return NextResponse.json(
+      {
+        ok: false,
+        error: error.message || 'Gagal menghapus foto.'
+      },
+      { status: 500 }
+    );
+  }
+}
