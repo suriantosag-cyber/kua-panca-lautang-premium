@@ -15,7 +15,7 @@ export default function Home() {
   const [adminNews, setAdminNews] = useState([]);
   
   useEffect(() => {
-  fetch('/api/kemenag')
+  fetch('/api/news', { cache: 'no-store' })
     .then(r => r.json())
     .then(setNews)
     .catch(() => setNews({ ok: false }))
