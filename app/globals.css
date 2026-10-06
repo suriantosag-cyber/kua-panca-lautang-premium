@@ -184,3 +184,41 @@
 .heroCard img[src='/kantor-kua.jpeg']{transition:transform .25s ease,box-shadow .25s ease;cursor:pointer}.heroCard img[src='/kantor-kua.jpeg']:hover{transform:scale(1.03);box-shadow:0 12px 28px rgba(0,0,0,.22)}
 
 
+
+/* FINAL - Berita KUA dua kolom sama besar */
+@media (min-width: 851px) {
+  .news .grid3 {
+    grid-template-columns: 1fr 1fr !important;
+    gap: 24px !important;
+    align-items: stretch !important;
+  }
+
+  .news .grid3 .featuredNewsCard,
+  .news .grid3 .newsCard:not(.featuredNewsCard) {
+    grid-column: auto !important;
+    grid-row: auto !important;
+    width: 100% !important;
+    min-height: 100% !important;
+  }
+
+  .news .grid3 .newsCard {
+    display: flex !important;
+    flex-direction: column !important;
+  }
+
+  .news .grid3 .newsCard > div:last-child {
+    margin-top: auto !important;
+  }
+
+  .news .grid3 .newsCard img,
+  .news .grid3 .featuredNewsCard img {
+    height: 260px !important;
+    object-fit: cover !important;
+  }
+}
+
+@media (max-width: 850px) {
+  .news .grid3 {
+    grid-template-columns: 1fr !important;
+  }
+}
