@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useState } from "react";
 
@@ -17,7 +17,7 @@ export default function TanyaAnto() {
     setAnswer("");
 
     try {
-      const response = await fetch("/api/ask", {
+      const response = await fetch("/api/chat", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -62,7 +62,7 @@ export default function TanyaAnto() {
           boxShadow: "0 4px 16px rgba(0,0,0,0.25)",
         }}
       >
-        ≡ƒÆ¼ Tanya Anto
+        Tanya Anto
       </button>
 
       {open && (
@@ -106,7 +106,7 @@ export default function TanyaAnto() {
               </p>
             )}
 
-            {loading && <p>ΓÅ│ Tanya Anto sedang menjawab...</p>}
+            {loading && <p>Tanya Anto sedang menjawab...</p>}
 
             {answer && (
               <div
@@ -162,3 +162,4 @@ export default function TanyaAnto() {
     </>
   );
 }
+
