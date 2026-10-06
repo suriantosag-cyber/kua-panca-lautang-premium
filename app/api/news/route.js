@@ -53,7 +53,8 @@ export async function POST(request) {
       .insert({
         title: body.title.trim(),
         content: body.content || '',
-        image_url: body.image_url || null
+        image_url: body.image_url || null,
+article_blocks: body.article_blocks || []
       })
       .select()
       .single();
@@ -96,11 +97,13 @@ export async function PUT(request) {
         title: body.title || '',
         content: body.content || '',
         image_url: body.image_url || null,
-        updated_at: new Date().toISOString()
-      })
+article_blocks: body.article_blocks || [],
+updated_at: new Date().toISOString()
+              })
       .eq('id', body.id)
       .select()
       .single();
+             
 
     if (error) {
       return Response.json(

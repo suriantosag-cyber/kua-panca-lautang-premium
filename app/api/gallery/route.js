@@ -1,11 +1,24 @@
-import { NextResponse } from 'next/server';
+﻿import { NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
+
+const CORS_HEADERS = {
+  'Access-Control-Allow-Origin': 'https://admin.kua-pancalautang.my.id',
+  'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
+  'Access-Control-Allow-Headers': 'Content-Type',
+};
+
+export async function OPTIONS() {
+  return new NextResponse(null, {
+    status: 204,
+    headers: CORS_HEADERS,
+  });
+}
 
 const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 const serviceRoleKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
 
 const BUCKET = 'website-files';
-const GALLERY_FOLDER = 'galeri/website_files';
+const GALLERY_FOLDER = 'news';
 
 function getSupabaseAdmin() {
   if (!supabaseUrl || !serviceRoleKey) {
@@ -15,6 +28,15 @@ function getSupabaseAdmin() {
   return createClient(supabaseUrl, serviceRoleKey);
 }
 
+function json(data, init = {}) {
+  return NextResponse.json(data, {
+    ...init,
+    headers: {
+      ...CORS_HEADERS,
+      ...(init.headers || {}),
+    },
+  });
+}
 export async function GET() {
   try {
     const supabase = getSupabaseAdmin();
@@ -30,7 +52,7 @@ export async function GET() {
       });
 
     if (error) {
-      return NextResponse.json(
+      return json(
         { ok: false, error: error.message },
         { status: 500 }
       );
@@ -69,12 +91,12 @@ export async function GET() {
         };
       });
 
-    return NextResponse.json({
+    return json({
       ok: true,
       data: files,
     });
   } catch (error) {
-    return NextResponse.json(
+    return json(
       {
         ok: false,
         error: error.message || 'Gagal mengambil galeri.',
@@ -91,7 +113,7 @@ export async function DELETE(request) {
     const path = body?.path;
 
     if (!path) {
-      return NextResponse.json(
+      return json(
         { ok: false, error: 'Path foto tidak ditemukan.' },
         { status: 400 }
       );
@@ -99,7 +121,7 @@ export async function DELETE(request) {
 
     // Hanya izinkan penghapusan file di folder Galeri.
     if (!path.startsWith(`${GALLERY_FOLDER}/`)) {
-      return NextResponse.json(
+      return json(
         { ok: false, error: 'Path file tidak valid.' },
         { status: 400 }
       );
@@ -120,7 +142,7 @@ export async function DELETE(request) {
     );
 
     if (!isImage) {
-      return NextResponse.json(
+      return json(
         { ok: false, error: 'Hanya file gambar yang boleh dihapus dari Galeri.' },
         { status: 400 }
       );
@@ -131,18 +153,18 @@ export async function DELETE(request) {
       .remove([path]);
 
     if (error) {
-      return NextResponse.json(
+      return json(
         { ok: false, error: error.message },
         { status: 500 }
       );
     }
 
-    return NextResponse.json({
+    return json({
       ok: true,
       message: 'Foto berhasil dihapus.'
     });
   } catch (error) {
-    return NextResponse.json(
+    return json(
       {
         ok: false,
         error: error.message || 'Gagal menghapus foto.'
@@ -159,7 +181,7 @@ export async function POST(request) {
     const file = formData.get('file');
 
     if (!file || typeof file.arrayBuffer !== 'function') {
-      return NextResponse.json(
+      return json(
         { ok: false, error: 'File foto tidak ditemukan.' },
         { status: 400 }
       );
@@ -170,7 +192,7 @@ export async function POST(request) {
     const lowerName = originalName.toLowerCase();
 
     if (!imageExtensions.some((ext) => lowerName.endsWith(ext))) {
-      return NextResponse.json(
+      return json(
         { ok: false, error: 'File harus berupa gambar.' },
         { status: 400 }
       );
@@ -190,7 +212,7 @@ export async function POST(request) {
       });
 
     if (error) {
-      return NextResponse.json(
+      return json(
         { ok: false, error: error.message },
         { status: 500 }
       );
@@ -200,7 +222,7 @@ export async function POST(request) {
       .from(BUCKET)
       .getPublicUrl(path);
 
-    return NextResponse.json({
+    return json({
       ok: true,
       data: {
         name: fileName,
@@ -209,7 +231,7 @@ export async function POST(request) {
       }
     });
   } catch (error) {
-    return NextResponse.json(
+    return json(
       {
         ok: false,
         error: error.message || 'Gagal mengunggah foto.'
@@ -218,3 +240,5 @@ export async function POST(request) {
     );
   }
 }
+
+

@@ -1,11 +1,5 @@
 {
   "cleanUrls": true,
-  "rewrites": [
-    {
-      "source": "/berita/:slug",
-      "destination": "/"
-    }
-  ],
   "headers": [
     {
       "source": "/(.*)",

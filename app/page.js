@@ -3,48 +3,82 @@ import TanyaAnto from './components/TanyaAnto';
 import { useEffect, useState } from 'react';
 
 const features = [
-  ['ðŸ•Œ','Kegiatan','Informasi kegiatan penyuluhan, pembinaan keagamaan, dan agenda masyarakat.'],
-  ['ðŸ“š','Materi Dakwah','Materi ringkas yang mudah dibaca untuk keluarga dan masyarakat.'],
-  ['ðŸ“„','Laporan Kegiatan','Dokumentasi dan laporan kegiatan penyuluhan tersusun rapi.'],
+  ['PR','Kegiatan','Informasi kegiatan penyuluhan, pembinaan keagamaan, dan agenda masyarakat.'],
+  ['MD','Materi Dakwah','Materi ringkas yang mudah dibaca untuk keluarga dan masyarakat.'],
+  ['LK','Laporan Kegiatan','Dokumentasi dan laporan kegiatan penyuluhan tersusun rapi.'],
 ];
 
 export default function Home() {
   const [news, setNews] = useState(null);
+  const [kemenagNews, setKemenagNews] = useState([]);
   const [loading, setLoading] = useState(true);
   const [gallery, setGallery] = useState([]);
+const [selectedGallery, setSelectedGallery] = useState(null);
 
   useEffect(() => {
+    fetch('/api/kemenag').then(r => r.json()).then(j => setKemenagNews((j?.data || []).slice(0, 2))).catch(() => setKemenagNews([]));
+
     fetch('/api/news').then(r => r.json()).then(j => setNews(j?.data || [])).catch(() => setNews([])).finally(() => setLoading(false));
     fetch('/api/gallery').then(r => r.json()).then(result => { if (result.ok) setGallery(result.data || []); }).catch(() => setGallery([]));
   }, []);
 
+  const newsImageUrls = new Set(
+    (news || []).flatMap((item) => [
+      item?.image_url,
+      ...(item?.article_blocks || [])
+        .filter((block) => block?.type === 'image')
+        .map((block) => block?.url)
+    ].filter(Boolean))
+  );
+
+  const visibleGallery = gallery.filter((item, index, arr) => {
+    if (!item?.url) return false;
+    if (newsImageUrls.has(item.url)) return false;
+
+    return arr.findIndex((other) => other?.url === item.url) === index;
+  });
+
+
   return <>
     <header className="top">
       <div className="wrap nav">
-        <a href="#beranda" className="brand"><span className="brandmark">â˜ª</span><span>KUA Panca Lautang<small>Penyuluh Agama Islam</small></span></a>
+        <a href="#beranda" className="brand"><img className="brandmark" src="/logo-kua.png" alt="Logo KUA" /><span>KUA Panca Lautang<small>Penyuluh Agama Islam</small></span></a>
         <nav className="navlinks">
-          <a href="#profil">Profil</a><a href="#kegiatan">Kegiatan</a><a href="#berita">Berita</a><a href="#materi">Materi</a><a href="#galeri">Galeri</a><a href="#kontak">Kontak</a>
+          <a href="/profil">Profil</a><a href="#kegiatan">Kegiatan</a><a href="#berita">Berita</a><a href="#materi">Materi</a><a href="#galeri">Galeri</a><a href="#kontak">Kontak</a>
         </nav>
       </div>
     </header>
 
     <main>
+
+<div className="kemenagTicker">
+  <div className="kemenagTickerLabel">INFO KEMENAG</div>
+  <div className="kemenagTickerTrack">
+    <div className="kemenagTickerMove">
+      {kemenagNews.map((item) => (
+        <a key={item.url} href={item.url} target="_blank" rel="noreferrer">
+          {item.title}
+        </a>
+      ))}
+    </div>
+  </div>
+</div>
       <section id="beranda" className="hero">
         <div className="wrap heroGrid">
           <div>
             <span className="eyebrow"><span className="pulse"/> Portal Informasi KUA Panca Lautang</span>
             <h1>Pelayanan yang <span>dekat</span> dengan masyarakat.</h1>
             <p>Website baru yang bersih, cepat, dan responsif untuk informasi Penyuluh Agama Islam, kegiatan, materi dakwah, laporan, galeri, serta satu berita terbaru Kementerian Agama setiap hari.</p>
-            <div className="actions"><a className="btn primary" href="#berita">ðŸ“° Berita Kemenag Hari Ini</a><a className="btn" href="#kontak">ðŸ“ž Hubungi Kami</a></div>
+            <div className="actions"><a className="btn primary" href="#kemenag">Berita Kemenag Hari Ini</a><a className="btn" href="#kontak">Hubungi Kami</a></div>
           </div>
-          <div className="heroCard"><div className="heroBadge">KUA PANCA LAUTANG â€¢ SIDRAP</div><div className="mosque"><div className="tower left"/><div className="tower right"/><div className="dome"/><div className="minaret"/></div></div>
+          <div className="heroCard"><div className="heroBadge">KUA PANCA LAUTANG - SIDRAP</div><img src="/kantor-kua.jpeg" alt="Kantor KUA Panca Lautang" style={{width:"100%",height:"280px",objectFit:"cover",borderRadius:"18px"}} /></div>
         </div>
       </section>
 
       <section id="profil" className="section">
         <div className="wrap profile">
-          <div className="profileMain"><div className="avatar">ðŸ‘¤</div><h3>Profil Penyuluh</h3><p>Ruang informasi untuk memperkenalkan Penyuluh Agama Islam, bidang pembinaan, layanan masyarakat, dan aktivitas penyuluhan di wilayah Panca Lautang.</p><a className="btn primary" href="#kontak">Lihat informasi layanan</a></div>
-          <div className="card"><div className="sectionHead"><div><h2>Ruang layanan</h2><p>Konten utama disusun sederhana agar mudah ditemukan dari HP maupun komputer.</p></div></div><div className="list"><div className="listItem"><div className="icon">ðŸ¤</div><div><b>Pendampingan masyarakat</b><span>Konsultasi dan pembinaan keagamaan sesuai ruang layanan Penyuluh.</span></div></div><div className="listItem"><div className="icon">ðŸ“…</div><div><b>Agenda & kegiatan</b><span>Temukan kegiatan yang sedang berjalan dan dokumentasi program.</span></div></div><div className="listItem"><div className="icon">ðŸ“–</div><div><b>Materi yang praktis</b><span>Materi dakwah dibuat singkat, jelas, dan mudah dibagikan.</span></div></div></div></div>
+          <div className="profileMain"><div className="avatar">PAI</div><h3>Profil Penyuluh</h3><p>Ruang informasi untuk memperkenalkan Penyuluh Agama Islam, bidang pembinaan, layanan masyarakat, dan aktivitas penyuluhan di wilayah Panca Lautang.</p><a className="btn primary" href="#kontak">Lihat informasi layanan</a></div>
+          <div className="card"><div className="sectionHead"><div><h2>Ruang layanan</h2><p>Konten utama disusun sederhana agar mudah ditemukan dari HP maupun komputer.</p></div></div><div className="list"><div className="listItem"><div className="icon">PM</div><div><b>Pendampingan masyarakat</b><span>Konsultasi dan pembinaan keagamaan sesuai ruang layanan Penyuluh.</span></div></div><div className="listItem"><div className="icon">AK</div><div><b>Agenda & kegiatan</b><span>Temukan kegiatan yang sedang berjalan dan dokumentasi program.</span></div></div><div className="listItem"><div className="icon">MP</div><div><b>Materi yang praktis</b><span>Materi dakwah dibuat singkat, jelas, dan mudah dibagikan.</span></div></div></div></div>
         </div>
       </section>
 
@@ -78,13 +112,13 @@ export default function Home() {
           ) : (
             <div className="grid3">
               {news.map((item) => (
-                <article className="card newsCard" key={item.id}>
-                  {item.image_url && (
+                <article className={`card newsCard ${item.id === news[0]?.id ? "featuredNewsCard" : ""}`} key={item.id}>
+                  {(item.image_url || item.article_blocks?.find((block) => block.type === 'image')?.url) && (
                     <div style={{margin:'-1px -1px 18px',borderRadius:'16px 16px 0 0',overflow:'hidden'}}>
                       <img
-                        src={item.image_url}
+                        src={item.image_url || item.article_blocks?.find((block) => block.type === 'image')?.url}
                         alt={item.title || 'Foto berita KUA Panca Lautang'}
-                        style={{width:'100%',height:'210px',objectFit:'cover',display:'block'}}
+                        style={{width:'100%',height:'145px',objectFit:'cover',display:'block'}}
                       />
                     </div>
                   )}
@@ -111,7 +145,7 @@ export default function Home() {
                       className="newsBtn"
                       href={`/berita/${item.id}`}
                     >
-                      Baca selengkapnya →
+                      Baca berita lengkap
                     </a>
                   </div>
                 </article>
@@ -121,9 +155,53 @@ export default function Home() {
         </div>
       </section>
 
-      <section id="materi" className="section"><div className="wrap"><div className="sectionHead"><div><h2>Materi Dakwah</h2><p>Ruang untuk materi pilihan yang bermanfaat bagi keluarga dan masyarakat.</p></div></div><div className="grid3"><div className="card"><div className="icon">ðŸ’</div><h3>Pernikahan & keluarga</h3><p>Materi seputar persiapan pernikahan, keluarga sakinah, dan pembinaan pasangan.</p></div><div className="card"><div className="icon">ðŸ•‹</div><h3>Ibadah & akhlak</h3><p>Materi keagamaan singkat yang relevan untuk pembinaan sehari-hari.</p></div><div className="card"><div className="icon">ðŸŒ±</div><h3>Moderasi & kemasyarakatan</h3><p>Materi tentang kerukunan, kepedulian sosial, dan kehidupan bermasyarakat.</p></div></div></div></section>
+      <section id="kemenag" className="section">
+  <div className="wrap">
+    <div className="sectionHead">
+      <div>
+        <h2>Berita Terbaru Kementerian Agama</h2>
+        <p>Dua berita terbaru dari Kementerian Agama Republik Indonesia.</p>
+      </div>
+    </div>
 
-      <section id="galeri" className="section" style={{paddingTop:0}}>
+    {kemenagNews.length === 0 ? (
+  <div className="card">
+    <h3>Berita Kemenag sedang diperbarui</h3>
+    <p>Silakan coba kembali beberapa saat lagi.</p>
+  </div>
+) : (
+  <div className="kemenagNewsGrid">
+    {kemenagNews.map((item, index) => (
+      <article className="kemenagNewsCard" key={item.url || index}>
+        <div className="kemenagNewsTop">
+          <span className="kemenagNewsTag">KEMENAG RI</span>
+          <span className="kemenagNewsDate">{item.date}</span>
+        </div>
+
+        <div className="kemenagNewsIcon">K</div>
+
+        <h3>{item.title}</h3>
+
+        {item.excerpt && (
+          <p>{item.excerpt}</p>
+        )}
+
+        <a
+          className="kemenagNewsButton"
+          href={item.url}
+          target="_blank"
+          rel="noreferrer"
+        >
+          Baca berita selengkapnya ?
+        </a>
+      </article>
+    ))}
+  </div>
+)}
+       </div>
+       </section>
+      
+    <section id="galeri" className="section" style={{paddingTop:0}}>
   <div className="wrap">
     <div className="sectionHead">
       <div>
@@ -131,32 +209,149 @@ export default function Home() {
         <p>Dokumentasi kegiatan KUA Panca Lautang.</p>
       </div>
     </div>
-    <div className="gallery">
-      {gallery.length > 0 ? gallery.map((item, index) => (
-        <div className={`photo ${index === 0 ? 'big' : ''}`} key={item.path || item.name}>
-          <img
-            src={item.url}
-            alt={item.name || 'Dokumentasi kegiatan KUA'}
-            style={{width:'100%',height:'100%',objectFit:'cover',display:'block'}}
-          />
-        </div>
-      )) : (
-        <div className="photo big">
-          <span>?? Belum ada foto galeri</span>
+
+    <div style={{
+      display: 'grid',
+      gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
+      gap: 24
+    }}>
+      {visibleGallery.length > 0 ? (
+        visibleGallery.map((item) => (
+          <div
+            key={item.path || item.name}
+            style={{
+              borderRadius: 22,
+              overflow: 'hidden',
+              background: '#fff'
+            }}
+          ><button
+  type="button"
+  onClick={() => setSelectedGallery(item)}
+  style={{
+    border: 0,
+    padding: 0,
+    margin: 0,
+    background: 'transparent',
+    cursor: 'pointer',
+    width: '100%',
+    display: 'block'
+  }}
+>
+  <img
+    src={item.url}
+    alt={item.name || 'Dokumentasi kegiatan KUA'}
+    style={{
+      width: '100%',
+      height: 260,
+      objectFit: 'cover',
+      display: 'block'
+    }}
+  />
+</button>
+          </div>
+        ))
+      ) : (
+        <div className="card">
+          Belum ada foto galeri
         </div>
       )}
     </div>
-  </div>
-</section>
-
-      <section id="kontak" className="section"><div className="wrap"><div className="sectionHead"><div><h2>Kontak</h2><p>Informasi kontak resmi dapat dilengkapi setelah data layanan final.</p></div></div><div className="contact"><div className="contactCard"><div className="icon">ðŸ“</div><h3>KUA Kecamatan Panca Lautang</h3><p style={{color:'var(--muted)',lineHeight:1.7}}>Panca Lautang, Kabupaten Sidenreng Rappang, Sulawesi Selatan.</p></div><div className="contactCard"><div className="icon">ðŸŒ</div><h3>Website</h3><p style={{color:'var(--muted)',lineHeight:1.7}}>kua-pancalautang.my.id</p><a className="btn primary" href="https://kua-pancalautang.my.id" target="_blank" rel="noreferrer">Buka domain â†—</a></div></div></div></section>
+    </div>
+    </section>
+      <section id="kontak" className="section"><div className="wrap"><div className="sectionHead"><div><h2>Kontak</h2><p>Informasi kontak resmi dapat dilengkapi setelah data layanan final.</p></div></div><div className="contact"><div className="contactCard"><div className="icon">LOK</div><h3>KUA Kecamatan Panca Lautang</h3><p style={{color:'var(--muted)',lineHeight:1.7}}>Panca Lautang, Kabupaten Sidenreng Rappang, Sulawesi Selatan.</p></div><div className="contactCard"><div className="icon">WEB</div><h3>Website</h3><p style={{color:'var(--muted)',lineHeight:1.7}}>kua-pancalautang.my.id</p><a className="btn primary" href="https://kua-pancalautang.my.id" target="_blank" rel="noreferrer">Buka domain</a></div></div></div></section>
     </main>
 
-    <footer><div className="wrap footer"><div><b>â˜ª KUA Panca Lautang</b><div><small>Penyuluh Agama Islam â€¢ Website informasi masyarakat</small></div></div><small>Â© 2026 KUA Panca Lautang</small></div></footer>
+    <footer><div className="wrap footer"><div><b>KUA Panca Lautang</b><div><small>Penyuluh Agama Islam - Website informasi masyarakat</small></div></div><small>(c) 2026 KUA Panca Lautang</small></div></footer>
+{selectedGallery && (
+  <div
+    onClick={() => setSelectedGallery(null)}
+    style={{
+      position: 'fixed',
+      inset: 0,
+      background: 'rgba(0,0,0,0.85)',
+      zIndex: 9999,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: 20
+    }}
+  >
+    <div
+      onClick={(e) => e.stopPropagation()}
+      style={{
+        maxWidth: 900,
+        width: '100%',
+        background: '#fff',
+        borderRadius: 22,
+        overflow: 'hidden',
+        position: 'relative'
+      }}
+    >
+      <button type="button" onClick={() => { const i = gallery.findIndex(x => x.path === selectedGallery.path); setSelectedGallery(gallery[(i - 1 + gallery.length) % gallery.length]); }} style={{position:"absolute",left:12,top:"50%",zIndex:3,border:0,borderRadius:"50%",width:48,height:48,fontSize:28,cursor:"pointer"}}>&lsaquo;</button>
+      <button type="button" onClick={() => { const i = gallery.findIndex(x => x.path === selectedGallery.path); setSelectedGallery(gallery[(i + 1) % gallery.length]); }} style={{position:"absolute",right:12,top:"50%",zIndex:3,border:0,borderRadius:"50%",width:48,height:48,fontSize:28,cursor:"pointer"}}>&rsaquo;</button>
+      <button
+        type="button"
+        onClick={() => setSelectedGallery(null)}
+        style={{
+          position: 'absolute',
+          top: 12,
+          right: 12,
+          zIndex: 2,
+          border: 0,
+          borderRadius: '50%',
+          width: 40,
+          height: 40,
+          fontSize: 24,
+          cursor: 'pointer'
+        }}
+      >
+        X
+      </button>
 
+      <img
+        src={selectedGallery.url}
+        alt={selectedGallery.name || 'Foto Galeri'}
+        style={{
+          width: '100%',
+          maxHeight: '60vh',
+          objectFit: 'contain',
+          display: 'block',
+          background: '#111'
+        }}
+      />
+
+      <div style={{ padding: 16, background: '#fff', color: '#111', textAlign: 'center' }}>
+        <strong>
+          {(selectedGallery.name || 'Dokumentasi kegiatan KUA Panca Lautang').replace(/^\d+-/, '').replace(/\.[^.]+$/, '').replace(/[-_]+/g, ' ')}
+        </strong>
+      </div>
+    </div>
+  </div>
+)}
 <TanyaAnto />
   </>;
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
