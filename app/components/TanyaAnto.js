@@ -23,7 +23,7 @@ export default function TanyaAnto() {
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
-          question: question.trim(),
+          message: question.trim(),
         }),
       });
 
