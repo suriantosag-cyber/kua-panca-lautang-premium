@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 import TanyaAnto from './components/TanyaAnto';
 import { useEffect, useState } from 'react';
 
@@ -13,6 +13,7 @@ export default function Home() {
   const [kemenagNews, setKemenagNews] = useState([]);
   const [loading, setLoading] = useState(true);
   const [gallery, setGallery] = useState([]);
+  const [kegiatan, setKegiatan] = useState([]);
 const [selectedGallery, setSelectedGallery] = useState(null);
 
   useEffect(() => {
@@ -20,6 +21,7 @@ const [selectedGallery, setSelectedGallery] = useState(null);
 
     fetch('/api/news').then(r => r.json()).then(j => setNews(j?.data || [])).catch(() => setNews([])).finally(() => setLoading(false));
     fetch('/api/gallery').then(r => r.json()).then(result => { if (result.ok) setGallery(result.data || []); }).catch(() => setGallery([]));
+    fetch('/api/kegiatan-publik').then(r => r.json()).then(result => { if (result.ok) setKegiatan((result.data || []).slice(0, 3)); }).catch(() => setKegiatan([]));
   }, []);
 
   const newsImageUrls = new Set(
@@ -82,7 +84,7 @@ const [selectedGallery, setSelectedGallery] = useState(null);
         </div>
       </section>
 
-      <section id="kegiatan" className="section" style={{paddingTop:0}}><div className="wrap"><div className="sectionHead"><div><h2>Kegiatan</h2><p>Program dan aktivitas penyuluhan untuk masyarakat.</p></div></div><div className="grid3">{features.map(([i,t,d])=><article className="card" key={t}><div className="icon">{i}</div><h3>{t}</h3><p>{d}</p></article>)}</div></div></section>
+      <section id="kegiatan" className="section" style={{paddingTop:0}}><div className="wrap"><div className="sectionHead"><div><h2>Kegiatan</h2><p>Program dan aktivitas penyuluhan untuk masyarakat.</p></div></div><div className="grid3">{features.map(([i,t,d])=><article className="card" key={t}><div className="icon">{i}</div><h3>{t}</h3><p>{d}</p></article>)}</div>{kegiatan.length > 0 && <><div style={{marginTop:24}}><h3>Kegiatan Terbaru</h3></div><div className="grid3">{kegiatan.map((item)=><article className="card" key={item.id}><h3>{item.nama_kegiatan}</h3><p><b>{item.penyelenggara}</b> · {item.desa}</p><p>{item.deskripsi || "Kegiatan KUA Panca Lautang."}</p><small>{item.tanggal} · {item.kategori}</small></article>)}</div><div style={{marginTop:20}}><a className="btn primary" href="/kegiatan">Lihat Semua Kegiatan</a></div></>}</div></section>
 
       <section id="berita" className="section news">
         <div className="wrap">
@@ -331,6 +333,10 @@ const [selectedGallery, setSelectedGallery] = useState(null);
 <TanyaAnto />
   </>;
 }
+
+
+
+
 
 
 
