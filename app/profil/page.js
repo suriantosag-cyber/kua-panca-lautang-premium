@@ -1,4 +1,4 @@
-﻿export default function ProfilPage() {
+export default function ProfilPage() {
   return (
     <main className="section" style={{ fontSize: "19px" }}>
       <div className="wrap">
@@ -447,7 +447,13 @@
   </p>
 </div>
 
-<h2>Profil Penyuluh Agama Islam</h2>
+/*
+  PROFIL PENYULUH SEMENTARA DITUTUP
+
+  Data profil tetap disimpan di sini.
+  Akan dibuka kembali setelah data lengkap dan final verifikasi.
+
+  <h2>Profil Penyuluh Agama Islam</h2>
 
 <p>
   Penyuluh Agama Islam merupakan bagian penting dalam
@@ -700,6 +706,8 @@
 
 </div>
 
+
+*/
 <h2>Komitmen Pelayanan</h2>
             <p>
               KUA Kecamatan Panca Lautang berkomitmen memberikan
