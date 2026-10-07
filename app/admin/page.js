@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
-
+import { supabaseKegiatan } from "../kegiatan/supabase-kegiatan";
 export default function AdminPage() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [username, setUsername] = useState("");
@@ -16,10 +16,78 @@ export default function AdminPage() {
   const [message, setMessage] = useState("");
 
   const [gallery, setGallery] = useState([]);
+const [kegiatan, setKegiatan] = useState([]);
+  const [kegiatanLoading, setKegiatanLoading] = useState(false);
   const [galleryFile, setGalleryFile] = useState(null);
   const [galleryLoading, setGalleryLoading] = useState(false);
   const [editingGallery, setEditingGallery] = useState(null);
 
+  async function updateKegiatanStatus(id, status) {
+    const yakin = window.confirm(
+      status === 'disetujui'
+        ? 'Setujui kegiatan ini?'
+        : 'Tolak kegiatan ini?'
+    );
+
+    if (!yakin) {
+      return;
+    }
+
+    setKegiatanLoading(true);
+    setMessage('');
+
+    try {
+      const response = await fetch('/api/kegiatan', {
+        method: 'PATCH',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ id, status })
+      });
+
+      const result = await response.json();
+
+      if (!response.ok || !result.ok) {
+        throw new Error(result.error || 'Gagal mengubah status kegiatan.');
+      }
+
+      setMessage(
+        status === 'disetujui'
+          ? 'Kegiatan berhasil disetujui.'
+          : 'Kegiatan berhasil ditolak.'
+      );
+
+      await loadKegiatan();
+    } catch (error) {
+      console.error(error);
+      setMessage(`Gagal mengubah status kegiatan: ${error.message}`);
+    } finally {
+      setKegiatanLoading(false);
+    }
+  }
+
+  async function loadKegiatan() {
+    setKegiatanLoading(true);
+
+    try {
+      const response = await fetch('/api/kegiatan', {
+        cache: 'no-store'
+      });
+
+      const result = await response.json();
+
+      if (!response.ok || !result.ok) {
+        throw new Error(result.error || 'Gagal mengambil kegiatan.');
+      }
+
+      setKegiatan(result.data || []);
+    } catch (error) {
+      console.error(error);
+      setMessage(`Gagal mengambil kegiatan: ${error.message}`);
+    } finally {
+      setKegiatanLoading(false);
+    }
+  }
   async function loadGallery() {
     try {
       const response = await fetch("/api/gallery");
@@ -123,10 +191,11 @@ export default function AdminPage() {
   }
 
   useEffect(() => {
-    if (loggedIn) {
-      loadNews();
-      loadGallery();
-    }
+  if (loggedIn) {
+    loadNews();
+    loadGallery();
+    loadKegiatan();
+  }
   }, [loggedIn]);
 
   function login(e) {
@@ -704,6 +773,99 @@ export default function AdminPage() {
           marginTop: 24,
         }}
       >
+        <h2>Kegiatan Menunggu Verifikasi</h2>
+
+        <div style={{ marginTop: 16 }}>
+          {kegiatanLoading ? (
+            <p>Memuat kegiatan...</p>
+          ) : kegiatan.length === 0 ? (
+            <p>Tidak ada kegiatan yang menunggu verifikasi.</p>
+          ) : (
+            <div style={{ display: "grid", gap: 16 }}>
+              {kegiatan.map((item) => (
+                <div
+                  key={item.id}
+                  style={{
+                    border: "1px solid #e5e7eb",
+                    borderRadius: 12,
+                    padding: 16,
+                    background: "#fafafa",
+                  }}
+                >
+                  <h3 style={{ marginTop: 0 }}>{item.nama_kegiatan}</h3>
+
+                  <p>
+                    <strong>Penyelenggara:</strong> {item.penyelenggara}
+                  </p>
+
+                  <p>
+                    <strong>Desa/Kelurahan:</strong> {item.desa}
+                  </p>
+
+                  <p>
+                    <strong>Tanggal:</strong> {item.tanggal}
+                  </p>
+
+                  <p>
+                    <strong>Kategori:</strong> {item.kategori}
+                  </p>
+
+                  <p>
+                    <strong>Narahubung:</strong> {item.narahubung}
+                  </p>
+
+                  {item.deskripsi && (
+                    <p>
+                      <strong>Deskripsi:</strong> {item.deskripsi}
+                    </p>
+                  )}
+
+                  <div
+                    style={{
+                      display: "flex",
+                      gap: 10,
+                      marginTop: 16,
+                      flexWrap: "wrap",
+                    }}
+                  >
+                    <button
+                      type="button"
+                      onClick={() =>
+                        updateKegiatanStatus(item.id, "disetujui")
+                      }
+                      disabled={kegiatanLoading}
+                      style={{
+                        padding: "10px 16px",
+                        border: "none",
+                        borderRadius: 8,
+                        cursor: "pointer",
+                      }}
+                    >
+                      Setujui
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() =>
+                        updateKegiatanStatus(item.id, "ditolak")
+                      }
+                      disabled={kegiatanLoading}
+                      style={{
+                        padding: "10px 16px",
+                        border: "none",
+                        borderRadius: 8,
+                        cursor: "pointer",
+                      }}
+                    >
+                      Tolak
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </div>
+
         <h2>Galeri Dokumentasi</h2>
 
         <div style={{ marginTop: 16 }}>
