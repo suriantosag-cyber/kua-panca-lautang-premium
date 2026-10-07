@@ -147,6 +147,7 @@
 </p>
 
 <div style={{
+  color: "#1e293b",
   display: "grid",
   gridTemplateColumns: "repeat(2, 1fr)",
   gap: "20px",
@@ -729,6 +730,8 @@
     </main>
   );
 }
+
+
 
 
 
