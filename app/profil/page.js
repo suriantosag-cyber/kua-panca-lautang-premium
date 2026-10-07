@@ -137,6 +137,88 @@
               <li>Koordinasi kegiatan keagamaan di wilayah kecamatan.</li>
             </ul>
 
+            <h2>Layanan Utama KUA</h2>
+
+            <p>
+              KUA Kecamatan Panca Lautang menyediakan berbagai layanan
+              administratif dan pembinaan keagamaan untuk membantu masyarakat
+              memperoleh informasi dan pelayanan secara mudah, jelas dan transparan.
+            </p>
+
+            <div
+              style={{
+                display: "grid",
+                gridTemplateColumns: "repeat(2, 1fr)",
+                gap: "20px",
+                marginTop: "24px",
+                marginBottom: "36px"
+              }}
+            >
+              <div
+                style={{
+                  padding: "24px",
+                  borderRadius: "18px",
+                  background: "rgba(0,0,0,.04)",
+                  border: "1px solid rgba(0,0,0,.08)"
+                }}
+              >
+                <h3>💍 Layanan Pernikahan (Nikah & Rujuk)</h3>
+                <p>
+                  Informasi persyaratan pendaftaran nikah, baik di KUA maupun
+                  di luar KUA, alur prosedur pendaftaran, informasi biaya resmi
+                  (PNBP), integrasi layanan SIMKAH serta informasi jadwal dan
+                  kuota pendaftaran.
+                </p>
+              </div>
+
+              <div
+                style={{
+                  padding: "24px",
+                  borderRadius: "18px",
+                  background: "rgba(0,0,0,.04)",
+                  border: "1px solid rgba(0,0,0,.08)"
+                }}
+              >
+                <h3>🕌 Layanan Kemasjidan</h3>
+                <p>
+                  Informasi prosedur dan persyaratan penerbitan ID Nasional
+                  Masjid dan Mushala melalui layanan SIMAS, serta informasi
+                  dan panduan arah kiblat.
+                </p>
+              </div>
+
+              <div
+                style={{
+                  padding: "24px",
+                  borderRadius: "18px",
+                  background: "rgba(0,0,0,.04)",
+                  border: "1px solid rgba(0,0,0,.08)"
+                }}
+              >
+                <h3>🟢 Layanan Produk Halal</h3>
+                <p>
+                  Informasi alur pengurusan sertifikasi halal, termasuk jalur
+                  Self Declare bagi pelaku UMKM serta informasi mengenai
+                  Pendamping Proses Produk Halal (P3H).
+                </p>
+              </div>
+
+              <div
+                style={{
+                  padding: "24px",
+                  borderRadius: "18px",
+                  background: "rgba(0,0,0,.04)",
+                  border: "1px solid rgba(0,0,0,.08)"
+                }}
+              >
+                <h3>🤲 Zakat, Wakaf & Ibadah Sosial</h3>
+                <p>
+                  Informasi dan pembinaan terkait sertifikasi tanah wakaf,
+                  konsultasi zakat, pembinaan muallaf serta rekomendasi dan
+                  informasi layanan lembaga keagamaan.
+                </p>
+              </div>
+            </div>
             <h2>Profil Penyuluh Agama Islam</h2>
 
 <p>
@@ -421,6 +503,7 @@
     </main>
   );
 }
+
 
 
 
