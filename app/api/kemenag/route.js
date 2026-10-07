@@ -1,39 +1,58 @@
-const NEWS = [
-  {
-    title: "Persamaan Pesantren dan Pramuka, Punya Misi Membentuk Karakter Bangsa",
-    url: "https://kemenag.go.id/nasional/persamaan-pesantren-dan-pramuka-punya-misi-membentuk-karakter-bangsa-HK5MQ",
-    date: "1 Oktober 2026",
-    source: "Kementerian Agama Republik Indonesia",
-    excerpt:
-      "Menteri Agama menegaskan bahwa pesantren dan gerakan Pramuka memiliki misi yang sama dalam membentuk karakter generasi bangsa melalui kemandirian, akhlak, pendidikan karakter, dan kemampuan bersosialisasi.",
-    image_url: ""
-  },
-  {
-    title: "Saka Amal Bakti, Wadah Gerakan Pramuka Pelajar Binaan Kementerian Agama",
-    url: "https://kemenag.go.id/nasional/saka-amal-bakti-wadah-gerakan-pramuka-pelajar-binaan-kementerian-agama-6qbKx",
-    date: "1 Oktober 2026",
-    source: "Kementerian Agama Republik Indonesia",
-    excerpt:
-      "Kementerian Agama meluncurkan Saka Amal Bakti sebagai wadah bagi santri, mahasiswa, dan pelajar binaan Kemenag untuk mengembangkan kegiatan kepramukaan yang mendorong kehidupan beragama yang harmonis, toleran, dan damai.",
-    image_url: ""
-  },
-  {
-    title: "Usai IGIC 2026, Menag Siapkan Dialog Imam dan Pemimpin Lintas Agama",
-    url: "https://kemenag.go.id/nasional/usai-igic-2026-menag-siapkan-dialog-imam-dan-pemimpin-lintas-agama-doPhn",
-    date: "1 Oktober 2026",
-    source: "Kementerian Agama Republik Indonesia",
-    excerpt:
-      "Setelah International Grand Imams Conference 2026, Kementerian Agama menyiapkan dialog lanjutan yang melibatkan pemimpin rumah ibadah dan tokoh lintas agama untuk memperkuat perdamaian, kerukunan, dan diplomasi keagamaan.",
-    image_url: ""
-  }
-];
+﻿const SOURCE_URL = "https://kemenag.go.id/api/articles";
+
+export const revalidate = 3600;
 
 export async function GET() {
-  return Response.json({
-    ok: true,
-    source: "Kementerian Agama Republik Indonesia",
-    count: NEWS.length,
-    data: NEWS,
-    fetchedAt: new Date().toISOString()
-  });
+  try {
+    const response = await fetch(
+      `${SOURCE_URL}?category=nasional&limit=5&page=1`,
+      {
+        next: { revalidate: 3600 },
+        headers: {
+          "User-Agent": "KUA-Panca-Lautang/1.0",
+          "Accept": "application/json"
+        }
+      }
+    );
+
+    if (!response.ok) {
+      throw new Error(`Kemenag HTTP ${response.status}`);
+    }
+
+    const result = await response.json();
+
+    const articles = Array.isArray(result.data) ? result.data : [];
+
+    const data = articles.map((article) => ({
+      id: article.id,
+      title: article.title,
+      url: article.path
+        ? `https://kemenag.go.id${article.path}`
+        : "https://kemenag.go.id/nasional",
+      date: article.publishedAt || "",
+      source: "Kementerian Agama Republik Indonesia",
+      excerpt: article.preview || article.caption || "",
+      image:
+        article.image?.medium ||
+        article.image?.thumbnail ||
+        ""
+    }));
+
+    return Response.json({
+      ok: true,
+      source: "Kementerian Agama Republik Indonesia",
+      data,
+      fetchedAt: new Date().toISOString()
+    });
+  } catch (error) {
+    return Response.json(
+      {
+        ok: false,
+        source: "Kementerian Agama Republik Indonesia",
+        data: [],
+        error: "Gagal mengambil berita terbaru Kemenag"
+      },
+      { status: 200 }
+    );
+  }
 }
