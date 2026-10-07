@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import { supabaseKegiatan } from './supabase-kegiatan';
+
 export default function KegiatanPage() {
   const [showForm, setShowForm] = useState(false);
 const [loading, setLoading] = useState(false);
@@ -43,33 +43,68 @@ async function handleSubmit(event) {
 
   const form = event.currentTarget;
 
-  const data = {
-    nama_kegiatan: form.nama_kegiatan.value.trim(),
-    penyelenggara: form.penyelenggara.value.trim(),
-    desa: form.desa.value.trim(),
-    tanggal: form.tanggal.value,
-    kategori: form.kategori.value,
-    deskripsi: form.deskripsi.value.trim(),
-    narahubung: form.narahubung.value.trim(),
-    status: 'menunggu'
-  };
+  try {
+    const formData = new FormData();
 
-  const { error } = await supabaseKegiatan
-    .from('kegiatan')
-    .insert(data);
+    formData.append('nama_kegiatan', form.nama_kegiatan.value.trim());
+    formData.append('penyelenggara', form.penyelenggara.value.trim());
+    formData.append('desa', form.desa.value.trim());
+    formData.append('tanggal', form.tanggal.value);
+    formData.append('kategori', form.kategori.value);
+    formData.append('deskripsi', form.deskripsi.value.trim());
+    formData.append('narahubung', form.narahubung.value.trim());
 
-  setLoading(false);
+    console.log('DATA FORM:', {
+      nama_kegiatan: form.nama_kegiatan.value,
+      penyelenggara: form.penyelenggara.value,
+      desa: form.desa.value,
+      tanggal: form.tanggal.value,
+      kategori: form.kategori.value,
+      deskripsi: form.deskripsi.value,
+      narahubung: form.narahubung.value,
+      foto: form.foto.files?.[0]?.name || null
+    });
 
-  if (error) {
+    const foto = form.foto.files?.[0];
+
+    if (foto) {
+      formData.append('foto', foto);
+    }
+
+    console.log(
+      'FORMDATA DIKIRIM:',
+      [...formData.entries()].map(([key, value]) => [
+        key,
+        value instanceof File ? value.name : value
+      ])
+    );
+
+    const response = await fetch('/api/kegiatan', {
+      method: 'POST',
+      body: formData
+    });
+
+    const result = await response.json();
+
+    if (!response.ok || !result.ok) {
+      throw new Error(
+        result.error || 'Gagal mengirim kegiatan.'
+      );
+    }
+
+    form.reset();
+
+    setMessage(
+      foto
+        ? 'Kegiatan dan foto berhasil dikirim. Menunggu verifikasi Admin KUA.'
+        : 'Kegiatan berhasil dikirim. Menunggu verifikasi Admin KUA.'
+    );
+  } catch (error) {
     console.error(error);
     setMessage(`Gagal mengirim kegiatan: ${error.message}`);
-    return;
+  } finally {
+    setLoading(false);
   }
-
-  form.reset();
-  setMessage(
-    'Kegiatan berhasil dikirim dan sedang menunggu verifikasi Admin KUA.'
-  );
 }
   return (
     <main className="section">
