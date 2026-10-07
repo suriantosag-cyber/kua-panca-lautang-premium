@@ -426,6 +426,7 @@
 <hr />
 
 <div style={{
+  color: "#1e293b",
   padding: "20px",
   marginTop: "28px",
   marginBottom: "36px",
@@ -730,6 +731,7 @@
     </main>
   );
 }
+
 
 
 
