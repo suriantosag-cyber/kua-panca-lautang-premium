@@ -237,12 +237,12 @@ async function handleSubmit(event) {
 
               <div style={{ marginBottom: '16px' }}>
                 <label>
-                  <strong>Nama Narahubung</strong>
+                  <strong>Nama yang Bisa Dihubungi</strong>
                 </label>
                 <input
                   type="text"
                   name="narahubung"
-                  placeholder="Nama yang dapat dihubungi"
+                  placeholder="Contoh: Ahmad / Ketua Panitia"
                   style={{ width: '100%', marginTop: '6px', padding: '12px' }}
                 />
               </div>

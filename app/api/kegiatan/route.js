@@ -1,4 +1,4 @@
-﻿import { createClient } from '@supabase/supabase-js';
+import { createClient } from '@supabase/supabase-js';
 
 function getSupabaseAdmin() {
   return createClient(
@@ -31,6 +31,164 @@ export async function GET() {
   } catch (error) {
     return Response.json(
       { ok: false, error: error.message },
+      { status: 500 }
+    );
+  }
+}
+
+export async function POST(request) {
+  try {
+    const formData = await request.formData();
+
+    const namaKegiatan = String(formData.get('nama_kegiatan') || '').trim();
+    const penyelenggara = String(formData.get('penyelenggara') || '').trim();
+    const desa = String(formData.get('desa') || '').trim();
+    const tanggal = String(formData.get('tanggal') || '').trim();
+    const kategori = String(formData.get('kategori') || '').trim();
+    const deskripsi = String(formData.get('deskripsi') || '').trim();
+    const narahubung = String(formData.get('narahubung') || '').trim();
+    const foto = formData.get('foto');
+
+    console.log('API FORM DATA:', {
+      namaKegiatan,
+      penyelenggara,
+      desa,
+      tanggal,
+      kategori,
+      deskripsi,
+      narahubung,
+      foto: foto
+        ? {
+            name: foto.name,
+            size: foto.size,
+            type: foto.type
+          }
+        : null
+    });
+
+    if (
+      !namaKegiatan ||
+      !penyelenggara ||
+      !desa ||
+      !tanggal ||
+      !narahubung
+    ) {
+      return Response.json(
+        {
+          ok: false,
+          error: 'Data kegiatan wajib belum lengkap.'
+        },
+        { status: 400 }
+      );
+    }
+
+    const supabase = getSupabaseAdmin();
+
+    let fotoUrl = null;
+    let uploadedPath = null;
+
+    if (foto && typeof foto.arrayBuffer === 'function' && foto.size > 0) {
+      if (!foto.type.startsWith('image/')) {
+        return Response.json(
+          {
+            ok: false,
+            error: 'File yang dipilih harus berupa gambar.'
+          },
+          { status: 400 }
+        );
+      }
+
+      if (foto.size > 6 * 1024 * 1024) {
+        return Response.json(
+          {
+            ok: false,
+            error: 'Ukuran foto maksimal 6 MB.'
+          },
+          { status: 400 }
+        );
+      }
+
+      const extension =
+        foto.name && foto.name.includes('.')
+          ? foto.name.split('.').pop().toLowerCase()
+          : 'jpg';
+
+      const safeExtension = /^[a-z0-9]+$/.test(extension)
+        ? extension
+        : 'jpg';
+
+      const fileName = `${crypto.randomUUID()}.${safeExtension}`;
+      uploadedPath = `kegiatan/${fileName}`;
+
+      const arrayBuffer = await foto.arrayBuffer();
+
+      const { error: uploadError } = await supabase.storage
+        .from('media')
+        .upload(uploadedPath, arrayBuffer, {
+          contentType: foto.type,
+          cacheControl: '3600',
+          upsert: false
+        });
+
+      if (uploadError) {
+        return Response.json(
+          {
+            ok: false,
+            error: `Upload foto gagal: ${uploadError.message}`
+          },
+          { status: 500 }
+        );
+      }
+
+      const { data: publicUrlData } = supabase.storage
+        .from('media')
+        .getPublicUrl(uploadedPath);
+
+      fotoUrl = publicUrlData.publicUrl;
+    }
+
+    const { data, error } = await supabase
+      .from('kegiatan')
+      .insert({
+        nama_kegiatan: namaKegiatan,
+        penyelenggara,
+        desa,
+        tanggal,
+        kategori,
+        deskripsi,
+        narahubung,
+        foto_url: fotoUrl,
+        status: 'menunggu'
+      })
+      .select()
+      .single();
+
+    if (error) {
+      if (uploadedPath) {
+        await supabase.storage
+          .from('media')
+          .remove([uploadedPath]);
+      }
+
+      return Response.json(
+        {
+          ok: false,
+          error: error.message
+        },
+        { status: 500 }
+      );
+    }
+
+    return Response.json({
+      ok: true,
+      data
+    });
+  } catch (error) {
+    return Response.json(
+      {
+        ok: false,
+        error: error.message
+      },
       { status: 500 }
     );
   }

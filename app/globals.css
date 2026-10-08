@@ -251,3 +251,94 @@
     padding: 10px 13px !important;
   }
 }
+
+/* Jadwal Nikah */
+.jadwalNikah {
+  padding: 45px 0;
+}
+
+.jadwalNikahCard {
+  max-width: 850px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 360px 1fr;
+  gap: 28px;
+  align-items: center;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: 24px;
+  padding: 22px;
+  box-shadow: 0 12px 35px rgba(18,63,49,.08);
+}
+
+.jadwalNikahImage img {
+  display: block;
+  width: 100%;
+  max-width: 360px;
+  height: auto;
+  margin: 0 auto;
+  border-radius: 18px;
+}
+
+.jadwalNikahInfo {
+  padding: 10px;
+}
+
+.jadwalNikahLabel {
+  display: inline-block;
+  color: var(--brand);
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: .5px;
+  margin-bottom: 10px;
+}
+
+.jadwalNikahInfo h2 {
+  margin: 0 0 12px;
+  font-size: 28px;
+}
+
+.jadwalNikahInfo p {
+  color: var(--muted);
+  line-height: 1.6;
+}
+
+.jadwalNikahDetail {
+  display: grid;
+  gap: 10px;
+  margin-top: 18px;
+}
+
+.jadwalNikahDetail div {
+  padding: 12px 14px;
+  background: #f1f8f4;
+  border-radius: 12px;
+}
+
+.jadwalNikahDetail small {
+  display: block;
+  color: var(--muted);
+  font-size: 11px;
+  margin-bottom: 4px;
+}
+
+.jadwalNikahDetail strong {
+  color: var(--ink);
+  font-size: 14px;
+}
+
+@media (max-width: 700px) {
+  .jadwalNikahCard {
+    grid-template-columns: 1fr;
+    max-width: 500px;
+  }
+
+  .jadwalNikahImage img {
+    max-width: 320px;
+  }
+
+  .jadwalNikahInfo h2 {
+    font-size: 24px;
+  }
+}
+

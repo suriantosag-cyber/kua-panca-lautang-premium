@@ -1,0 +1,7 @@
+﻿app/**/*.bak
+app/**/*.backup*
+app/**/*.backup-*
+app/**/*.backup
+app/**/page.*.bak
+app/**/page.*.backup*
+kemenag-debug.html
