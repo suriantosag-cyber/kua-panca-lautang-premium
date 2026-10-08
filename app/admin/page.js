@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import { supabaseKegiatan } from "../kegiatan/supabase-kegiatan";
+import JadwalNikahAdmin from "./JadwalNikahAdmin";
 export default function AdminPage() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [username, setUsername] = useState("");
@@ -866,6 +867,7 @@ const [kegiatan, setKegiatan] = useState([]);
           )}
         </div>
 
+        <JadwalNikahAdmin />
         <h2>Galeri Dokumentasi</h2>
 
         <div style={{ marginTop: 16 }}>
@@ -949,6 +951,10 @@ const [kegiatan, setKegiatan] = useState([]);
     </main>
   );
 }
+
+
+
+
 
 
 

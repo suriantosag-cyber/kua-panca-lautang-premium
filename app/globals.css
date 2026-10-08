@@ -342,3 +342,35 @@
   }
 }
 
+
+/* Jadwal Nikah - tampilan data */
+.jadwalNikahDetail div {
+  padding: 16px 18px;
+  border-radius: 14px;
+  border: 1px solid rgba(20,108,67,.10);
+}
+
+.jadwalNikahDetail small {
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 7px;
+}
+
+.jadwalNikahDetail strong {
+  display: block;
+  font-size: 20px;
+  line-height: 1.35;
+  margin-bottom: 6px;
+}
+
+.jadwalNikahDetail div div {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  font-size: 15px;
+  line-height: 1.5;
+}
+
+.jadwalNikahDetail div div + div {
+  margin-top: 4px !important;
+}
