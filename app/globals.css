@@ -676,3 +676,189 @@
     padding: 14px;
   }
 }
+
+/* Bimbingan Perkawinan: desain nyaman dibaca */
+.bimwin-page {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 28px 20px 56px;
+  color: #183b2b;
+  line-height: 1.8;
+}
+
+.bimwin-hero {
+  padding: 42px 32px;
+  margin-bottom: 32px;
+  border-radius: 22px;
+  background: linear-gradient(135deg, #e8f5ec, #f7fbf7);
+  border: 1px solid #d4e8d9;
+}
+
+.bimwin-label {
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  color: #247345;
+}
+
+.bimwin-hero h1 {
+  max-width: 850px;
+  margin: 12px 0;
+  font-size: clamp(30px, 4vw, 44px);
+  line-height: 1.2;
+}
+
+.bimwin-hero > p:last-child {
+  max-width: 780px;
+  font-size: 19px;
+  line-height: 1.8;
+}
+
+.bimwin-content {
+  width: 100%;
+}
+
+.bimwin-content > h2,
+.bimwin-note h2 {
+  font-size: clamp(25px, 3vw, 32px);
+  line-height: 1.35;
+}
+
+.bimwin-intro {
+  font-size: 18px;
+  margin-bottom: 22px;
+}
+
+.bimwin-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 14px;
+  width: 100%;
+}
+
+.bimwin-item {
+  width: 100%;
+  overflow: hidden;
+  border: 1px solid #d5e6d9;
+  border-radius: 15px;
+  background: #fff;
+  box-shadow: 0 3px 12px rgba(25, 75, 45, 0.06);
+}
+
+.bimwin-item summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  width: 100%;
+  padding: 22px 24px;
+  cursor: pointer;
+  list-style: none;
+  color: #185c36;
+  font-size: 20px;
+  font-weight: 750;
+  line-height: 1.5;
+}
+
+.bimwin-item summary::-webkit-details-marker {
+  display: none;
+}
+
+.bimwin-item summary::after {
+  content: "+";
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: #e8f5ec;
+  color: #176638;
+  font-size: 25px;
+  line-height: 1;
+}
+
+.bimwin-item[open] summary {
+  background: #edf7ef;
+  border-bottom: 1px solid #d5e6d9;
+}
+
+.bimwin-item[open] summary::after {
+  content: "−";
+}
+
+.bimwin-detail {
+  padding: 24px 26px 28px;
+  font-size: 18px;
+  line-height: 1.9;
+  color: #34483b;
+}
+
+.bimwin-detail p {
+  margin: 0 0 18px;
+}
+
+.bimwin-detail section {
+  margin-top: 24px;
+}
+
+.bimwin-detail h3 {
+  margin: 0 0 8px;
+  color: #176638;
+  font-size: 20px;
+  line-height: 1.5;
+}
+
+.bimwin-note {
+  margin-top: 34px;
+  padding: 26px;
+  border-radius: 16px;
+  background: #f2f8f3;
+  border-left: 5px solid #27804a;
+}
+
+.bimwin-note p {
+  font-size: 17px;
+  line-height: 1.85;
+}
+
+@media (max-width: 700px) {
+  .bimwin-page {
+    padding: 18px 12px 36px;
+  }
+
+  .bimwin-hero {
+    padding: 28px 20px;
+    border-radius: 16px;
+  }
+
+  .bimwin-hero > p:last-child {
+    font-size: 17px;
+  }
+
+  .bimwin-item summary {
+    padding: 18px 16px;
+    font-size: 18px;
+    gap: 10px;
+  }
+
+  .bimwin-item summary::after {
+    width: 30px;
+    height: 30px;
+  }
+
+  .bimwin-detail {
+    padding: 20px 17px 24px;
+    font-size: 17px;
+    line-height: 1.85;
+  }
+
+  .bimwin-detail h3 {
+    font-size: 19px;
+  }
+
+  .bimwin-note {
+    padding: 20px;
+  }
+}
+
