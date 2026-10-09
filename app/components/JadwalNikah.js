@@ -1,4 +1,4 @@
-
+﻿
 'use client';
 
 import { useEffect, useState } from 'react';
@@ -14,11 +14,26 @@ export default function JadwalNikah() {
         const response = await fetch('/api/jadwal-nikah', {
           cache: 'no-store',
         });
-
         const result = await response.json();
 
         if (response.ok && result.ok) {
-          setJadwal(result.data || []);
+          const hariIni = new Date();
+          hariIni.setHours(0, 0, 0, 0);
+
+          const jadwalTerdekat = (result.data || [])
+            .filter((item) => {
+              if (!item.tanggal) return false;
+              const tanggal = new Date(`${item.tanggal}T00:00:00`);
+              return !Number.isNaN(tanggal.getTime()) && tanggal >= hariIni;
+            })
+            .sort((a, b) => {
+              const tanggalA = `${a.tanggal}T${a.waktu || '00:00'}`;
+              const tanggalB = `${b.tanggal}T${b.waktu || '00:00'}`;
+              return tanggalA.localeCompare(tanggalB);
+            })
+            .slice(0, 4);
+
+          setJadwal(jadwalTerdekat);
         }
       } catch (error) {
         console.error('Gagal mengambil jadwal nikah:', error);
@@ -31,51 +46,43 @@ export default function JadwalNikah() {
   }, []);
 
   function formatTanggal(tanggal) {
-    if (!tanggal) return '-';
-
-    return new Intl.DateTimeFormat('id-ID', {
+    return new Date(`${tanggal}T00:00:00`).toLocaleDateString('id-ID', {
+      weekday: 'long',
       day: 'numeric',
       month: 'long',
       year: 'numeric',
-    }).format(new Date(`${tanggal}T00:00:00`));
+    });
   }
 
   function formatWaktu(waktu) {
-    if (!waktu) return '-';
-    return `${String(waktu).slice(0, 5)} WITA`;
+    return waktu ? `${waktu} WITA` : 'Waktu belum ditentukan';
   }
 
   function getShareText(item) {
-  const siteUrl = 'https://kua-pancalautang.my.id';
+    return [
+      'JADWAL NIKAH KUA PANCA LAUTANG',
+      '',
+      `Calon pengantin: ${item.pengantin || '-'}`,
+      `Tanggal: ${formatTanggal(item.tanggal)}`,
+      `Waktu: ${formatWaktu(item.waktu)}`,
+      `Lokasi: ${item.desa || '-'} - ${item.lokasi || '-'}`,
+      '',
+      'Informasi KUA Panca Lautang.',
+    ].join('\n');
+  }
 
-  return [
-    'Jadwal Nikah KUA Panca Lautang',
-    '',
-    `Pengantin: ${item.pengantin || '-'}`,
-    `Tanggal: ${formatTanggal(item.tanggal)}`,
-    `Waktu: ${formatWaktu(item.waktu)}`,
-    `Lokasi: ${item.desa || '-'} - ${item.lokasi || '-'}`,
-    '',
-    'KUA Panca Lautang',
-    siteUrl,
-  ].join('\n');
-}
-
-  function shareWhatsApp(item) {
-    const text = encodeURIComponent(getShareText(item));
-    window.open(`https://wa.me/?text=${text}`, '_blank');
+  async function shareWhatsApp(item) {
+    const url = `https://wa.me/?text=${encodeURIComponent(getShareText(item))}`;
+    window.open(url, '_blank', 'noopener,noreferrer');
   }
 
   async function copyLink() {
     try {
       await navigator.clipboard.writeText(window.location.href);
       setCopied(true);
-
-      setTimeout(() => {
-        setCopied(false);
-      }, 2000);
-    } catch (error) {
-      console.error('Gagal menyalin tautan:', error);
+      setTimeout(() => setCopied(false), 2000);
+    } catch {
+      window.prompt('Salin tautan halaman ini:', window.location.href);
     }
   }
 
@@ -102,52 +109,42 @@ export default function JadwalNikah() {
   return (
     <section className="jadwalNikah">
       <div className="wrap">
-        <div className="jadwalNikahCard">
-          <div className="jadwalNikahImage">
-            <img
-              src="/poster/jadwal-nikah.png"
-              alt="Jadwal Nikah KUA Panca Lautang"
-            />
-          </div>
+        <div className="jadwalNikahCard jadwalNikahCardResmi">
+          <header className="jadwalNikahHeader">
+            <div className="jadwalNikahIcon" aria-hidden="true">
+              <span>â–¦</span>
+            </div>
+            <span className="jadwalNikahLabel">LAYANAN INFORMASI</span>
+            <h2>Jadwal Nikah</h2>
+            <p>KANTOR URUSAN AGAMA KECAMATAN PANCA LAUTANG</p>
+            <div className="jadwalNikahOrnamen" aria-hidden="true" />
+          </header>
 
           <div className="jadwalNikahInfo">
-            <span className="jadwalNikahLabel">JADWAL NIKAH</span>
-
-            <h2>Jadwal Pernikahan KUA Panca Lautang</h2>
-
-            <p>
-              Informasi jadwal akad nikah yang dilaksanakan di wilayah
-              pelayanan KUA Panca Lautang.
+            <p className="jadwalNikahIntro">
+              Informasi jadwal akad nikah terdekat di wilayah pelayanan
+              KUA Panca Lautang.
             </p>
 
             {loading ? (
-              <div className="jadwalNikahDetail">
-                <div>
-                  <small>Jadwal</small>
-                  <strong>Memuat jadwal...</strong>
-                </div>
-              </div>
+              <div className="jadwalNikahEmpty">Memuat jadwal nikah...</div>
             ) : jadwal.length === 0 ? (
-              <div className="jadwalNikahDetail">
-                <div>
-                  <small>Jadwal</small>
-                  <strong>Belum ada jadwal nikah</strong>
-                </div>
+              <div className="jadwalNikahEmpty">
+                Belum ada jadwal nikah yang akan datang.
               </div>
             ) : (
-              <div className="jadwalNikahDetail">
+              <div className="jadwalNikahDetail jadwalNikahGrid">
                 {jadwal.map((item) => (
-                  <div key={item.id}>
+                  <article className="jadwalNikahItem" key={item.id}>
                     <small>{formatTanggal(item.tanggal)}</small>
-
-                    <strong>{item.pengantin}</strong>
-
-                    <div style={{ marginTop: 6 }}>
-                      🕐 {formatWaktu(item.waktu)}
+                    <strong>{item.pengantin || 'Nama belum tersedia'}</strong>
+                    <div className="jadwalNikahMeta">
+                      <span>Waktu</span>
+                      <b>{formatWaktu(item.waktu)}</b>
                     </div>
-
-                    <div style={{ marginTop: 4 }}>
-                      📍 {item.desa || '-'} — {item.lokasi || '-'}
+                    <div className="jadwalNikahMeta">
+                      <span>Lokasi</span>
+                      <b>{item.desa || '-'} - {item.lokasi || '-'}</b>
                     </div>
 
                     <div className="jadwalNikahActions">
@@ -158,15 +155,13 @@ export default function JadwalNikah() {
                       >
                         WhatsApp
                       </button>
-
                       <button
                         type="button"
                         onClick={copyLink}
                         className="jadwalNikahButton"
                       >
-                        {copied ? 'Tersalin ✓' : 'Salin Tautan'}
+                        {copied ? 'Tersalin' : 'Salin Tautan'}
                       </button>
-
                       <button
                         type="button"
                         onClick={() => sharePage(item)}
@@ -175,7 +170,7 @@ export default function JadwalNikah() {
                         Bagikan
                       </button>
                     </div>
-                  </div>
+                  </article>
                 ))}
               </div>
             )}
