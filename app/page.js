@@ -55,7 +55,9 @@ const [selectedGallery, setSelectedGallery] = useState(null);
     <main>
 
 <div className="kemenagTicker">
-  <div className="kemenagTickerLabel">INFO HAJI & UMRAH</div>
+  <a className="kemenagTickerLabel" href="/info-haji-umrah">
+  INFO HAJI & UMRAH
+</a>
   <div className="kemenagTickerTrack">
     <div className="kemenagTickerMove">
       {kemenagNews.map((item) => (
