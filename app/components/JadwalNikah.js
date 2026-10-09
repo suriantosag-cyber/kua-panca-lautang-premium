@@ -112,7 +112,7 @@ export default function JadwalNikah() {
         <div className="jadwalNikahCard jadwalNikahCardResmi">
           <header className="jadwalNikahHeader">
             <div className="jadwalNikahIcon" aria-hidden="true">
-              <span>â–¦</span>
+              <span>JN</span>
             </div>
             <span className="jadwalNikahLabel">LAYANAN INFORMASI</span>
             <h2>Jadwal Nikah</h2>
@@ -180,4 +180,5 @@ export default function JadwalNikah() {
     </section>
   );
 }
+
 
