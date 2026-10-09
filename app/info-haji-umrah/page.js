@@ -44,7 +44,7 @@ fontSize: "13px",
 >
 LAYANAN INFORMASI MASYARAKAT </p>
 
-```
+
       <h1
         style={{
           color: "#14532d",
@@ -251,7 +251,6 @@ LAYANAN INFORMASI MASYARAKAT </p>
       </div>
     </section>
 
-    ```
     <div style={{ marginTop: "32px", marginBottom: "12px" }}>
       <a
         href="/"
