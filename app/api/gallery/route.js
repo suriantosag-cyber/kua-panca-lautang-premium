@@ -1,4 +1,4 @@
-﻿import { NextResponse } from 'next/server';
+import { NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
 import { verifyAdminRequest } from '../../../lib/admin-auth';
 
@@ -41,7 +41,6 @@ function json(data, init = {}) {
 export async function GET() {
   try {
     const supabase = getSupabaseAdmin();
-    const formData = await request.formData();
 
     const { data, error } = await supabase.storage
       .from(BUCKET)
