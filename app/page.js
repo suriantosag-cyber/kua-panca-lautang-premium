@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 
 const features = [
   ['PR','Kegiatan','Informasi kegiatan penyuluhan, pembinaan keagamaan, dan agenda masyarakat.'],
-  ['MD','Materi Dakwah','Materi ringkas yang mudah dibaca untuk keluarga dan masyarakat.'],
+  ['MD','Materi Dakwah','Panduan ibadah, akhlak mulia, moderasi beragama, zakat, kepedulian sosial, dan pembinaan keagamaan masyarakat.'],
   ['LK','Laporan Kegiatan','Dokumentasi dan laporan kegiatan penyuluhan tersusun rapi.'],
 ];
 
