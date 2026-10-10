@@ -47,7 +47,7 @@ const [selectedGallery, setSelectedGallery] = useState(null);
       <div className="wrap nav">
         <a href="#beranda" className="brand"><img className="brandmark" src="/logo-kua.png" alt="Logo KUA" /><span>KUA Panca Lautang<small>Penyuluh Agama Islam</small></span></a>
         <nav className="navlinks">
-          <a href="/profil">Profil</a><a href="#kegiatan">Kegiatan</a><a href="#berita">Berita</a><a href="#materi">Materi</a><a href="#galeri">Galeri</a><a href="#kontak">Kontak</a>
+          <a href="/profil">Profil</a><a href="#kegiatan">Kegiatan</a><a href="#berita">Berita</a><a href="/materi-dakwah">Materi</a><a href="#galeri">Galeri</a><a href="#kontak">Kontak</a>
         </nav>
       </div>
     </header>
