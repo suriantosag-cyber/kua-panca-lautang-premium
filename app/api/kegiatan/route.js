@@ -1,4 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
+import { verifyAdminRequest } from '../../../lib/admin-auth';
 
 function getSupabaseAdmin() {
   return createClient(
@@ -7,8 +8,16 @@ function getSupabaseAdmin() {
   );
 }
 
-export async function GET() {
+export async function GET(request) {
   try {
+    const auth = await verifyAdminRequest(request);
+
+    if (!auth.ok) {
+      return Response.json(
+        { ok: false, error: auth.error },
+        { status: auth.status }
+      );
+    }
     const supabase = getSupabaseAdmin();
 
     const { data, error } = await supabase
@@ -49,24 +58,7 @@ export async function POST(request) {
     const narahubung = String(formData.get('narahubung') || '').trim();
     const foto = formData.get('foto');
 
-    console.log('API FORM DATA:', {
-      namaKegiatan,
-      penyelenggara,
-      desa,
-      tanggal,
-      kategori,
-      deskripsi,
-      narahubung,
-      foto: foto
-        ? {
-            name: foto.name,
-            size: foto.size,
-            type: foto.type
-          }
-        : null
-    });
-
-    if (
+        if (
       !namaKegiatan ||
       !penyelenggara ||
       !desa ||
@@ -194,8 +186,18 @@ export async function POST(request) {
   }
 }
 
+
 export async function PATCH(request) {
   try {
+    const auth = await verifyAdminRequest(request);
+
+    if (!auth.ok) {
+      return Response.json(
+        { ok: false, error: auth.error },
+        { status: auth.status }
+      );
+    }
+
     const body = await request.json();
 
     if (!body.id || !body.status) {

@@ -1,10 +1,11 @@
 ﻿import { NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
+import { verifyAdminRequest } from '../../../lib/admin-auth';
 
 const CORS_HEADERS = {
   'Access-Control-Allow-Origin': 'https://admin.kua-pancalautang.my.id',
   'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
-  'Access-Control-Allow-Headers': 'Content-Type',
+  'Access-Control-Allow-Headers': 'Content-Type, Authorization',
 };
 
 export async function OPTIONS() {
@@ -40,6 +41,7 @@ function json(data, init = {}) {
 export async function GET() {
   try {
     const supabase = getSupabaseAdmin();
+    const formData = await request.formData();
 
     const { data, error } = await supabase.storage
       .from(BUCKET)
@@ -107,6 +109,15 @@ export async function GET() {
 }
 export async function DELETE(request) {
   try {
+       const auth = await verifyAdminRequest(request);
+
+    if (!auth.ok) {
+      return Response.json(
+        { ok: false, error: auth.error },
+        { status: auth.status }
+      );
+    }
+
     const supabase = getSupabaseAdmin();
 
     const body = await request.json();
@@ -175,9 +186,17 @@ export async function DELETE(request) {
 }
 export async function POST(request) {
   try {
-    const supabase = getSupabaseAdmin();
+    const auth = await verifyAdminRequest(request);
 
-    const formData = await request.formData();
+    if (!auth.ok) {
+      return json(
+        { ok: false, error: auth.error },
+        { status: auth.status }
+      );
+    }
+
+    const supabase = getSupabaseAdmin();
+const formData = await request.formData();
     const file = formData.get('file');
 
     if (!file || typeof file.arrayBuffer !== 'function') {

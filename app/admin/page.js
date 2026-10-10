@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 import { supabaseKegiatan } from "../kegiatan/supabase-kegiatan";
 import JadwalNikahAdmin from "./JadwalNikahAdmin";
+import { supabaseBrowser } from "../../lib/supabase-browser";
+import { adminFetch } from "../../lib/admin-client";
 export default function AdminPage() {
   const [loggedIn, setLoggedIn] = useState(false);
   const [username, setUsername] = useState("");
@@ -38,7 +40,7 @@ const [kegiatan, setKegiatan] = useState([]);
     setMessage('');
 
     try {
-      const response = await fetch('/api/kegiatan', {
+      const response = await adminFetch('/api/kegiatan', {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json'
@@ -71,7 +73,7 @@ const [kegiatan, setKegiatan] = useState([]);
     setKegiatanLoading(true);
 
     try {
-      const response = await fetch('/api/kegiatan', {
+      const response = await adminFetch('/api/kegiatan', {
         cache: 'no-store'
       });
 
@@ -115,7 +117,7 @@ const [kegiatan, setKegiatan] = useState([]);
       const formData = new FormData();
       formData.append("file", galleryFile);
 
-      const response = await fetch("/api/gallery", {
+      const response = await adminFetch("/api/gallery", {
         method: "POST",
         body: formData,
       });
@@ -152,15 +154,12 @@ const [kegiatan, setKegiatan] = useState([]);
     setMessage("");
 
     try {
-      const response = await fetch("/api/gallery", {
-        method: "DELETE",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ path }),
-      });
+     const response = await adminFetch("/api/gallery", {
+  method: "POST",
+  body: formData,
+});
 
-      const result = await response.json();
+const result = await response.json();
 
       if (!response.ok || !result.ok) {
         setMessage(result.error || "Gagal menghapus foto.");
@@ -199,16 +198,34 @@ const [kegiatan, setKegiatan] = useState([]);
   }
   }, [loggedIn]);
 
-  function login(e) {
-    e.preventDefault();
+  async function login(e) {
+  e.preventDefault();
+  setMessage("");
 
-    if (username === "admin" && password === "admin123") {
-      setLoggedIn(true);
-      setMessage("");
-    } else {
-      alert("Username atau password salah.");
-    }
+  const { data, error } = await supabaseBrowser.auth.signInWithPassword({
+    email: username.trim(),
+    password,
+  });
+
+  if (error || !data.user) {
+    setMessage("Login gagal. Periksa email dan kata sandi.");
+    return;
   }
+
+  const adminEmail = process.env.NEXT_PUBLIC_ADMIN_EMAIL?.trim().toLowerCase();
+
+  if (
+    !adminEmail ||
+    data.user.email?.trim().toLowerCase() !== adminEmail
+  ) {
+    await supabaseBrowser.auth.signOut();
+    setMessage("Akun ini tidak memiliki akses admin.");
+    return;
+  }
+
+  setLoggedIn(true);
+  setMessage("Login berhasil.");
+}
   function addArticleBlock(type) {
     setArticleBlocks((prev) => [
       ...prev,
@@ -251,7 +268,7 @@ const [kegiatan, setKegiatan] = useState([]);
     try {
       const method = editingId ? "PUT" : "POST";
 
-      const response = await fetch("/api/news", {
+      const response = await adminFetch("/api/news", {
         method,
         headers: {
           "Content-Type": "application/json",
@@ -311,7 +328,7 @@ const [kegiatan, setKegiatan] = useState([]);
     setMessage("");
 
     try {
-      const response = await fetch("/api/news", {
+      const response = await adminFetch("/api/news", {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -363,11 +380,12 @@ const [kegiatan, setKegiatan] = useState([]);
           <p style={{ color: "#667085" }}>
             Masuk untuk mengelola berita dan berkas.
           </p>
-          <label>Username</label>
-          <input
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            placeholder="Username"
+          <label>Email admin</label>
+<input
+  type="email"
+  value={username}
+  onChange={(e) => setUsername(e.target.value)}
+  placeholder="Email admin"
             style={{
               width: "100%",
               padding: 12,
@@ -574,11 +592,12 @@ const [kegiatan, setKegiatan] = useState([]);
                             const formData = new FormData();
                             formData.append("file", file);
                             try {
-                              const response = await fetch("/api/gallery", {
-                                method: "POST",
-                                body: formData,
-                              });
-                              const result = await response.json();
+                              const response = await adminFetch("/api/gallery", {
+  method: "POST",
+  body: formData,
+});
+
+const result = await response.json();
                               if (!response.ok || !result.ok) {
                                 setMessage(result.error || "Gagal upload foto artikel.");
                                 return;
@@ -614,12 +633,12 @@ const [kegiatan, setKegiatan] = useState([]);
       formData.append("file", file);
 
       try {
-        const response = await fetch("/api/gallery", {
-          method: "POST",
-          body: formData,
-        });
+        const response = await adminFetch("/api/gallery", {
+  method: "POST",
+  body: formData,
+});
 
-        const result = await response.json();
+const result = await response.json();
 
         if (!response.ok || !result.ok) {
           setMessage(result.error || "Gagal upload foto artikel.");

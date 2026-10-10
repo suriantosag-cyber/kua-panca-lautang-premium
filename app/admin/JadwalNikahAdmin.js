@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { adminFetch } from "../../lib/admin-client";
 
 export default function JadwalNikahAdmin() {
   const kosong = {
@@ -20,7 +21,7 @@ export default function JadwalNikahAdmin() {
 
   async function loadJadwal() {
     try {
-      const response = await fetch("/api/jadwal-nikah?admin=1", {
+      const response = await adminFetch("/api/jadwal-nikah?admin=1", {
         cache: "no-store",
       });
 
@@ -72,7 +73,7 @@ export default function JadwalNikahAdmin() {
     setMessage("");
 
     try {
-      const response = await fetch("/api/jadwal-nikah", {
+      const response = await adminFetch("/api/jadwal-nikah", {
         method: editingId ? "PUT" : "POST",
         headers: {
           "Content-Type": "application/json",
@@ -130,7 +131,7 @@ export default function JadwalNikahAdmin() {
     setMessage("");
 
     try {
-      const response = await fetch("/api/jadwal-nikah", {
+      const response = await adminFetch("/api/jadwal-nikah", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -173,7 +174,7 @@ export default function JadwalNikahAdmin() {
     setMessage("");
 
     try {
-      const response = await fetch("/api/jadwal-nikah", {
+      const response = await adminFetch("/api/jadwal-nikah", {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",

@@ -1,4 +1,5 @@
 import { createClient } from '@supabase/supabase-js';
+import { verifyAdminRequest } from '../../../lib/admin-auth';
 
 function getSupabaseAdmin() {
   return createClient(
@@ -7,12 +8,24 @@ function getSupabaseAdmin() {
   );
 }
 
+
 export async function GET(request) {
   try {
     const supabase = getSupabaseAdmin();
 
     const { searchParams } = new URL(request.url);
     const isAdmin = searchParams.get('admin') === '1';
+
+    if (isAdmin) {
+      const auth = await verifyAdminRequest(request);
+
+      if (!auth.ok) {
+        return Response.json(
+          { ok: false, error: auth.error },
+          { status: auth.status }
+        );
+      }
+    }
 
     let query = supabase
       .from('jadwal_nikah')
@@ -47,8 +60,16 @@ export async function GET(request) {
 
 export async function POST(request) {
   try {
-    const body = await request.json();
+    const auth = await verifyAdminRequest(request);
 
+    if (!auth.ok) {
+      return Response.json(
+        { ok: false, error: auth.error },
+        { status: auth.status }
+      );
+    }
+
+    const body = await request.json();
     const tanggal = String(body.tanggal || '').trim();
     const waktu = String(body.waktu || '').trim();
     const pengantin = String(body.pengantin || '').trim();
@@ -91,7 +112,7 @@ export async function POST(request) {
       ok: true,
       data
     });
-  } catch (error) {
+   } catch (error) {
     return Response.json(
       {
         ok: false,
@@ -104,6 +125,16 @@ export async function POST(request) {
 
 export async function PUT(request) {
   try {
+    const auth = await verifyAdminRequest(request);
+
+    if (!auth.ok) {
+      return Response.json(
+        { ok: false, error: auth.error },
+        { status: auth.status }
+      );
+    }
+
+
     const body = await request.json();
 
     if (!body.id) {
@@ -179,6 +210,16 @@ export async function PUT(request) {
 
 export async function DELETE(request) {
   try {
+    const auth = await verifyAdminRequest(request);
+
+    if (!auth.ok) {
+      return Response.json(
+        { ok: false, error: auth.error },
+        { status: auth.status }
+      );
+    }
+
+
     const body = await request.json();
 
     if (!body.id) {

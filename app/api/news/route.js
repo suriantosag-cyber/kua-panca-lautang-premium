@@ -1,9 +1,17 @@
+
 import { createClient } from '@supabase/supabase-js';
+import { verifyAdminRequest } from '../../../lib/admin-auth';
 
 function getSupabase() {
   return createClient(
     process.env.NEXT_PUBLIC_SUPABASE_URL,
     process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY
+  );
+}
+function getSupabaseAdmin() {
+  return createClient(
+    process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL,
+    process.env.SUPABASE_SERVICE_ROLE_KEY
   );
 }
 
@@ -23,10 +31,7 @@ export async function GET() {
       );
     }
 
-    return Response.json({
-      ok: true,
-      data
-    });
+    return Response.json({ ok: true, data });
   } catch (error) {
     return Response.json(
       { ok: false, error: error.message },
@@ -37,6 +42,15 @@ export async function GET() {
 
 export async function POST(request) {
   try {
+    const auth = await verifyAdminRequest(request);
+
+    if (!auth.ok) {
+      return Response.json(
+        { ok: false, error: auth.error },
+        { status: auth.status }
+      );
+    }
+
     const body = await request.json();
 
     if (!body.title || !body.title.trim()) {
@@ -46,7 +60,7 @@ export async function POST(request) {
       );
     }
 
-    const supabase = getSupabase();
+    const supabase = getSupabaseAdmin();
 
     const { data, error } = await supabase
       .from('news')
@@ -54,7 +68,7 @@ export async function POST(request) {
         title: body.title.trim(),
         content: body.content || '',
         image_url: body.image_url || null,
-article_blocks: body.article_blocks || []
+        article_blocks: body.article_blocks || []
       })
       .select()
       .single();
@@ -66,10 +80,7 @@ article_blocks: body.article_blocks || []
       );
     }
 
-    return Response.json({
-      ok: true,
-      data
-    });
+    return Response.json({ ok: true, data });
   } catch (error) {
     return Response.json(
       { ok: false, error: error.message },
@@ -80,6 +91,15 @@ article_blocks: body.article_blocks || []
 
 export async function PUT(request) {
   try {
+    const auth = await verifyAdminRequest(request);
+
+    if (!auth.ok) {
+      return Response.json(
+        { ok: false, error: auth.error },
+        { status: auth.status }
+      );
+    }
+
     const body = await request.json();
 
     if (!body.id) {
@@ -89,21 +109,27 @@ export async function PUT(request) {
       );
     }
 
-    const supabase = getSupabase();
+    if (!body.title || !body.title.trim()) {
+      return Response.json(
+        { ok: false, error: 'Judul berita wajib diisi.' },
+        { status: 400 }
+      );
+    }
+
+    const supabase = getSupabaseAdmin();
 
     const { data, error } = await supabase
       .from('news')
       .update({
-        title: body.title || '',
+        title: body.title.trim(),
         content: body.content || '',
         image_url: body.image_url || null,
-article_blocks: body.article_blocks || [],
-updated_at: new Date().toISOString()
-              })
+        article_blocks: body.article_blocks || [],
+        updated_at: new Date().toISOString()
+      })
       .eq('id', body.id)
       .select()
       .single();
-             
 
     if (error) {
       return Response.json(
@@ -112,10 +138,7 @@ updated_at: new Date().toISOString()
       );
     }
 
-    return Response.json({
-      ok: true,
-      data
-    });
+    return Response.json({ ok: true, data });
   } catch (error) {
     return Response.json(
       { ok: false, error: error.message },
@@ -126,6 +149,15 @@ updated_at: new Date().toISOString()
 
 export async function DELETE(request) {
   try {
+    const auth = await verifyAdminRequest(request);
+
+    if (!auth.ok) {
+      return Response.json(
+        { ok: false, error: auth.error },
+        { status: auth.status }
+      );
+    }
+
     const body = await request.json();
 
     if (!body.id) {
@@ -135,7 +167,7 @@ export async function DELETE(request) {
       );
     }
 
-    const supabase = getSupabase();
+    const supabase = getSupabaseAdmin();
 
     const { error } = await supabase
       .from('news')
@@ -149,9 +181,7 @@ export async function DELETE(request) {
       );
     }
 
-    return Response.json({
-      ok: true
-    });
+    return Response.json({ ok: true });
   } catch (error) {
     return Response.json(
       { ok: false, error: error.message },
