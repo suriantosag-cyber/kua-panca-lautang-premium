@@ -311,6 +311,24 @@ async function handleSubmit(event) {
           >
             <h3 style={{ marginTop: 0 }}>{item.nama_kegiatan}</h3>
 
+{item.foto_url && (
+  <img
+    src={item.foto_url}
+    alt={`Foto kegiatan ${item.nama_kegiatan}`}
+    loading="lazy"
+    style={{
+      display: 'block',
+      width: '100%',
+      maxWidth: '640px',
+      maxHeight: '420px',
+      objectFit: 'contain',
+      objectPosition: 'left center',
+      borderRadius: '12px',
+      marginBottom: '16px',
+      background: '#f1f5f9'
+    }}
+  />
+)}
             <p>
               <strong>Penyelenggara:</strong> {item.penyelenggara}
             </p>
