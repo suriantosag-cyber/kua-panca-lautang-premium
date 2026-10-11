@@ -2,6 +2,7 @@
 'use client';
 
 import { useState } from 'react';
+import KhutbahBugis from '../components/KhutbahBugis';
 
 const tahapanWudu = [
   {
@@ -251,6 +252,74 @@ export default function MateriDakwahPage() {
           )}
         </article>
 
+
+  <a
+    href="/materi-dakwah/khutbah-kedua"
+    style={{
+      display: 'inline-block',
+      background: '#087653',
+      color: '#fff',
+      padding: '12px 18px',
+      borderRadius: 10,
+      textDecoration: 'none',
+      fontWeight: 750
+    }}
+  >
+    Buka Materi Khutbah Kedua →
+  </a>
+
+<section className="mdKhutbahGroup">
+  <header className="mdKhutbahHeader">
+    <h2>Materi Khutbah Jumat</h2>
+    <p>
+      Pilih naskah khutbah sesuai kebutuhan. Kedua materi dapat dibuka
+      secara terpisah.
+    </p>
+  </header>
+
+  <div className="mdKhutbahGrid">
+    <article className="mdCard">
+      <div className="mdSectionTitle">
+        <span>05</span>
+        <div>
+          <h2>Khutbah Kedua Bahasa Bugis</h2>
+          <p>
+            Naskah khutbah kedua untuk dibaca khatib,
+            lengkap dengan bacaan Arab dan doa penutup.
+          </p>
+        </div>
+      </div>
+
+      <a
+        href="/materi-dakwah/khutbah-kedua"
+        className="mdKhutbahButton"
+      >
+        Buka Materi Khutbah Kedua →
+      </a>
+    </article>
+
+    <article className="mdCard">
+      <div className="mdSectionTitle">
+        <span>06</span>
+        <div>
+          <h2>Khutbah Jumat Bahasa Indonesia dan Bugis</h2>
+          <p>
+            Buka naskah khutbah Jumat lengkap untuk dibaca,
+            disalin, dicetak, atau dibagikan melalui WhatsApp.
+          </p>
+        </div>
+      </div>
+
+      <a
+        href="/khutbah-jumat"
+        className="mdKhutbahButton"
+      >
+        Buka Naskah Khutbah Jumat →
+      </a>
+    </article>
+  </div>
+</section>
+<KhutbahBugis />
         <footer className="mdFooter">
           <strong>Terus belajar, terus memperbaiki ibadah.</strong>
           <p>
@@ -262,7 +331,50 @@ export default function MateriDakwahPage() {
         </footer>
       </section>
 
-      <style jsx>{`
+    <style jsx>{`
+
+.mdKhutbahHeader {
+  margin-bottom: 18px;
+}
+
+.mdKhutbahHeader h2 {
+  margin: 0 0 8px;
+  color: #075e48;
+  font-size: 1.5rem;
+}
+
+.mdKhutbahHeader p {
+  margin: 0;
+  line-height: 1.6;
+}
+
+.mdKhutbahGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.mdKhutbahButton {
+  display: inline-block;
+  background: #087653;
+  color: #fff;
+  padding: 12px 18px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-weight: 750;
+}
+
+@media (max-width: 650px) {
+  .mdKhutbahGroup {
+    margin: 20px 12px;
+    padding: 16px;
+  }
+
+  .mdKhutbahGrid {
+    grid-template-columns: 1fr;
+  }
+}
+
         .mdPage { background:#f3f8f3; color:#20362c; min-height:100vh; padding-bottom:40px; }
         .mdHero { padding:30px max(20px, calc((100% - 900px)/2)) 38px; background:linear-gradient(135deg,#075e48,#13805d); color:white; }
         .mdBack { color:#e1f5e9; text-decoration:none; font-size:14px; display:inline-block; margin-bottom:30px; }
@@ -304,6 +416,39 @@ export default function MateriDakwahPage() {
         .mdSubmit:disabled { background:#9bb9a7; cursor:not-allowed; }
         .mdResult { display:flex; flex-wrap:wrap; align-items:center; gap:16px; font-weight:800; }
         .mdFooter { text-align:center; padding:28px 10px; color:#536b5b; line-height:1.8; }
+        .mdKhutbahGroup {
+          max-width: 1000px;
+          margin: 28px auto;
+          padding: 22px;
+          background: #eaf4ed;
+          border: 1px solid #cfe3d5;
+          border-radius: 18px;
+        }
+
+        .mdKhutbahHeader { margin-bottom: 18px; }
+        .mdKhutbahHeader h2 { color: #075e48; }
+        .mdKhutbahHeader p { margin: 0; line-height: 1.6; }
+
+        .mdKhutbahGrid {
+          display: grid;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 16px;
+        }
+
+        .mdKhutbahButton {
+          display: inline-block;
+          background: #087653;
+          color: #fff;
+          padding: 12px 18px;
+          border-radius: 10px;
+          text-decoration: none;
+          font-weight: 750;
+        }
+
+        @media (max-width: 650px) {
+          .mdKhutbahGroup { margin: 20px 12px; padding: 16px; }
+          .mdKhutbahGrid { grid-template-columns: 1fr; }
+        }
         .mdFooter p { font-size:14px; }
         .mdFooter a { color:#087653; font-weight:750; text-decoration:none; }
         @media(max-width:600px) { .mdHero { padding:24px 20px 30px; } .mdIntro,.mdCard { padding:18px; } .mdIntro { flex-direction:column; } h2 { font-size:20px; } }
