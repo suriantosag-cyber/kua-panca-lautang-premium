@@ -268,6 +268,48 @@ const [selectedGallery, setSelectedGallery] = useState(null);
       <section id="kontak" className="section"><div className="wrap"><div className="sectionHead"><div><h2>Kontak</h2><p>Informasi kontak resmi dapat dilengkapi setelah data layanan final.</p></div></div><div className="contact"><div className="contactCard"><div className="icon">LOK</div><h3>KUA Kecamatan Panca Lautang</h3><p style={{color:'var(--muted)',lineHeight:1.7}}>Panca Lautang, Kabupaten Sidenreng Rappang, Sulawesi Selatan.</p></div><div className="contactCard"><div className="icon">WEB</div><h3>Website</h3><p style={{color:'var(--muted)',lineHeight:1.7}}>kua-pancalautang.my.id</p><a className="btn primary" href="https://kua-pancalautang.my.id" target="_blank" rel="noreferrer">Buka domain</a></div></div></div></section>
     </main>
 
+<section
+  id="disclaimer"
+  className="section"
+  style={{ paddingTop: "0" }}
+>
+  <div className="wrap">
+    <div
+      className="card"
+      style={{
+        borderLeft: "4px solid #64748b",
+        background: "#f8fafc",
+        padding: "24px",
+      }}
+    >
+      <h2 style={{ marginTop: 0, fontSize: "20px" }}>
+        DISCLAIMER
+      </h2>
+      <p style={{ lineHeight: 1.8, color: "#475569" }}>
+        Situs web ini merupakan Portal Informasi Swadaya yang
+        dikelola oleh Penyuluh Agama Islam KUA Kecamatan Panca
+        Lautang sebagai media dakwah, penyebaran informasi, dan
+        dokumentasi kegiatan masyarakat.
+      </p>
+      <p style={{ lineHeight: 1.8, color: "#475569", marginBottom: 0 }}>
+        Situs ini bukan pengganti sistem administrasi resmi
+        Kementerian Agama. Untuk pendaftaran nikah resmi dan
+        keperluan administrasi hukum negara, silakan mengakses{" "}
+        <a
+          href="https://simkah4.kemenag.go.id"
+          target="_blank"
+          rel="noreferrer"
+          style={{ fontWeight: 600, color: "#0f766e" }}
+        >
+          SIMKAH Kementerian Agama Republik Indonesia
+        </a>{" "}
+        atau menghubungi Kantor Kementerian Agama Kabupaten
+        Sidenreng Rappang (Sidrap).
+      </p>
+    </div>
+  </div>
+</section>
+
     <footer><div className="wrap footer"><div><b>KUA Panca Lautang</b><div><small>Penyuluh Agama Islam - Website informasi masyarakat</small></div></div><small>(c) 2026 KUA Panca Lautang</small></div></footer>
 {selectedGallery && (
   <div
