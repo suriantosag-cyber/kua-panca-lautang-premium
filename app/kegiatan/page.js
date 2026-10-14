@@ -2,110 +2,133 @@
 
 import { useEffect, useState } from 'react';
 
+function buatTautanBagikan(item) {
+  const url = `https://kua-pancalautang.my.id/kegiatan/${item.id}`;
+
+  const teks = [
+    `📢 ${item.nama_kegiatan}`,
+    `Penyelenggara: ${item.penyelenggara || '-'}`,
+    `Tanggal: ${item.tanggal || '-'}`,
+    `Lokasi: ${item.lokasi_lengkap || item.desa || '-'}`,
+    '',
+    'Baca detail dan lihat foto kegiatan di sini:',
+    url,
+    '',
+    'Kegiatan KUA Panca Lautang'
+  ].join('\n');
+
+  return { url, teks };
+}
 export default function KegiatanPage() {
   const [showForm, setShowForm] = useState(false);
-const [loading, setLoading] = useState(false);
-const [message, setMessage] = useState('');
+  const [loading, setLoading] = useState(false);
+  const [message, setMessage] = useState('');
+  const [kegiatan, setKegiatan] = useState([]);
+  const [kegiatanLoading, setKegiatanLoading] = useState(true);
 
+  async function handleBagikan(item) {
+    const { teks } = buatTautanBagikan(item);
+    const urlWhatsApp =
+      `https://wa.me/?text=${encodeURIComponent(teks)}`;
 
-const [kegiatan, setKegiatan] = useState([]);
-const [kegiatanLoading, setKegiatanLoading] = useState(true);
+    window.open(urlWhatsApp, '_blank', 'noopener,noreferrer');
+  }
 
-useEffect(() => {
-  async function loadKegiatanPublik() {
+  async function handleSalinTautan(item) {
+    const { url } = buatTautanBagikan(item);
+
     try {
-      const response = await fetch('/api/kegiatan-publik', {
-        cache: 'no-store'
+      await navigator.clipboard.writeText(url);
+      alert('Tautan kegiatan berhasil disalin.');
+    } catch {
+      alert(
+        'Gagal menyalin tautan. Silakan salin alamat halaman secara manual.'
+      );
+    }
+  }
+
+  useEffect(() => {
+    async function loadKegiatanPublik() {
+      try {
+        const response = await fetch('/api/kegiatan-publik', {
+          cache: 'no-store'
+        });
+
+        const result = await response.json();
+
+        if (!response.ok || !result.ok) {
+          throw new Error(
+            result.error || 'Gagal mengambil kegiatan yang disetujui.'
+          );
+        }
+
+        setKegiatan(result.data || []);
+      } catch (error) {
+        console.error(error);
+      } finally {
+        setKegiatanLoading(false);
+      }
+    }
+
+    loadKegiatanPublik();
+  }, []);
+
+  async function handleSubmit(event) {
+    event.preventDefault();
+    setLoading(true);
+    setMessage('');
+
+    const form = event.currentTarget;
+
+    try {
+      const formData = new FormData();
+
+      formData.append('nama_kegiatan', form.nama_kegiatan.value.trim());
+      formData.append('penyelenggara', form.penyelenggara.value.trim());
+      formData.append('desa', form.desa.value.trim());
+      formData.append(
+        'lokasi_lengkap',
+        form.lokasi_lengkap.value.trim()
+      );
+      formData.append('jam_mulai', form.jam_mulai.value);
+      formData.append('jam_selesai', form.jam_selesai.value);
+      formData.append('tanggal', form.tanggal.value);
+      formData.append('kategori', form.kategori.value);
+      formData.append('deskripsi', form.deskripsi.value.trim());
+      formData.append('narahubung', form.narahubung.value.trim());
+
+      const foto = form.foto.files?.[0];
+
+      if (foto) {
+        formData.append('foto', foto);
+      }
+
+      const response = await fetch('/api/kegiatan', {
+        method: 'POST',
+        body: formData
       });
 
       const result = await response.json();
 
       if (!response.ok || !result.ok) {
-        throw new Error(
-          result.error || 'Gagal mengambil kegiatan yang disetujui.'
-        );
+        throw new Error(result.error || 'Gagal mengirim kegiatan.');
       }
 
-      setKegiatan(result.data || []);
+      form.reset();
+
+      setMessage(
+        foto
+          ? 'Kegiatan dan foto berhasil dikirim. Menunggu verifikasi Admin KUA.'
+          : 'Kegiatan berhasil dikirim. Menunggu verifikasi Admin KUA.'
+      );
     } catch (error) {
       console.error(error);
+      setMessage(`Gagal mengirim kegiatan: ${error.message}`);
     } finally {
-      setKegiatanLoading(false);
+      setLoading(false);
     }
   }
 
-  loadKegiatanPublik();
-}, []);
-async function handleSubmit(event) {
-  event.preventDefault();
-  setLoading(true);
-  setMessage('');
-
-  const form = event.currentTarget;
-
-  try {
-    const formData = new FormData();
-
-    formData.append('nama_kegiatan', form.nama_kegiatan.value.trim());
-    formData.append('penyelenggara', form.penyelenggara.value.trim());
-    formData.append('desa', form.desa.value.trim());
-    formData.append('tanggal', form.tanggal.value);
-    formData.append('kategori', form.kategori.value);
-    formData.append('deskripsi', form.deskripsi.value.trim());
-    formData.append('narahubung', form.narahubung.value.trim());
-
-    console.log('DATA FORM:', {
-      nama_kegiatan: form.nama_kegiatan.value,
-      penyelenggara: form.penyelenggara.value,
-      desa: form.desa.value,
-      tanggal: form.tanggal.value,
-      kategori: form.kategori.value,
-      deskripsi: form.deskripsi.value,
-      narahubung: form.narahubung.value,
-      foto: form.foto.files?.[0]?.name || null
-    });
-
-    const foto = form.foto.files?.[0];
-
-    if (foto) {
-      formData.append('foto', foto);
-    }
-
-    console.log(
-      'FORMDATA DIKIRIM:',
-      [...formData.entries()].map(([key, value]) => [
-        key,
-        value instanceof File ? value.name : value
-      ])
-    );
-
-    const response = await fetch('/api/kegiatan', {
-      method: 'POST',
-      body: formData
-    });
-
-    const result = await response.json();
-
-    if (!response.ok || !result.ok) {
-      throw new Error(
-        result.error || 'Gagal mengirim kegiatan.'
-      );
-    }
-
-    form.reset();
-
-    setMessage(
-      foto
-        ? 'Kegiatan dan foto berhasil dikirim. Menunggu verifikasi Admin KUA.'
-        : 'Kegiatan berhasil dikirim. Menunggu verifikasi Admin KUA.'
-    );
-  } catch (error) {
-    console.error(error);
-    setMessage(`Gagal mengirim kegiatan: ${error.message}`);
-  } finally {
-    setLoading(false);
-  }
-}
   return (
     <main className="section">
       <div className="wrap">
@@ -132,7 +155,9 @@ async function handleSubmit(event) {
             <ol>
               <li>Kegiatan dikirim melalui halaman ini.</li>
               <li>Admin KUA melakukan pemeriksaan.</li>
-              <li>Kegiatan yang disetujui akan ditampilkan kepada masyarakat.</li>
+              <li>
+                Kegiatan yang disetujui akan ditampilkan kepada masyarakat.
+              </li>
             </ol>
           </div>
 
@@ -159,7 +184,11 @@ async function handleSubmit(event) {
                   type="text"
                   name="nama_kegiatan"
                   placeholder="Contoh: Pembinaan Keagamaan Masyarakat"
-                  style={{ width: '100%', marginTop: '6px', padding: '12px' }}
+                  style={{
+                    width: '100%',
+                    marginTop: '6px',
+                    padding: '12px'
+                  }}
                 />
               </div>
 
@@ -171,7 +200,11 @@ async function handleSubmit(event) {
                   type="text"
                   name="penyelenggara"
                   placeholder="Nama penyelenggara"
-                  style={{ width: '100%', marginTop: '6px', padding: '12px' }}
+                  style={{
+                    width: '100%',
+                    marginTop: '6px',
+                    padding: '12px'
+                  }}
                 />
               </div>
 
@@ -183,7 +216,57 @@ async function handleSubmit(event) {
                   type="text"
                   name="desa"
                   placeholder="Nama Desa/Kelurahan"
-                  style={{ width: '100%', marginTop: '6px', padding: '12px' }}
+                  style={{
+                    width: '100%',
+                    marginTop: '6px',
+                    padding: '12px'
+                  }}
+                />
+              </div>
+
+              <div style={{ marginBottom: '16px' }}>
+                <label>
+                  <strong>Lokasi Lengkap</strong>
+                </label>
+                <input
+                  type="text"
+                  name="lokasi_lengkap"
+                  placeholder="Contoh: Masjid Al-Ikhlas, Jalan Poros Bilokka"
+                  style={{
+                    width: '100%',
+                    marginTop: '6px',
+                    padding: '12px'
+                  }}
+                />
+              </div>
+
+              <div style={{ marginBottom: '16px' }}>
+                <label>
+                  <strong>Jam Mulai</strong>
+                </label>
+                <input
+                  type="time"
+                  name="jam_mulai"
+                  style={{
+                    width: '100%',
+                    marginTop: '6px',
+                    padding: '12px'
+                  }}
+                />
+              </div>
+
+              <div style={{ marginBottom: '16px' }}>
+                <label>
+                  <strong>Jam Selesai (Opsional)</strong>
+                </label>
+                <input
+                  type="time"
+                  name="jam_selesai"
+                  style={{
+                    width: '100%',
+                    marginTop: '6px',
+                    padding: '12px'
+                  }}
                 />
               </div>
 
@@ -194,7 +277,11 @@ async function handleSubmit(event) {
                 <input
                   type="date"
                   name="tanggal"
-                  style={{ width: '100%', marginTop: '6px', padding: '12px' }}
+                  style={{
+                    width: '100%',
+                    marginTop: '6px',
+                    padding: '12px'
+                  }}
                 />
               </div>
 
@@ -205,7 +292,11 @@ async function handleSubmit(event) {
                 <select
                   name="kategori"
                   defaultValue=""
-                  style={{ width: '100%', marginTop: '6px', padding: '12px' }}
+                  style={{
+                    width: '100%',
+                    marginTop: '6px',
+                    padding: '12px'
+                  }}
                 >
                   <option value="" disabled>
                     Pilih kategori
@@ -231,7 +322,11 @@ async function handleSubmit(event) {
                   name="deskripsi"
                   rows="5"
                   placeholder="Ceritakan secara singkat kegiatan yang dilaksanakan."
-                  style={{ width: '100%', marginTop: '6px', padding: '12px' }}
+                  style={{
+                    width: '100%',
+                    marginTop: '6px',
+                    padding: '12px'
+                  }}
                 />
               </div>
 
@@ -243,7 +338,11 @@ async function handleSubmit(event) {
                   type="text"
                   name="narahubung"
                   placeholder="Contoh: Ahmad / Ketua Panitia"
-                  style={{ width: '100%', marginTop: '6px', padding: '12px' }}
+                  style={{
+                    width: '100%',
+                    marginTop: '6px',
+                    padding: '12px'
+                  }}
                 />
               </div>
 
@@ -259,107 +358,158 @@ async function handleSubmit(event) {
                 />
               </div>
 
-             <button className="btn primary" type="submit" disabled={loading}>
-  {loading ? 'Mengirim...' : 'Kirim Kegiatan'}
-</button>
+              <button
+                className="btn primary"
+                type="submit"
+                disabled={loading}
+              >
+                {loading ? 'Mengirim...' : 'Kirim Kegiatan'}
+              </button>
 
-{message && (
-  <p style={{ marginTop: '16px' }}>
-    {message}
-  </p>
-)}
-
+              {message && (
+                <p style={{ marginTop: '16px' }}>
+                  {message}
+                </p>
+              )}
             </form>
           </div>
         )}
 
-               <div className="card">
-  <h2>Kegiatan Terbaru</h2>
+        <div className="card">
+          <h2>Kegiatan Terbaru</h2>
 
-  <p>
-    Kegiatan yang telah diverifikasi dan disetujui Admin KUA Panca Lautang.
-  </p>
+          <p>
+            Kegiatan yang telah diverifikasi dan disetujui Admin KUA
+            Panca Lautang.
+          </p>
 
-  <div style={{ marginTop: '20px' }}>
-    {kegiatanLoading ? (
-      <p>Memuat kegiatan...</p>
-    ) : kegiatan.length === 0 ? (
-      <div
-        style={{
-          padding: '20px',
-          borderRadius: '14px',
-          background: '#f8fafc',
-          border: '1px solid #e2e8f0'
-        }}
-      >
-        <strong>Belum ada kegiatan yang ditampilkan.</strong>
-        <p style={{ marginBottom: 0 }}>
-          Kegiatan akan muncul setelah diverifikasi dan disetujui Admin KUA.
-        </p>
-      </div>
-    ) : (
-      <div style={{ display: 'grid', gap: '18px' }}>
-        {kegiatan.map((item) => (
-          <article
-            key={item.id}
-            style={{
-              padding: '20px',
-              borderRadius: '14px',
-              background: '#f8fafc',
-              border: '1px solid #e2e8f0'
-            }}
-          >
-            <h3 style={{ marginTop: 0 }}>{item.nama_kegiatan}</h3>
+          <div style={{ marginTop: '20px' }}>
+            {kegiatanLoading ? (
+              <p>Memuat kegiatan...</p>
+            ) : kegiatan.length === 0 ? (
+              <div
+                style={{
+                  padding: '20px',
+                  borderRadius: '14px',
+                  background: '#f8fafc',
+                  border: '1px solid #e2e8f0'
+                }}
+              >
+                <strong>Belum ada kegiatan yang ditampilkan.</strong>
+                <p style={{ marginBottom: 0 }}>
+                  Kegiatan akan muncul setelah diverifikasi dan disetujui
+                  Admin KUA.
+                </p>
+              </div>
+            ) : (
+              <div style={{ display: 'grid', gap: '18px' }}>
+                {kegiatan.map((item) => (
+                  <article
+                    key={item.id}
+                    style={{
+                      padding: '20px',
+                      borderRadius: '14px',
+                      background: '#f8fafc',
+                      border: '1px solid #e2e8f0'
+                    }}
+                  >
+                    <h3 style={{ marginTop: 0 }}>
+                      {item.nama_kegiatan}
+                    </h3>
 
-{item.foto_url && (
-  <img
-    src={item.foto_url}
-    alt={`Foto kegiatan ${item.nama_kegiatan}`}
-    loading="lazy"
-    style={{
-      display: 'block',
-      width: '100%',
-      maxWidth: '640px',
-      maxHeight: '420px',
-      objectFit: 'contain',
-      objectPosition: 'left center',
-      borderRadius: '12px',
-      marginBottom: '16px',
-      background: '#f1f5f9'
-    }}
-  />
-)}
-            <p>
-              <strong>Penyelenggara:</strong> {item.penyelenggara}
-            </p>
+                    {item.foto_url && (
+                      <img
+                        src={item.foto_url}
+                        alt={`Foto kegiatan ${item.nama_kegiatan}`}
+                        loading="lazy"
+                        style={{
+                          display: 'block',
+                          width: '100%',
+                          maxWidth: '640px',
+                          maxHeight: '420px',
+                          objectFit: 'contain',
+                          objectPosition: 'left center',
+                          borderRadius: '12px',
+                          marginBottom: '16px',
+                          background: '#f1f5f9'
+                        }}
+                      />
+                    )}
 
-            <p>
-              <strong>Desa/Kelurahan:</strong> {item.desa}
-            </p>
+                    <p>
+                      <strong>Penyelenggara:</strong>{' '}
+                      {item.penyelenggara || '-'}
+                    </p>
 
-            <p>
-              <strong>Tanggal:</strong> {item.tanggal}
-            </p>
+                    <p>
+                      <strong>Desa/Kelurahan:</strong> {item.desa || '-'}
+                    </p>
 
-            <p>
-              <strong>Kategori:</strong> {item.kategori}
-            </p>
+                    <p>
+                      <strong>Tanggal:</strong> {item.tanggal || '-'}
+                    </p>
 
-            {item.deskripsi && (
-              <p>
-                <strong>Deskripsi:</strong> {item.deskripsi}
-              </p>
+                    <p>
+                      <strong>Kategori:</strong> {item.kategori || '-'}
+                    </p>
+
+                    {item.lokasi_lengkap && (
+                      <p>
+                        <strong>Lokasi lengkap:</strong>{' '}
+                        {item.lokasi_lengkap}
+                      </p>
+                    )}
+
+                    {item.jam_mulai && (
+                      <p>
+                        <strong>Jam:</strong> {item.jam_mulai}
+                        {item.jam_selesai
+                          ? `–${item.jam_selesai}`
+                          : ''}
+                      </p>
+                    )}
+
+                    {item.deskripsi && (
+                      <p>
+                        <strong>Deskripsi:</strong> {item.deskripsi}
+                      </p>
+                    )}
+
+                    <p style={{ marginBottom: 0 }}>
+                      <strong>Narahubung:</strong>{' '}
+                      {item.narahubung || '-'}
+                    </p>
+
+                    <div
+                      style={{
+                        display: 'flex',
+                        flexWrap: 'wrap',
+                        gap: '10px',
+                        marginTop: '16px'
+                      }}
+                    >
+                      <button
+                        type="button"
+                        className="btn primary"
+                        onClick={() => handleBagikan(item)}
+                      >
+                        Bagikan via WhatsApp
+                      </button>
+
+                      <button
+                        type="button"
+                        className="btn"
+                        onClick={() => handleSalinTautan(item)}
+                      >
+                        Salin Tautan
+                      </button>
+                    </div>
+                  </article>
+                ))}
+              </div>
             )}
-
-            <p style={{ marginBottom: 0 }}>
-              <strong>Narahubung:</strong> {item.narahubung}
-            </p>
-          </article>
-        ))}
-      </div>
-    )}
-  </div>
-</div>
+          </div>
+        </div>
       </div>
     </main>
   );

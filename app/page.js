@@ -45,7 +45,7 @@ const [selectedGallery, setSelectedGallery] = useState(null);
   return <>
     <header className="top">
       <div className="wrap nav">
-        <a href="#beranda" className="brand"><img className="brandmark" src="/logo-kua.png" alt="Logo KUA" /><span>KUA Panca Lautang<small>Penyuluh Agama Islam</small></span></a>
+        <a href="#beranda" className="brand"><img className="brandmark" src="/logo-kua.png" alt="Logo KUA" /><span>KUA Panca Lautang<small>Portal Informasi dan Layanan Masyarakat</small></span></a>
         <nav className="navlinks">
           <a href="/profil">Profil</a><a href="/kegiatan">Kegiatan</a><a href="#berita">Berita</a><a href="/materi-dakwah">Materi</a><a href="#galeri">Galeri</a><a href="#kontak">Kontak</a>
         </nav>
@@ -73,7 +73,7 @@ const [selectedGallery, setSelectedGallery] = useState(null);
           <div>
             <span className="eyebrow"><span className="pulse"/> Portal Informasi KUA Panca Lautang</span>
             <h1>Pelayanan yang <span>dekat</span> dengan masyarakat.</h1>
-            <p>Website baru yang bersih, cepat, dan responsif untuk informasi Penyuluh Agama Islam, kegiatan, materi dakwah, laporan, galeri, serta satu berita terbaru Kementerian Agama setiap hari.</p>
+            <p>Portal informasi dan layanan KUA Kecamatan Panca Lautang yang memudahkan masyarakat menemukan informasi administrasi KUA, layanan perkawinan, penyuluhan dan pembinaan keagamaan, kegiatan masyarakat, serta berita Kementerian Agama.</p>
             <div className="actions"><a className="btn primary" href="#kemenag">Berita Kemenag Hari Ini</a><a className="btn" href="#kontak">Hubungi Kami</a></div>
           </div>
           <div className="heroCard"><div className="heroBadge">KUA PANCA LAUTANG - SIDRAP</div><img src="/kantor-kua.jpeg" alt="Kantor KUA Panca Lautang" style={{width:"100%",height:"280px",objectFit:"cover",borderRadius:"18px"}} /></div>
@@ -85,8 +85,70 @@ const [selectedGallery, setSelectedGallery] = useState(null);
       <section id="profil" className="section">
         <div className="wrap profile">
           <div className="profileMain"><div className="avatar">PAI</div><h3>Profil Penyuluh</h3><p>Ruang informasi untuk memperkenalkan Penyuluh Agama Islam, bidang pembinaan, layanan masyarakat, dan aktivitas penyuluhan di wilayah Panca Lautang.</p><a className="btn primary" href="#kontak">Lihat informasi layanan</a></div>
-          <div className="card"><div className="sectionHead"><div><h2>Ruang layanan</h2><p>Konten utama disusun sederhana agar mudah ditemukan dari HP maupun komputer.</p></div></div><div className="list"><div className="listItem"><div className="icon">PM</div><div><b>Konsultasi dan Pendampingan Masyarakat</b><span>Konsultasi dan pembinaan keagamaan sesuai ruang layanan Penyuluh.</span></div></div><div className="listItem"><div className="icon">AK</div><div><b>Pembinaan Keagamaan</b><span>Pendampingan dan pembinaan keagamaan bagi masyarakat.</span></div></div><div className="listItem"><div className="icon">MP</div><div><b>Layanan Administrasi</b><span>Informasi dan arahan mengenai kebutuhan administrasi layanan KUA.</span></div></div><div className="listItem"><div className="icon">BK</div><div><b>Bimbingan Perkawinan dan Keluarga Sakinah</b><span>Informasi persiapan perkawinan, komunikasi keluarga, dan pembinaan rumah tangga.</span><a className="btn primary" href="/bimbingan-perkawinan" style={{marginTop:10}}>Informasi Bimbingan</a></div></div></div></div>
+
+<div className="card">
+  <div className="sectionHead">
+    <div>
+      <h2>Ruang Layanan KUA</h2>
+      <p>Layanan administrasi dan pembinaan keagamaan untuk masyarakat Panca Lautang.</p>
+    </div>
+  </div>
+
+  <div className="list">
+    <div className="listItem">
+      <div className="icon">AD</div>
+      <div>
+        <b>Layanan Administrasi KUA</b>
+        <span>Informasi pendaftaran nikah, rekomendasi nikah, kemasjidan, zakat, dan wakaf.</span>
+        <div style={{marginTop:12}}>
+          <a
+            className="btn primary"
+            href="https://simkah4.kemenag.go.id/"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Daftar Nikah di SIMKAH Kemenag
+          </a>
         </div>
+        <div style={{marginTop:18,padding:16,background:"#f0f8f4",borderRadius:14}}>
+          <b>Persiapan Dokumen Nikah</b>
+          <p style={{margin:"8px 0",fontSize:13,lineHeight:1.6,color:"#38534a"}}>
+            Dokumen yang umumnya perlu disiapkan:
+          </p>
+          <ul style={{margin:"0 0 0 18px",padding:0,fontSize:13,lineHeight:1.8,color:"#38534a"}}>
+            <li>Surat pengantar atau dokumen nikah dari desa/kelurahan.</li>
+            <li>KTP dan Kartu Keluarga calon pengantin.</li>
+            <li>Akta kelahiran atau dokumen identitas pendukung.</li>
+            <li>Pasfoto dan dokumen tambahan sesuai ketentuan KUA.</li>
+            <li>Surat rekomendasi nikah jika diperlukan karena perbedaan wilayah.</li>
+          </ul>
+          <p style={{margin:"10px 0 0",fontSize:12,lineHeight:1.6,color:"#38534a"}}>
+            Persyaratan dapat berbeda sesuai kondisi calon pengantin. Konfirmasikan daftar dokumen dan batas waktu pendaftaran kepada KUA Panca Lautang sebelum hari akad.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div className="listItem">
+      <div className="icon">PA</div>
+      <div>
+        <b>Penyuluhan dan Pembinaan Keagamaan</b>
+        <span>Konsultasi, pendampingan masyarakat, dan pembinaan kehidupan beragama.</span>
+      </div>
+    </div>
+
+    <div className="listItem">
+      <div className="icon">BK</div>
+      <div>
+        <b>Bimbingan Perkawinan dan Keluarga Sakinah</b>
+        <span>Informasi persiapan perkawinan, komunikasi keluarga, dan pembinaan rumah tangga.</span>
+        <div style={{marginTop:10}}>
+          <a className="btn primary" href="/bimbingan-perkawinan">Informasi Bimbingan</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div></div>
       </section>
 
       <section id="kegiatan" className="section" style={{paddingTop:0}}><div className="wrap"><div className="sectionHead"><div><h2>Kegiatan</h2><p>Program dan aktivitas penyuluhan untuk masyarakat.</p></div></div><div className="grid3">{features.map(([i,t,d,link,label])=><article className="card" key={t}><div className="icon">{i}</div><h3>{t}</h3><p>{d}</p><a className="btn primary" href={link} style={{marginTop:10}}>{label}</a></article>)}</div>{kegiatan.length > 0 && <><div style={{marginTop:24}}><h3>Kegiatan Terbaru</h3></div><div className="grid3">{kegiatan.map((item)=><article className="card" key={item.id}><h3>{item.nama_kegiatan}</h3><p><b>{item.penyelenggara}</b> · {item.desa}</p><p>{item.deskripsi || "Kegiatan KUA Panca Lautang."}</p><small>{item.tanggal} · {item.kategori}</small></article>)}</div><div style={{marginTop:20}}><a className="btn primary" href="/kegiatan">Lihat Semua Kegiatan</a></div></>}</div></section>
@@ -207,7 +269,7 @@ const [selectedGallery, setSelectedGallery] = useState(null);
 )}
        </div>
        </section>
-      
+
     <section id="galeri" className="section" style={{paddingTop:0}}>
   <div className="wrap">
     <div className="sectionHead">

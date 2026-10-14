@@ -822,23 +822,43 @@ const result = await response.json();
                     <strong>Desa/Kelurahan:</strong> {item.desa}
                   </p>
 
-                  <p>
-                    <strong>Tanggal:</strong> {item.tanggal}
-                  </p>
+
+<p>
+  <strong>Tanggal:</strong> {item.tanggal}
+</p>
+
+<p>
+  <strong>Lokasi Lengkap:</strong>{' '}
+  {item.lokasi_lengkap || item.desa || '-'}
+</p>
+
+<p>
+  <strong>Jam Mulai:</strong>{' '}
+  {item.jam_mulai ? `${item.jam_mulai.slice(0, 5)} WITA` : '-'}
+</p>
+
+{item.jam_selesai && (
+  <p>
+    <strong>Jam Selesai:</strong>{' '}
+    {item.jam_selesai.slice(0, 5)} WITA
+  </p>
+)}
+
+<p>
+  <strong>Kategori:</strong> {item.kategori}
+</p>
+
+
 
                   <p>
-                    <strong>Kategori:</strong> {item.kategori}
-                  </p>
+  <strong>Narahubung:</strong> {item.narahubung}
+</p>
 
-                  <p>
-                    <strong>Narahubung:</strong> {item.narahubung}
-                  </p>
-
-                  {item.deskripsi && (
-                    <p>
-                      <strong>Deskripsi:</strong> {item.deskripsi}
-                    </p>
-                  )}
+{item.deskripsi && (
+  <p>
+    <strong>Deskripsi:</strong> {item.deskripsi}
+  </p>
+)}
 
                   <div
                     style={{

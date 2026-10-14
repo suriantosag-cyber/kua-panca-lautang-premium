@@ -162,10 +162,26 @@ export default function ProfilPage() {
     border: "1px solid #e2e8f0"
   }}>
     <h3>💍 Layanan Pernikahan (Nikah & Rujuk)</h3>
-    <p>
-      Melayani informasi dan proses pendaftaran pernikahan sesuai ketentuan
-      Kementerian Agama melalui sistem pencatatan pernikahan.
-    </p>
+
+
+<p style={{ fontSize: "13px", color: "#64748b", marginTop: "10px" }}>
+  Anda akan dialihkan ke sistem eksternal resmi SIMKAH Kementerian Agama RI.
+  Situs layanan akan terbuka di tab baru.
+</p>
+
+
+<p>
+  <strong>Panduan awal:</strong> Siapkan dokumen persyaratan nikah,
+  pastikan data calon pengantin dan wali benar, lalu ikuti petunjuk
+  pendaftaran pada sistem SIMKAH.
+</p>
+
+<p>
+  <strong>Catatan:</strong> Tombol di bawah akan membuka situs layanan
+  SIMKAH. Pemeriksaan dokumen dan proses selanjutnya mengikuti ketentuan
+  yang berlaku.
+</p>
+
     <a
       href="https://simkah4.kemenag.go.id"
       target="_blank"
@@ -182,10 +198,26 @@ export default function ProfilPage() {
     border: "1px solid #e2e8f0"
   }}>
     <h3>🕌 Layanan Kemasjidan</h3>
-    <p>
-      Membantu masyarakat dan pengurus masjid/mushala dalam pendataan,
-      pendaftaran, dan informasi kemasjidan melalui SIMAS Kementerian Agama.
-    </p>
+
+
+<p style={{ fontSize: "13px", color: "#64748b", marginTop: "10px" }}>
+  Anda akan dialihkan ke sistem eksternal SIMAS Kementerian Agama RI.
+  Situs layanan akan terbuka di tab baru.
+</p>
+
+
+<p>
+  <strong>Panduan awal:</strong> Siapkan identitas dan data masjid atau
+  mushala, data pengurus atau penanggung jawab, serta dokumen pendukung
+  yang diperlukan.
+</p>
+
+<p>
+  <strong>Catatan:</strong> Tombol di bawah akan membuka situs SIMAS.
+  Ikuti petunjuk pada sistem dan proses verifikasi sesuai ketentuan
+  Kementerian Agama.
+</p>
+
     <a
       href="https://simas.kemenag.go.id"
       target="_blank"
@@ -202,11 +234,26 @@ export default function ProfilPage() {
     border: "1px solid #e2e8f0"
   }}>
     <h3>🟢 Layanan Produk Halal</h3>
-    <p>
-      Informasi dan pendampingan awal bagi pelaku UMK yang ingin mengurus
-      sertifikasi halal, termasuk skema self declare sesuai persyaratan
-      yang berlaku.
-    </p>
+
+
+<p style={{ fontSize: "13px", color: "#64748b", marginTop: "10px" }}>
+  Anda akan dialihkan ke sistem eksternal SIHALAL melalui layanan resmi BPJPH.
+  Situs layanan akan terbuka di tab baru.
+</p>
+
+
+<p>
+  <strong>Panduan awal:</strong> Siapkan data usaha, data produk,
+  bahan yang digunakan, dan informasi proses produksi. Pastikan
+  persyaratan skema sertifikasi yang dipilih sudah terpenuhi.
+</p>
+
+<p>
+  <strong>Catatan:</strong> Tombol di bawah akan membuka situs SIHALAL.
+  Pengajuan dan pemeriksaan selanjutnya dilakukan mengikuti prosedur
+  resmi BPJPH.
+</p>
+
     <a
       href="https://ptsp.halal.go.id"
       target="_blank"
@@ -223,11 +270,25 @@ export default function ProfilPage() {
     border: "1px solid #e2e8f0"
   }}>
     <h3>🤲 Zakat, Wakaf & Ibadah Sosial</h3>
-    <p>
-      Memberikan informasi dan konsultasi awal mengenai wakaf, zakat,
-      pembinaan muallaf, serta layanan keagamaan dan kelembagaan Islam
-      sesuai kewenangan KUA.
-    </p>
+
+<p>
+  <strong>Tujuan layanan:</strong> Memberikan informasi dan konsultasi
+  awal mengenai zakat, wakaf, pembinaan mualaf, serta kegiatan
+  keagamaan dan kelembagaan Islam sesuai kewenangan KUA.
+</p>
+
+<p>
+  <strong>Panduan awal:</strong> Siapkan informasi atau dokumen yang
+  berkaitan dengan kebutuhan Anda. Jelaskan tujuan konsultasi agar
+  petugas dapat memberikan arahan yang sesuai.
+</p>
+
+<p>
+  <strong>Bagaimana mendapatkan layanan?</strong> Silakan menghubungi
+  atau datang ke KUA Kecamatan Panca Lautang untuk memperoleh informasi
+  mengenai prosedur, persyaratan, dan tindak lanjut layanan.
+</p>
+
   </div>
 
 </div>
@@ -478,19 +539,3 @@ export default function ProfilPage() {
     </main>
   );
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

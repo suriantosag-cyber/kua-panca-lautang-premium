@@ -1,4 +1,4 @@
-﻿
+
 'use client';
 
 import { useEffect, useState } from 'react';
@@ -72,17 +72,19 @@ export default function JadwalNikah() {
   }
 
   async function shareWhatsApp(item) {
-    const url = `https://wa.me/?text=${encodeURIComponent(getShareText(item))}`;
+    const shareUrl = 'https://kua-pancalautang.my.id/jadwal-nikah';
+    const message = `${getShareText(item)}\n\nLihat poster jadwal: ${shareUrl}`;
+    const url = `https://wa.me/?text=${encodeURIComponent(message)}`;
     window.open(url, '_blank', 'noopener,noreferrer');
   }
 
   async function copyLink() {
     try {
-      await navigator.clipboard.writeText(window.location.href);
+      await navigator.clipboard.writeText('https://kua-pancalautang.my.id/jadwal-nikah');
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch {
-      window.prompt('Salin tautan halaman ini:', window.location.href);
+      window.prompt('Salin tautan Jadwal Nikah:', 'https://kua-pancalautang.my.id/jadwal-nikah');
     }
   }
 
@@ -90,7 +92,7 @@ export default function JadwalNikah() {
     const shareData = {
       title: 'Jadwal Nikah KUA Panca Lautang',
       text: getShareText(item),
-      url: window.location.href,
+      url: 'https://kua-pancalautang.my.id/jadwal-nikah',
     };
 
     if (navigator.share) {
@@ -180,5 +182,3 @@ export default function JadwalNikah() {
     </section>
   );
 }
-
-
