@@ -3,10 +3,13 @@ import './globals.css';
 export const metadata = {
   metadataBase: new URL('https://kua-pancalautang.my.id'),
 
-  title: 'KUA Panca Lautang | Kantor Urusan Agama Kecamatan Panca Lautang',
+  title: {
+    default: 'KUA Panca Lautang | Kantor Urusan Agama Kecamatan Panca Lautang',
+    template: '%s | KUA Panca Lautang',
+  },
 
   description:
-    'Website resmi KUA Kecamatan Panca Lautang, Kantor Urusan Agama di Panca Lautang. Informasi layanan KUA, jadwal nikah, kegiatan, berita, materi dakwah, galeri, dan informasi Kementerian Agama.',
+    'Website resmi Kantor Urusan Agama Kecamatan Panca Lautang, Kabupaten Sidenreng Rappang, Sulawesi Selatan. Informasi layanan administrasi KUA, jadwal nikah, bimbingan perkawinan, kegiatan, materi dakwah, dan informasi keagamaan.',
 
   keywords: [
     'KUA Panca Lautang',
@@ -15,11 +18,15 @@ export const metadata = {
     'kua-pancalautang.my.id',
   ],
 
+  alternates: {
+    canonical: '/',
+  },
+
   openGraph: {
     title: 'KUA Panca Lautang | Kantor Urusan Agama Kecamatan Panca Lautang',
     description:
-      'Website resmi KUA Panca Lautang untuk informasi layanan, jadwal nikah, kegiatan, dan berita Kementerian Agama.',
-    url: 'https://kua-pancalautang.my.id',
+      'Website resmi KUA Panca Lautang untuk informasi layanan, jadwal nikah, bimbingan perkawinan, kegiatan, dan informasi keagamaan.',
+    url: 'https://kua-pancalautang.my.id/',
     siteName: 'KUA Panca Lautang',
     locale: 'id_ID',
     type: 'website',
