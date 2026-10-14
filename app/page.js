@@ -73,7 +73,7 @@ const [selectedGallery, setSelectedGallery] = useState(null);
           <div>
             <span className="eyebrow"><span className="pulse"/> Portal Informasi KUA Panca Lautang</span>
             <h1>Pelayanan yang <span>dekat</span> dengan masyarakat.</h1>
-            <p>Website baru yang bersih, cepat, dan responsif untuk informasi Penyuluh Agama Islam, kegiatan, materi dakwah, laporan, galeri, serta satu berita terbaru Kementerian Agama setiap hari.</p>
+            <p>Portal informasi dan layanan KUA Kecamatan Panca Lautang yang memudahkan masyarakat menemukan informasi administrasi KUA, layanan perkawinan, penyuluhan dan pembinaan keagamaan, kegiatan masyarakat, serta berita Kementerian Agama.</p>
             <div className="actions"><a className="btn primary" href="#kemenag">Berita Kemenag Hari Ini</a><a className="btn" href="#kontak">Hubungi Kami</a></div>
           </div>
           <div className="heroCard"><div className="heroBadge">KUA PANCA LAUTANG - SIDRAP</div><img src="/kantor-kua.jpeg" alt="Kantor KUA Panca Lautang" style={{width:"100%",height:"280px",objectFit:"cover",borderRadius:"18px"}} /></div>
@@ -85,7 +85,38 @@ const [selectedGallery, setSelectedGallery] = useState(null);
       <section id="profil" className="section">
         <div className="wrap profile">
           <div className="profileMain"><div className="avatar">PAI</div><h3>Profil Penyuluh</h3><p>Ruang informasi untuk memperkenalkan Penyuluh Agama Islam, bidang pembinaan, layanan masyarakat, dan aktivitas penyuluhan di wilayah Panca Lautang.</p><a className="btn primary" href="#kontak">Lihat informasi layanan</a></div>
-          <div className="card"><div className="sectionHead"><div><h2>Ruang layanan</h2><p>Konten utama disusun sederhana agar mudah ditemukan dari HP maupun komputer.</p></div></div><div className="list"><div className="listItem"><div className="icon">PM</div><div><b>Konsultasi dan Pendampingan Masyarakat</b><span>Konsultasi dan pembinaan keagamaan sesuai ruang layanan Penyuluh.</span></div></div><div className="listItem"><div className="icon">AK</div><div><b>Pembinaan Keagamaan</b><span>Pendampingan dan pembinaan keagamaan bagi masyarakat.</span></div></div><div className="listItem"><div className="icon">MP</div><div><b>Layanan Administrasi</b><span>Informasi dan arahan mengenai kebutuhan administrasi layanan KUA.</span></div></div><div className="listItem"><div className="icon">BK</div><div><b>Bimbingan Perkawinan dan Keluarga Sakinah</b><span>Informasi persiapan perkawinan, komunikasi keluarga, dan pembinaan rumah tangga.</span><a className="btn primary" href="/bimbingan-perkawinan" style={{marginTop:10}}>Informasi Bimbingan</a></div></div></div></div>
+          <div className="card">
+            <div className="sectionHead">
+              <div>
+                <h2>Ruang Layanan KUA</h2>
+                <p>Layanan administrasi dan pembinaan keagamaan untuk masyarakat Panca Lautang.</p>
+              </div>
+            </div>
+            <div className="list">
+              <div className="listItem">
+                <div className="icon">AD</div>
+                <div>
+                  <b>Layanan Administrasi KUA</b>
+                  <span>Informasi Pendaftaran Nikah, Rekomendasi Nikah, Kemasjidan, serta Zakat dan Wakaf.</span>
+                </div>
+              </div>
+              <div className="listItem">
+                <div className="icon">PA</div>
+                <div>
+                  <b>Penyuluhan dan Pembinaan Keagamaan</b>
+                  <span>Konsultasi, pendampingan masyarakat, dan pembinaan kehidupan beragama.</span>
+                </div>
+              </div>
+              <div className="listItem">
+                <div className="icon">BK</div>
+                <div>
+                  <b>Bimbingan Perkawinan dan Keluarga Sakinah</b>
+                  <span>Informasi persiapan perkawinan, komunikasi keluarga, dan pembinaan rumah tangga.</span>
+                  <a className="btn primary" href="/bimbingan-perkawinan" style={{marginTop:10}}>Informasi Bimbingan</a>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
