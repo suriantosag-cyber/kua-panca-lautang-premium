@@ -1,12 +1,12 @@
-﻿'use client';
+'use client';
 import TanyaAnto from './components/TanyaAnto';
 import JadwalNikah from './components/JadwalNikah';
 import { useEffect, useState } from 'react';
 
 const features = [
-  ['PR','Kegiatan','Informasi kegiatan penyuluhan, pembinaan keagamaan, dan agenda masyarakat.'],
-  ['MD','Materi Dakwah','Panduan ibadah, akhlak mulia, moderasi beragama, zakat, kepedulian sosial, dan pembinaan keagamaan masyarakat.'],
-  ['LK','Laporan Kegiatan','Dokumentasi dan laporan kegiatan penyuluhan tersusun rapi.'],
+  ['PR','Kegiatan','Informasi kegiatan KUA, penyuluhan, pembinaan masyarakat, dan agenda keagamaan.','/kegiatan','Lihat Kegiatan'],
+  ['MD','Materi Dakwah','Panduan ibadah, khutbah, akhlak mulia, moderasi beragama, dan materi pembinaan masyarakat.','/materi-dakwah','Buka Materi'],
+  ['LK','Dokumentasi Kegiatan','Dokumentasi kegiatan masyarakat ditampilkan melalui galeri website.','#galeri','Lihat Galeri'],
 ];
 
 export default function Home() {
@@ -85,11 +85,11 @@ const [selectedGallery, setSelectedGallery] = useState(null);
       <section id="profil" className="section">
         <div className="wrap profile">
           <div className="profileMain"><div className="avatar">PAI</div><h3>Profil Penyuluh</h3><p>Ruang informasi untuk memperkenalkan Penyuluh Agama Islam, bidang pembinaan, layanan masyarakat, dan aktivitas penyuluhan di wilayah Panca Lautang.</p><a className="btn primary" href="#kontak">Lihat informasi layanan</a></div>
-          <div className="card"><div className="sectionHead"><div><h2>Ruang layanan</h2><p>Konten utama disusun sederhana agar mudah ditemukan dari HP maupun komputer.</p></div></div><div className="list"><div className="listItem"><div className="icon">PM</div><div><b>Pendampingan masyarakat</b><span>Konsultasi dan pembinaan keagamaan sesuai ruang layanan Penyuluh.</span></div></div><div className="listItem"><div className="icon">AK</div><div><b>Agenda & kegiatan</b><span>Temukan kegiatan yang sedang berjalan dan dokumentasi program.</span></div></div><div className="listItem"><div className="icon">MP</div><div><b>Materi yang praktis</b><span>Materi dakwah dibuat singkat, jelas, dan mudah dibagikan.</span></div></div><div className="listItem"><div className="icon">BK</div><div><b>Bimbingan Perkawinan dan Keluarga Sakinah</b><span>Informasi persiapan perkawinan, komunikasi keluarga, dan pembinaan rumah tangga.</span><a className="btn primary" href="/bimbingan-perkawinan" style={{marginTop:10}}>Informasi Bimbingan</a></div></div></div></div>
+          <div className="card"><div className="sectionHead"><div><h2>Ruang layanan</h2><p>Konten utama disusun sederhana agar mudah ditemukan dari HP maupun komputer.</p></div></div><div className="list"><div className="listItem"><div className="icon">PM</div><div><b>Konsultasi dan Pendampingan Masyarakat</b><span>Konsultasi dan pembinaan keagamaan sesuai ruang layanan Penyuluh.</span></div></div><div className="listItem"><div className="icon">AK</div><div><b>Pembinaan Keagamaan</b><span>Pendampingan dan pembinaan keagamaan bagi masyarakat.</span></div></div><div className="listItem"><div className="icon">MP</div><div><b>Layanan Administrasi</b><span>Informasi dan arahan mengenai kebutuhan administrasi layanan KUA.</span></div></div><div className="listItem"><div className="icon">BK</div><div><b>Bimbingan Perkawinan dan Keluarga Sakinah</b><span>Informasi persiapan perkawinan, komunikasi keluarga, dan pembinaan rumah tangga.</span><a className="btn primary" href="/bimbingan-perkawinan" style={{marginTop:10}}>Informasi Bimbingan</a></div></div></div></div>
         </div>
       </section>
 
-      <section id="kegiatan" className="section" style={{paddingTop:0}}><div className="wrap"><div className="sectionHead"><div><h2>Kegiatan</h2><p>Program dan aktivitas penyuluhan untuk masyarakat.</p></div></div><div className="grid3">{features.map(([i,t,d])=><article className="card" key={t}><div className="icon">{i}</div><h3>{t}</h3><p>{d}</p></article>)}</div>{kegiatan.length > 0 && <><div style={{marginTop:24}}><h3>Kegiatan Terbaru</h3></div><div className="grid3">{kegiatan.map((item)=><article className="card" key={item.id}><h3>{item.nama_kegiatan}</h3><p><b>{item.penyelenggara}</b> · {item.desa}</p><p>{item.deskripsi || "Kegiatan KUA Panca Lautang."}</p><small>{item.tanggal} · {item.kategori}</small></article>)}</div><div style={{marginTop:20}}><a className="btn primary" href="/kegiatan">Lihat Semua Kegiatan</a></div></>}</div></section>
+      <section id="kegiatan" className="section" style={{paddingTop:0}}><div className="wrap"><div className="sectionHead"><div><h2>Kegiatan</h2><p>Program dan aktivitas penyuluhan untuk masyarakat.</p></div></div><div className="grid3">{features.map(([i,t,d,link,label])=><article className="card" key={t}><div className="icon">{i}</div><h3>{t}</h3><p>{d}</p><a className="btn primary" href={link} style={{marginTop:10}}>{label}</a></article>)}</div>{kegiatan.length > 0 && <><div style={{marginTop:24}}><h3>Kegiatan Terbaru</h3></div><div className="grid3">{kegiatan.map((item)=><article className="card" key={item.id}><h3>{item.nama_kegiatan}</h3><p><b>{item.penyelenggara}</b> · {item.desa}</p><p>{item.deskripsi || "Kegiatan KUA Panca Lautang."}</p><small>{item.tanggal} · {item.kategori}</small></article>)}</div><div style={{marginTop:20}}><a className="btn primary" href="/kegiatan">Lihat Semua Kegiatan</a></div></>}</div></section>
 
       <section id="berita" className="section news">
         <div className="wrap">
@@ -380,35 +380,3 @@ const [selectedGallery, setSelectedGallery] = useState(null);
 <TanyaAnto />
   </>;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
