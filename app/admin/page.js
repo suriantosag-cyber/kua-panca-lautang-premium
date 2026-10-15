@@ -448,6 +448,7 @@ const result = await response.json();
         {" "}
         <h1>Dashboard Admin</h1>
         <p style={{ color: "#667085" }}>KUA Panca Lautang - Kelola Berita</p>
+        <a href="/admin/laporan" style={{ display: "inline-block", margin: "12px 0 20px", padding: "10px 16px", background: "#146c43", color: "#fff", borderRadius: 8, textDecoration: "none", fontWeight: 600 }}>Rekapitulasi Kinerja Tahunan</a>
         <section
           style={{
             background: "#fff",
