@@ -1,25 +1,25 @@
-﻿'use client';
+'use client';
 
 import { useEffect, useRef, useState } from 'react';
 
 
 const statistik = [
   {
-    ikon: '≡ƒòî',
+    ikon: '\u{1F54C}',
     judul: 'Data Masjid',
     keterangan: 'Informasi rumah ibadah di wilayah Panca Lautang',
     nilai: 'Data menyusul',
     href: null,
   },
   {
-    ikon: '≡ƒÆì',
+    ikon: '\u{1F48D}',
     judul: 'Layanan Nikah',
     keterangan: 'Informasi dan jadwal pelayanan pernikahan',
     nilai: 'Lihat jadwal',
     href: '#jadwal-nikah',
   },
   {
-    ikon: '≡ƒñ¥',
+    ikon: '\u{1F91D}',
     judul: 'Penyuluh Agama',
     keterangan: 'Informasi pembinaan dan layanan keagamaan',
     nilai: 'Lihat profil',
