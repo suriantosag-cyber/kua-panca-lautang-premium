@@ -1,6 +1,7 @@
 'use client';
 import TanyaAnto from './components/TanyaAnto';
 import JadwalNikah from './components/JadwalNikah';
+import StatistikLayanan from './components/StatistikLayanan';
 import { useEffect, useState } from 'react';
 
 const features = [
@@ -79,6 +80,8 @@ const [selectedGallery, setSelectedGallery] = useState(null);
           <div className="heroCard"><div className="heroBadge">KUA PANCA LAUTANG - SIDRAP</div><img src="/kantor-kua.jpeg" alt="Kantor KUA Panca Lautang" style={{width:"100%",height:"280px",objectFit:"cover",borderRadius:"18px"}} /></div>
         </div>
       </section>
+
+      <StatistikLayanan />
 
       <JadwalNikah />
 

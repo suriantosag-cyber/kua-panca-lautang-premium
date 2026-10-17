@@ -109,7 +109,7 @@ export default function JadwalNikah() {
   }
 
   return (
-    <section className="jadwalNikah">
+    <section id="jadwal-nikah" className="jadwalNikah">
       <div className="wrap">
         <div className="jadwalNikahCard jadwalNikahCardResmi">
           <header className="jadwalNikahHeader">

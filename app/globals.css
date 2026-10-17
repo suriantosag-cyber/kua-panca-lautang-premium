@@ -1109,3 +1109,94 @@
     border-radius: 14px;
   }
 }
+
+/* Statistik Layanan Digital KUA Panca Lautang */
+.statistikLayanan {
+  position: relative;
+  overflow: hidden;
+}
+.statistikGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 20px;
+}
+.statistikCard {
+  min-width: 0;
+  padding: 26px 22px;
+  border: 1px solid var(--border, rgba(120, 140, 160, 0.22));
+  border-radius: 20px;
+  background: var(--card, rgba(255, 255, 255, 0.04));
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.06);
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 0.55s ease,
+    transform 0.55s ease,
+    box-shadow 0.25s ease,
+    border-color 0.25s ease;
+  transition-delay: calc(var(--urutan-statistik, 0) * 100ms);
+}
+.statistikTerlihat .statistikCard {
+  opacity: 1;
+  transform: translateY(0);
+}
+.statistikCard:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 34px rgba(0, 0, 0, 0.10);
+}
+.statistikIkon {
+  display: grid;
+  place-items: center;
+  width: 54px;
+  height: 54px;
+  margin-bottom: 16px;
+  border-radius: 16px;
+  background: rgba(16, 185, 129, 0.12);
+  font-size: 27px;
+}
+.statistikCard h3 {
+  margin: 0 0 8px;
+  font-size: 1.15rem;
+}
+.statistikCard p {
+  margin: 0 0 16px;
+  line-height: 1.65;
+  opacity: 0.78;
+}
+.statistikCard strong {
+  display: inline-block;
+  color: var(--primary, #059669);
+  font-size: 1rem;
+  font-weight: 750;
+}
+@media (max-width: 760px) {
+  .statistikGrid {
+    grid-template-columns: 1fr;
+    gap: 14px;
+  }
+  .statistikCard {
+    padding: 22px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .statistikCard,
+  .statistikCard:hover {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+/* Tautan pada kartu Statistik Layanan */
+.statistikCardLink {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+  cursor: pointer;
+}
+.statistikCardLink:focus-visible {
+  outline: 3px solid var(--primary, #059669);
+  outline-offset: 4px;
+}
+.statistikCardLink strong {
+  text-decoration: none;
+}
