@@ -9,7 +9,7 @@ const statistik = [
     judul: 'Data Masjid',
     keterangan: 'Informasi rumah ibadah di wilayah Panca Lautang',
     nilai: 'Data menyusul',
-    href: null,
+    href: '/data-masjid',
   },
   {
     ikon: '\u{1F48D}',
