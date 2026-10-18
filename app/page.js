@@ -1,4 +1,4 @@
-'use client';
+﻿'use client';
 import TanyaAnto from './components/TanyaAnto';
 import JadwalNikah from './components/JadwalNikah';
 import StatistikLayanan from './components/StatistikLayanan';
@@ -44,14 +44,7 @@ const [selectedGallery, setSelectedGallery] = useState(null);
 
 
   return <>
-    <header className="top">
-      <div className="wrap nav">
-        <a href="#beranda" className="brand"><img className="brandmark" src="/logo-kua.png" alt="Logo KUA" /><span>KUA Panca Lautang<small>Portal Informasi dan Layanan Masyarakat</small></span></a>
-        <nav className="navlinks">
-          <a href="/profil">Profil</a><a href="/kegiatan">Kegiatan</a><a href="#berita">Berita</a><a href="/materi-dakwah">Materi</a><a href="#galeri">Galeri</a><a href="#kontak">Kontak</a>
-        </nav>
-      </div>
-    </header>
+
 
     <main>
 
@@ -69,6 +62,21 @@ const [selectedGallery, setSelectedGallery] = useState(null);
     </div>
   </div>
 </div>
+<div className="pengumumanTicker">
+  <div className="pengumumanTickerLabel">
+    ðŸ“¢ PENGUMUMAN KUA PANCA LAUTANG
+  </div>
+  <div className="pengumumanTickerTrack">
+    <div className="pengumumanTickerMove">
+      <span>
+        Mohon pastikan dokumen persyaratan lengkap sebelum mengurus
+        layanan di KUA. &nbsp;  â€” Melayani dengan sepenuh hati.
+      </span>
+    </div>
+  </div>
+</div>
+
+
       <section id="beranda" className="hero">
         <div className="wrap heroGrid">
           <div>
@@ -154,7 +162,7 @@ const [selectedGallery, setSelectedGallery] = useState(null);
 </div></div>
       </section>
 
-      <section id="kegiatan" className="section" style={{paddingTop:0}}><div className="wrap"><div className="sectionHead"><div><h2>Kegiatan</h2><p>Program dan aktivitas penyuluhan untuk masyarakat.</p></div></div><div className="grid3">{features.map(([i,t,d,link,label])=><article className="card" key={t}><div className="icon">{i}</div><h3>{t}</h3><p>{d}</p><a className="btn primary" href={link} style={{marginTop:10}}>{label}</a></article>)}</div>{kegiatan.length > 0 && <><div style={{marginTop:24}}><h3>Kegiatan Terbaru</h3></div><div className="grid3">{kegiatan.map((item)=><article className="card" key={item.id}><h3>{item.nama_kegiatan}</h3><p><b>{item.penyelenggara}</b> · {item.desa}</p><p>{item.deskripsi || "Kegiatan KUA Panca Lautang."}</p><small>{item.tanggal} · {item.kategori}</small></article>)}</div><div style={{marginTop:20}}><a className="btn primary" href="/kegiatan">Lihat Semua Kegiatan</a></div></>}</div></section>
+      <section id="kegiatan" className="section" style={{paddingTop:0}}><div className="wrap"><div className="sectionHead"><div><h2>Kegiatan</h2><p>Program dan aktivitas penyuluhan untuk masyarakat.</p></div></div><div className="grid3">{features.map(([i,t,d,link,label])=><article className="card" key={t}><div className="icon">{i}</div><h3>{t}</h3><p>{d}</p><a className="btn primary" href={link} style={{marginTop:10}}>{label}</a></article>)}</div>{kegiatan.length > 0 && <><div style={{marginTop:24}}><h3>Kegiatan Terbaru</h3></div><div className="grid3">{kegiatan.map((item)=><article className="card" key={item.id}><h3>{item.nama_kegiatan}</h3><p><b>{item.penyelenggara}</b> Â· {item.desa}</p><p>{item.deskripsi || "Kegiatan KUA Panca Lautang."}</p><small>{item.tanggal} Â· {item.kategori}</small></article>)}</div><div style={{marginTop:20}}><a className="btn primary" href="/kegiatan">Lihat Semua Kegiatan</a></div></>}</div></section>
 
       <section id="berita" className="section news">
         <div className="wrap">
