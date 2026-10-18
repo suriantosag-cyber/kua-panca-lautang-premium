@@ -64,13 +64,13 @@ const [selectedGallery, setSelectedGallery] = useState(null);
 </div>
 <div className="pengumumanTicker">
   <div className="pengumumanTickerLabel">
-    ðŸ“¢ PENGUMUMAN KUA PANCA LAUTANG
+    <span aria-hidden="true">[INFO]</span> PENGUMUMAN KUA PANCA LAUTANG
   </div>
   <div className="pengumumanTickerTrack">
     <div className="pengumumanTickerMove">
       <span>
         Mohon pastikan dokumen persyaratan lengkap sebelum mengurus
-        layanan di KUA. &nbsp;  â€” Melayani dengan sepenuh hati.
+        layanan di KUA. &nbsp;  - Melayani dengan sepenuh hati.
       </span>
     </div>
   </div>
@@ -105,64 +105,119 @@ const [selectedGallery, setSelectedGallery] = useState(null);
     </div>
   </div>
 
-  <div className="list">
-    <div className="listItem">
-      <div className="icon">AD</div>
-      <div>
-        <b>Layanan Administrasi KUA</b>
-        <span>Informasi pendaftaran nikah, rekomendasi nikah, kemasjidan, zakat, dan wakaf.</span>
-        <div style={{marginTop:12}}>
-          <a
-            className="btn primary"
-            href="https://simkah4.kemenag.go.id/"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Daftar Nikah di SIMKAH Kemenag
-          </a>
-        </div>
-        <div style={{marginTop:18,padding:16,background:"#f0f8f4",borderRadius:14}}>
-          <b>Persiapan Dokumen Nikah</b>
-          <p style={{margin:"8px 0",fontSize:13,lineHeight:1.6,color:"#38534a"}}>
-            Dokumen yang umumnya perlu disiapkan:
-          </p>
-          <ul style={{margin:"0 0 0 18px",padding:0,fontSize:13,lineHeight:1.8,color:"#38534a"}}>
-            <li>Surat pengantar atau dokumen nikah dari desa/kelurahan.</li>
-            <li>KTP dan Kartu Keluarga calon pengantin.</li>
-            <li>Akta kelahiran atau dokumen identitas pendukung.</li>
-            <li>Pasfoto dan dokumen tambahan sesuai ketentuan KUA.</li>
-            <li>Surat rekomendasi nikah jika diperlukan karena perbedaan wilayah.</li>
-          </ul>
-          <p style={{margin:"10px 0 0",fontSize:12,lineHeight:1.6,color:"#38534a"}}>
-            Persyaratan dapat berbeda sesuai kondisi calon pengantin. Konfirmasikan daftar dokumen dan batas waktu pendaftaran kepada KUA Panca Lautang sebelum hari akad.
-          </p>
-        </div>
-      </div>
-    </div>
+  
+<div className="list">
+  <div className="listItem">
+    <div className="icon">01</div>
+    <div>
+      <b>Pendaftaran Nikah dan Rujuk</b>
+      <span>
+        Panduan awal untuk calon pengantin dan masyarakat yang
+        membutuhkan informasi pencatatan pernikahan.
+      </span>
 
-    <div className="listItem">
-      <div className="icon">PA</div>
-      <div>
-        <b>Penyuluhan dan Pembinaan Keagamaan</b>
-        <span>Konsultasi, pendampingan masyarakat, dan pembinaan kehidupan beragama.</span>
+      <div style={{ marginTop: 12, display: "flex", gap: 8, flexWrap: "wrap" }}>
+        <a
+          className="btn primary"
+          href="https://simkah4.kemenag.go.id/"
+          target="_blank"
+          rel="noreferrer"
+        >
+          Buka SIMKAH Resmi
+        </a>
       </div>
-    </div>
 
-    <div className="listItem">
-      <div className="icon">BK</div>
-      <div>
-        <b>Bimbingan Perkawinan dan Keluarga Sakinah</b>
-        <span>Informasi persiapan perkawinan, komunikasi keluarga, dan pembinaan rumah tangga.</span>
-        <div style={{marginTop:10}}>
-          <a className="btn primary" href="/bimbingan-perkawinan">Informasi Bimbingan</a>
-        </div>
+      <div
+        style={{
+          marginTop: 16,
+          padding: 16,
+          background: "#f0f8f4",
+          borderRadius: 14
+        }}
+      >
+        <b>Checklist Persiapan Dokumen</b>
+        <ul style={{ margin: "10px 0 0 18px", padding: 0, fontSize: 13, lineHeight: 1.8 }}>
+          <li>KTP dan Kartu Keluarga calon pengantin.</li>
+          <li>Surat pengantar atau dokumen persyaratan dari desa/kelurahan sesuai prosedur.</li>
+          <li>Akta kelahiran atau dokumen pendukung jika dipersyaratkan.</li>
+          <li>Pasfoto sesuai ketentuan yang berlaku.</li>
+          <li>Dokumen tambahan sesuai keadaan, misalnya akta cerai atau surat kematian pasangan terdahulu jika relevan.</li>
+          <li>Surat rekomendasi nikah jika diperlukan karena lokasi pencatatan berbeda wilayah.</li>
+        </ul>
+        <p style={{ margin: "12px 0 0", fontSize: 12, lineHeight: 1.7, color: "#38534a" }}>
+          Daftar ini merupakan panduan awal, bukan daftar final untuk semua kondisi.
+          Konfirmasikan persyaratan, dokumen rujuk, dan batas waktu pendaftaran
+          kepada petugas KUA sebelum mengurus berkas.
+        </p>
+      </div>
+
+      <div style={{ marginTop: 16 }}>
+        <b>Alur Singkat</b>
+        <ol style={{ margin: "8px 0 0 18px", padding: 0, fontSize: 13, lineHeight: 1.8 }}>
+          <li>Siapkan dokumen dan konfirmasikan persyaratan kepada petugas.</li>
+          <li>Ikuti petunjuk pendaftaran melalui SIMKAH atau KUA sesuai prosedur.</li>
+          <li>Lengkapi dokumen dan ikuti pemeriksaan berkas dari petugas.</li>
+          <li>Ikuti jadwal dan arahan layanan yang telah dikonfirmasi.</li>
+        </ol>
       </div>
     </div>
   </div>
-</div></div>
-      </section>
 
-      <section id="kegiatan" className="section" style={{paddingTop:0}}><div className="wrap"><div className="sectionHead"><div><h2>Kegiatan</h2><p>Program dan aktivitas penyuluhan untuk masyarakat.</p></div></div><div className="grid3">{features.map(([i,t,d,link,label])=><article className="card" key={t}><div className="icon">{i}</div><h3>{t}</h3><p>{d}</p><a className="btn primary" href={link} style={{marginTop:10}}>{label}</a></article>)}</div>{kegiatan.length > 0 && <><div style={{marginTop:24}}><h3>Kegiatan Terbaru</h3></div><div className="grid3">{kegiatan.map((item)=><article className="card" key={item.id}><h3>{item.nama_kegiatan}</h3><p><b>{item.penyelenggara}</b> Â· {item.desa}</p><p>{item.deskripsi || "Kegiatan KUA Panca Lautang."}</p><small>{item.tanggal} Â· {item.kategori}</small></article>)}</div><div style={{marginTop:20}}><a className="btn primary" href="/kegiatan">Lihat Semua Kegiatan</a></div></>}</div></section>
+  <div className="listItem">
+    <div className="icon">02</div>
+    <div>
+      <b>Konsultasi dan Pembinaan Keagamaan</b>
+      <span>
+        Informasi konsultasi keagamaan, pembinaan masjid dan majelis taklim,
+        serta edukasi zakat, wakaf, dan kehidupan keluarga.
+      </span>
+      <div style={{ marginTop: 10 }}>
+        <a className="btn primary" href="#kontak">
+          Lihat Informasi Kontak
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div className="listItem">
+    <div className="icon">03</div>
+    <div>
+      <b>Bimbingan Perkawinan dan Keluarga Sakinah</b>
+      <span>
+        Pelajari persiapan calon pengantin, komunikasi pasangan,
+        tanggung jawab keluarga, dan pengelolaan rumah tangga.
+      </span>
+      <div style={{ marginTop: 10 }}>
+        <a className="btn primary" href="/bimbingan-perkawinan">
+          Buka Panduan Bimbingan
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div className="listItem">
+    <div className="icon">04</div>
+    <div>
+      <b>Profil dan Layanan Penyuluh Agama</b>
+      <span>
+        Informasi mengenai peran penyuluh, kegiatan pembinaan,
+        dan wilayah layanan akan ditampilkan setelah data petugas
+        diverifikasi.
+      </span>
+      <div style={{ marginTop: 10 }}>
+        <a className="btn primary" href="/profil">
+          Lihat Profil KUA
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+      </div>
+    </div>
+  </section>
+
+
+      <section id="kegiatan" className="section" style={{paddingTop:0}}><div className="wrap"><div className="sectionHead"><div><h2>Kegiatan</h2><p>Program dan aktivitas penyuluhan untuk masyarakat.</p></div></div><div className="grid3">{features.map(([i,t,d,link,label])=><article className="card" key={t}><div className="icon">{i}</div><h3>{t}</h3><p>{d}</p><a className="btn primary" href={link} style={{marginTop:10}}>{label}</a></article>)}</div>{kegiatan.length > 0 && <><div style={{marginTop:24}}><h3>Kegiatan Terbaru</h3></div><div className="grid3">{kegiatan.map((item)=><article className="card" key={item.id}><h3>{item.nama_kegiatan}</h3><p><b>{item.penyelenggara}</b> Ã‚Â· {item.desa}</p><p>{item.deskripsi || "Kegiatan KUA Panca Lautang."}</p><small>{item.tanggal} Ã‚Â· {item.kategori}</small></article>)}</div><div style={{marginTop:20}}><a className="btn primary" href="/kegiatan">Lihat Semua Kegiatan</a></div></>}</div></section>
 
       <section id="berita" className="section news">
         <div className="wrap">
@@ -338,8 +393,76 @@ const [selectedGallery, setSelectedGallery] = useState(null);
     </div>
     </div>
     </section>
-      <section id="kontak" className="section"><div className="wrap"><div className="sectionHead"><div><h2>Kontak</h2><p>Informasi kontak resmi dapat dilengkapi setelah data layanan final.</p></div></div><div className="contact"><div className="contactCard"><div className="icon">LOK</div><h3>KUA Kecamatan Panca Lautang</h3><p style={{color:'var(--muted)',lineHeight:1.7}}>Panca Lautang, Kabupaten Sidenreng Rappang, Sulawesi Selatan.</p></div><div className="contactCard"><div className="icon">WEB</div><h3>Website</h3><p style={{color:'var(--muted)',lineHeight:1.7}}>kua-pancalautang.my.id</p><a className="btn primary" href="https://kua-pancalautang.my.id" target="_blank" rel="noreferrer">Buka domain</a></div></div></div></section>
-    </main>
+    
+<section id="kontak" className="section">
+  <div className="wrap">
+    <div className="sectionHead">
+      <div>
+        <h2>Kontak</h2>
+        <p>Informasi kontak resmi dapat dilengkapi setelah data layanan final.</p>
+      </div>
+    </div>
+
+    <div className="contact">
+      <div className="contactCard">
+        <div className="icon">LOK</div>
+        <h3>KUA Kecamatan Panca Lautang</h3>
+        <p style={{ color: "var(--muted)", lineHeight: 1.7 }}>
+          Panca Lautang, Kabupaten Sidenreng Rappang, Sulawesi Selatan.
+        </p>
+        <a
+          className="btn primary"
+          
+href="https://www.google.com/maps/search/?api=1&query=KUA%20Panca%20Lautang%2C%20Panca%20Lautang%2C%20Sidenreng%20Rappang%2C%20Sulawesi%20Selatan"
+
+          target="_blank"
+          rel="noreferrer"
+        >
+          Buka di Google Maps
+        </a>
+      </div>
+
+      <div className="contactCard">
+        <div className="icon">WEB</div>
+        <h3>Website</h3>
+        <p style={{ color: "var(--muted)", lineHeight: 1.7 }}>
+          kua-pancalautang.my.id
+        </p>
+        <a
+          className="btn primary"
+          href="https://kua-pancalautang.my.id"
+          target="_blank"
+          rel="noreferrer"
+        >
+          Buka domain
+        </a>
+      </div>
+    </div>
+
+    <div
+      style={{
+        marginTop: 24,
+        borderRadius: 16,
+        overflow: "hidden",
+        border: "1px solid var(--border, #e2e8f0)",
+      }}
+    >
+      <iframe
+        title="Peta Lokasi KUA Kecamatan Panca Lautang"
+        
+src="https://maps.google.com/maps?q=KUA%20Panca%20Lautang%2C%20Panca%20Lautang%2C%20Sidenreng%20Rappang%2C%20Sulawesi%20Selatan&output=embed"
+
+        width="100%"
+        height="380"
+        style={{ border: 0, display: "block" }}
+        loading="lazy"
+        referrerPolicy="strict-origin-when-cross-origin"
+        allowFullScreen
+      />
+    </div>
+  </div>
+</section>
+</main>
 
 <section
   id="disclaimer"
@@ -453,3 +576,4 @@ const [selectedGallery, setSelectedGallery] = useState(null);
 <TanyaAnto />
   </>;
 }
+
