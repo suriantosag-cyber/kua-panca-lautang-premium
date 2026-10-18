@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 import TanyaAnto from './components/TanyaAnto';
 import JadwalNikah from './components/JadwalNikah';
 import StatistikLayanan from './components/StatistikLayanan';
@@ -138,7 +138,7 @@ const [selectedGallery, setSelectedGallery] = useState(null);
         <b>Checklist Persiapan Dokumen</b>
         <ul style={{ margin: "10px 0 0 18px", padding: 0, fontSize: 13, lineHeight: 1.8 }}>
           <li>KTP dan Kartu Keluarga calon pengantin.</li>
-          <li>Surat pengantar atau dokumen persyaratan dari desa/kelurahan sesuai prosedur.</li>
+          <li>Surat atau formulir persyaratan dari desa/kelurahan, termasuk N1–N4 jika dipersyaratkan sesuai ketentuan dan kondisi calon pengantin.</li>
           <li>Akta kelahiran atau dokumen pendukung jika dipersyaratkan.</li>
           <li>Pasfoto sesuai ketentuan yang berlaku.</li>
           <li>Dokumen tambahan sesuai keadaan, misalnya akta cerai atau surat kematian pasangan terdahulu jika relevan.</li>
@@ -155,7 +155,7 @@ const [selectedGallery, setSelectedGallery] = useState(null);
         <b>Alur Singkat</b>
         <ol style={{ margin: "8px 0 0 18px", padding: 0, fontSize: 13, lineHeight: 1.8 }}>
           <li>Siapkan dokumen dan konfirmasikan persyaratan kepada petugas.</li>
-          <li>Ikuti petunjuk pendaftaran melalui SIMKAH atau KUA sesuai prosedur.</li>
+          <li>Ikuti petunjuk pendaftaran nikah melalui SIMKAH resmi atau petugas KUA. Pastikan data dan dokumen diisi sesuai petunjuk yang berlaku.</li>
           <li>Lengkapi dokumen dan ikuti pemeriksaan berkas dari petugas.</li>
           <li>Ikuti jadwal dan arahan layanan yang telah dikonfirmasi.</li>
         </ol>
@@ -168,8 +168,12 @@ const [selectedGallery, setSelectedGallery] = useState(null);
     <div>
       <b>Konsultasi dan Pembinaan Keagamaan</b>
       <span>
-        Informasi konsultasi keagamaan, pembinaan masjid dan majelis taklim,
-        serta edukasi zakat, wakaf, dan kehidupan keluarga.
+        Layanan konsultasi dan pembinaan bagi masyarakat meliputi konsultasi
+        keagamaan, bimbingan pranikah, pembinaan masjid dan majelis taklim,
+        serta informasi zakat dan wakaf. Masyarakat dapat menghubungi atau
+        datang ke KUA untuk menanyakan prosedur dan jadwal layanan yang tersedia.
+        Konsultasi masalah keluarga akan diarahkan kepada petugas yang sesuai
+        dengan tetap memperhatikan privasi.
       </span>
       <div style={{ marginTop: 10 }}>
         <a className="btn primary" href="#kontak">
@@ -576,4 +580,3 @@ src="https://maps.google.com/maps?q=KUA%20Panca%20Lautang%2C%20Panca%20Lautang%2
 <TanyaAnto />
   </>;
 }
-
