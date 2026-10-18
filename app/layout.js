@@ -1,5 +1,5 @@
 import './globals.css';
-
+import Navbar from './components/Navbar';
 export const metadata = {
   metadataBase: new URL('https://kua-pancalautang.my.id'),
 
@@ -52,7 +52,10 @@ export const metadata = {
 export default function RootLayout({ children }) {
   return (
     <html lang="id">
-      <body>{children}</body>
-    </html>
+     <body>
+  <Navbar />
+  {children}
+</body>
+  </html>
   );
 }

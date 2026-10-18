@@ -1200,3 +1200,198 @@
 .statistikCardLink strong {
   text-decoration: none;
 }
+/* ===== NAVBAR RESPONSIF KUA PANCA LAUTANG ===== */
+.kuaNavbar {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+}
+
+.kuaNavInner {
+  position: relative;
+}
+
+.kuaNavLinks {
+  align-items: center;
+}
+
+.kuaNavGroup {
+  position: relative;
+}
+
+.kuaDropdownToggle {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  padding: 9px 7px;
+  border: 0;
+  border-radius: 8px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.kuaDropdownToggle:hover,
+.kuaDropdownToggle:focus-visible {
+  color: var(--brand);
+  outline-offset: 3px;
+}
+
+.kuaDropdown {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  min-width: 225px;
+  padding: 8px;
+  border: 1px solid rgba(120, 140, 130, 0.22);
+  border-radius: 12px;
+  background: var(--bg, #fff);
+  color: var(--ink, #24352d);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.13);
+  z-index: 1001;
+}
+
+.kuaDropdown.isExpanded {
+  display: flex;
+  flex-direction: column;
+}
+
+.kuaDropdown a {
+  display: block;
+  padding: 10px 12px;
+  border-radius: 7px;
+  font-size: 13px;
+  line-height: 1.45;
+}
+
+.kuaDropdown a:hover,
+.kuaDropdown a:focus-visible {
+  background: rgba(13, 107, 80, 0.09);
+  color: var(--brand);
+  outline-offset: -2px;
+}
+
+.kuaMenuToggle {
+  display: none;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 12px;
+  border: 1px solid rgba(120, 140, 130, 0.35);
+  border-radius: 9px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.kuaMenuToggle:focus-visible {
+  outline: 2px solid var(--brand);
+  outline-offset: 3px;
+}
+
+@media (max-width: 900px) {
+  .kuaNavInner {
+    flex-wrap: wrap;
+    min-height: 74px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+  }
+
+  .kuaMenuToggle {
+    display: inline-flex;
+    margin-left: auto;
+  }
+
+  .kuaNavLinks {
+    display: none;
+    flex: 0 0 100%;
+    width: 100%;
+    align-items: stretch;
+    flex-direction: column;
+    gap: 4px;
+    padding: 12px 0 4px;
+  }
+
+  .kuaNavLinks.isOpen {
+    display: flex;
+  }
+
+  .kuaNavLinks > a,
+  .kuaDropdownToggle {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    text-align: left;
+    padding: 12px;
+  }
+
+  .kuaNavGroup {
+    width: 100%;
+  }
+
+  .kuaDropdown {
+    position: static;
+    min-width: 0;
+    margin: 2px 0 8px;
+    box-shadow: none;
+  }
+}
+
+
+/* Running text pengumuman manual KUA */
+.pengumumanTicker {
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  width: 100%;
+  background: #fff8e7;
+  color: #493713;
+  border-bottom: 1px solid #ead8aa;
+}
+
+.pengumumanTickerLabel {
+  flex-shrink: 0;
+  padding: 12px 16px;
+  background: #8b5e16;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 800;
+  z-index: 1;
+}
+
+.pengumumanTickerTrack {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.pengumumanTickerMove {
+  display: inline-block;
+  padding-left: 100%;
+  animation: pengumumanBerjalan 28s linear infinite;
+}
+
+.pengumumanTickerMove span {
+  display: inline-block;
+  padding-right: 40px;
+  font-size: 13px;
+  font-weight: 600;
+}
+
+@keyframes pengumumanBerjalan {
+  from { transform: translateX(0); }
+  to { transform: translateX(-100%); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pengumumanTickerMove {
+    animation: none;
+    padding-left: 12px;
+  }
+}
