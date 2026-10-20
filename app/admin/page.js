@@ -17,6 +17,12 @@ export default function AdminPage() {
   const [editingId, setEditingId] = useState(null);
   const [loading, setLoading] = useState(false);
   const [message, setMessage] = useState("");
+  const [pengumuman, setPengumuman] = useState({
+    judul: "PENGUMUMAN KUA PANCA LAUTANG",
+    isi: "Mohon pastikan dokumen persyaratan lengkap sebelum mengurus layanan di KUA.",
+    aktif: true,
+  });
+  const [pengumumanLoading, setPengumumanLoading] = useState(false);
 
   const [gallery, setGallery] = useState([]);
 const [kegiatan, setKegiatan] = useState([]);
@@ -190,11 +196,51 @@ const result = await response.json();
     }
   }
 
+  async function loadPengumuman() {
+    try {
+      const response = await adminFetch("/api/pengumuman", { cache: "no-store" });
+      const result = await response.json();
+      if (!response.ok || !result.ok) throw new Error(result.error || "Gagal memuat pengumuman.");
+      if (result.data) {
+        setPengumuman({
+          judul: result.data.judul || "",
+          isi: result.data.isi || "",
+          aktif: result.data.aktif !== false,
+        });
+      }
+    } catch (error) {
+      console.error("Gagal memuat pengumuman:", error);
+      setMessage(`Gagal memuat pengumuman: ${error.message}`);
+    }
+  }
+
+  async function savePengumuman(e) {
+    e.preventDefault();
+    setPengumumanLoading(true);
+    setMessage("");
+    try {
+      const response = await adminFetch("/api/pengumuman", {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(pengumuman),
+      });
+      const result = await response.json();
+      if (!response.ok || !result.ok) throw new Error(result.error || "Gagal menyimpan pengumuman.");
+      setPengumuman(result.data);
+      setMessage("Pengumuman berhasil disimpan.");
+    } catch (error) {
+      console.error("Gagal menyimpan pengumuman:", error);
+      setMessage(`Gagal menyimpan pengumuman: ${error.message}`);
+    } finally {
+      setPengumumanLoading(false);
+    }
+  }
   useEffect(() => {
   if (loggedIn) {
     loadNews();
     loadGallery();
     loadKegiatan();
+    loadPengumuman();
   }
   }, [loggedIn]);
 
@@ -449,6 +495,39 @@ const result = await response.json();
         <h1>Dashboard Admin</h1>
         <p style={{ color: "#667085" }}>KUA Panca Lautang - Kelola Berita</p>
         <a href="/admin/laporan" style={{ display: "inline-block", margin: "12px 0 20px", padding: "10px 16px", background: "#146c43", color: "#fff", borderRadius: 8, textDecoration: "none", fontWeight: 600 }}>Rekapitulasi Kinerja Tahunan</a>
+        <section style={{ background: "#fff", padding: 24, borderRadius: 16, boxShadow: "0 5px 20px rgba(0,0,0,.06)", marginTop: 24 }}>
+          <h2>Kelola Pengumuman</h2>
+          <p style={{ color: "#667085" }}>Ubah pengumuman yang tampil di halaman utama website KUA.</p>
+          <form onSubmit={savePengumuman}>
+            <label>Judul Pengumuman</label>
+            <input
+              type="text"
+              value={pengumuman.judul}
+              onChange={(e) => setPengumuman((prev) => ({ ...prev, judul: e.target.value }))}
+              required
+              style={{ width: "100%", padding: 12, margin: "8px 0 18px", boxSizing: "border-box", border: "1px solid #d0d5dd", borderRadius: 10 }}
+            />
+            <label>Isi Pengumuman</label>
+            <textarea
+              value={pengumuman.isi}
+              onChange={(e) => setPengumuman((prev) => ({ ...prev, isi: e.target.value }))}
+              required
+              rows={4}
+              style={{ width: "100%", padding: 12, margin: "8px 0 18px", boxSizing: "border-box", border: "1px solid #d0d5dd", borderRadius: 10 }}
+            />
+            <label style={{ display: "flex", alignItems: "center", gap: 8, margin: "0 0 16px" }}>
+              <input
+                type="checkbox"
+                checked={pengumuman.aktif}
+                onChange={(e) => setPengumuman((prev) => ({ ...prev, aktif: e.target.checked }))}
+              />
+              Pengumuman aktif di halaman utama
+            </label>
+            <button type="submit" disabled={pengumumanLoading} style={{ padding: "12px 20px", background: "#146c43", color: "#fff", border: 0, borderRadius: 10, cursor: pengumumanLoading ? "wait" : "pointer", fontWeight: 600 }}>
+              {pengumumanLoading ? "Menyimpan..." : "Simpan Pengumuman"}
+            </button>
+          </form>
+        </section>
         <section
           style={{
             background: "#fff",

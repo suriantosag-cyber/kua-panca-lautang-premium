@@ -16,6 +16,11 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const [gallery, setGallery] = useState([]);
   const [kegiatan, setKegiatan] = useState([]);
+  const [pengumuman, setPengumuman] = useState({
+    judul: 'PENGUMUMAN KUA PANCA LAUTANG',
+    isi: 'Mohon pastikan dokumen persyaratan lengkap sebelum mengurus layanan di KUA.',
+    aktif: true,
+  });
 const [selectedGallery, setSelectedGallery] = useState(null);
 
   useEffect(() => {
@@ -24,6 +29,12 @@ const [selectedGallery, setSelectedGallery] = useState(null);
     fetch('/api/news').then(r => r.json()).then(j => setNews(j?.data || [])).catch(() => setNews([])).finally(() => setLoading(false));
     fetch('/api/gallery').then(r => r.json()).then(result => { if (result.ok) setGallery(result.data || []); }).catch(() => setGallery([]));
     fetch('/api/kegiatan-publik').then(r => r.json()).then(result => { if (result.ok) setKegiatan((result.data || []).slice(0, 3)); }).catch(() => setKegiatan([]));
+    fetch('/api/pengumuman', { cache: 'no-store' })
+      .then(r => r.json())
+      .then(result => {
+        if (result.ok && result.data) setPengumuman(result.data);
+      })
+      .catch(() => {});
   }, []);
 
   const newsImageUrls = new Set(
@@ -62,20 +73,18 @@ const [selectedGallery, setSelectedGallery] = useState(null);
     </div>
   </div>
 </div>
-<div className="pengumumanTicker">
-  <div className="pengumumanTickerLabel">
-    <span aria-hidden="true">[INFO]</span> PENGUMUMAN KUA PANCA LAUTANG
-  </div>
-  <div className="pengumumanTickerTrack">
-    <div className="pengumumanTickerMove">
-      <span>
-        Mohon pastikan dokumen persyaratan lengkap sebelum mengurus
-        layanan di KUA. &nbsp;  - Melayani dengan sepenuh hati.
-      </span>
+{pengumuman?.aktif !== false && pengumuman && (
+  <div className="pengumumanTicker">
+    <div className="pengumumanTickerLabel">
+      <span aria-hidden="true">[INFO]</span> {pengumuman.judul || 'PENGUMUMAN KUA PANCA LAUTANG'}
+    </div>
+    <div className="pengumumanTickerTrack">
+      <div className="pengumumanTickerMove">
+        <span>{pengumuman.isi} &nbsp; - Melayani dengan sepenuh hati.</span>
+      </div>
     </div>
   </div>
-</div>
-
+)}
 
       <section id="beranda" className="hero">
         <div className="wrap heroGrid">
