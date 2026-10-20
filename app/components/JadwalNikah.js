@@ -109,75 +109,62 @@ export default function JadwalNikah() {
   }
 
   return (
-    <section id="jadwal-nikah" className="jadwalNikah">
-      <div className="wrap">
-        <div className="jadwalNikahCard jadwalNikahCardResmi">
-          <header className="jadwalNikahHeader">
-            <div className="jadwalNikahIcon" aria-hidden="true">
-              <span>JN</span>
+    <section id="jadwal-nikah" className="jadwalNikahSeo" aria-labelledby="jadwal-nikah-seo">
+      <div className="jadwalHomeHeading">
+        <span className="jadwalHomeEyebrow">KUA KECAMATAN PANCA LAUTANG</span>
+        <h2 id="jadwal-nikah-seo">Jadwal Nikah Terdekat</h2>
+        <p>Informasi akad nikah mendatang di wilayah Kecamatan Panca Lautang.</p>
+      </div>
+
+      <div className="jadwalHomeColumns">
+        <div className="jadwalHomeList">
+          <h3 className="jadwalHomeSubheading">Agenda Akad Nikah</h3>
+
+          {loading ? (
+            <p className="jadwalHomeEmpty">Memuat jadwal nikah...</p>
+          ) : jadwal.length > 0 ? (
+            <div className="jadwalHomeItems">
+              {jadwal.map((item) => (
+                <article className="jadwalHomeItem" key={item.id}>
+                  <p className="jadwalHomeDate">{formatTanggal(item.tanggal)}</p>
+                  <h4>{item.pengantin || 'Nama belum tersedia'}</h4>
+                  <p><strong>Waktu:</strong> {formatWaktu(item.waktu)}</p>
+                  <p><strong>Lokasi:</strong> {item.desa || '-'}{item.lokasi ? ` — ${item.lokasi}` : ''}</p>
+                  <div className="jadwalNikahActions">
+                    <button type="button" onClick={() => shareWhatsApp(item)} className="jadwalNikahButton jadwalNikahWhatsApp">WhatsApp</button>
+                    <button type="button" onClick={copyLink} className="jadwalNikahButton">{copied ? 'Tersalin' : 'Salin Tautan'}</button>
+                    <button type="button" onClick={() => sharePage(item)} className="jadwalNikahButton">Bagikan</button>
+                  </div>
+                </article>
+              ))}
             </div>
-            <span className="jadwalNikahLabel">LAYANAN INFORMASI</span>
-            <h2>Jadwal Nikah</h2>
-            <p>KANTOR URUSAN AGAMA KECAMATAN PANCA LAUTANG</p>
-            <div className="jadwalNikahOrnamen" aria-hidden="true" />
-          </header>
-
-          <div className="jadwalNikahInfo">
-            <p className="jadwalNikahIntro">
-              Informasi jadwal akad nikah terdekat di wilayah pelayanan
-              KUA Panca Lautang.
-            </p>
-
-            {loading ? (
-              <div className="jadwalNikahEmpty">Memuat jadwal nikah...</div>
-            ) : jadwal.length === 0 ? (
-              <div className="jadwalNikahEmpty">
-                Belum ada jadwal nikah yang akan datang.
-              </div>
-            ) : (
-              <div className="jadwalNikahDetail jadwalNikahGrid">
-                {jadwal.map((item) => (
-                  <article className="jadwalNikahItem" key={item.id}>
-                    <small>{formatTanggal(item.tanggal)}</small>
-                    <strong>{item.pengantin || 'Nama belum tersedia'}</strong>
-                    <div className="jadwalNikahMeta">
-                      <span>Waktu</span>
-                      <b>{formatWaktu(item.waktu)}</b>
-                    </div>
-                    <div className="jadwalNikahMeta">
-                      <span>Lokasi</span>
-                      <b>{item.desa || '-'} - {item.lokasi || '-'}</b>
-                    </div>
-
-                    <div className="jadwalNikahActions">
-                      <button
-                        type="button"
-                        onClick={() => shareWhatsApp(item)}
-                        className="jadwalNikahButton jadwalNikahWhatsApp"
-                      >
-                        WhatsApp
-                      </button>
-                      <button
-                        type="button"
-                        onClick={copyLink}
-                        className="jadwalNikahButton"
-                      >
-                        {copied ? 'Tersalin' : 'Salin Tautan'}
-                      </button>
-                      <button
-                        type="button"
-                        onClick={() => sharePage(item)}
-                        className="jadwalNikahButton"
-                      >
-                        Bagikan
-                      </button>
-                    </div>
-                  </article>
-                ))}
-              </div>
-            )}
-          </div>
+          ) : (
+            <p className="jadwalHomeEmpty">Belum ada jadwal akad nikah mendatang yang tersedia.</p>
+          )}
         </div>
+
+        <div className="jadwalHomePoster">
+          <h3 className="jadwalHomeSubheading">Poster Jadwal Nikah</h3>
+          <a className="jadwalHomePosterLink" href="/jadwal-nikah" aria-label="Buka halaman lengkap Jadwal Nikah">
+            <img src="/poster/jadwal-nikah.png" alt="Poster Jadwal Nikah KUA Kecamatan Panca Lautang" loading="lazy" />
+            <span>Lihat jadwal lengkap</span>
+          </a>
+        </div>
+
+        <aside className="jadwalHomeInfo">
+          <h3 className="jadwalHomeSubheading">Informasi Layanan</h3>
+          <div className="jadwalHomeInfoBlock">
+            <span className="jadwalHomeInfoIcon" aria-hidden="true">📋</span>
+            <h4>Persiapan dokumen</h4>
+            <p>Calon pengantin disarankan memastikan persyaratan administrasi telah lengkap sebelum proses pendaftaran.</p>
+          </div>
+          <div className="jadwalHomeInfoBlock">
+            <span className="jadwalHomeInfoIcon" aria-hidden="true">🤝</span>
+            <h4>Konsultasi dan bimbingan</h4>
+            <p>Untuk informasi layanan, silakan menghubungi atau datang langsung ke KUA Kecamatan Panca Lautang.</p>
+          </div>
+          <a className="jadwalHomeInfoLink" href="/jadwal-nikah">Buka informasi jadwal <span aria-hidden="true">→</span></a>
+        </aside>
       </div>
     </section>
   );

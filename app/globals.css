@@ -1395,3 +1395,120 @@
     padding-left: 12px;
   }
 }
+
+
+/* Tata letak khusus jadwal nikah di halaman utama */
+.jadwalNikahSeo .jadwalHomeHeading {
+  margin: 0 auto 28px;
+  max-width: 760px;
+  text-align: center;
+}
+.jadwalNikahSeo .jadwalHomeEyebrow {
+  display: inline-block;
+  margin-bottom: 8px;
+  font-size: .76rem;
+  font-weight: 800;
+  letter-spacing: .12em;
+  color: var(--accent, #0f766e);
+}
+.jadwalNikahSeo .jadwalHomeHeading h2 { margin: 0 0 10px; }
+.jadwalNikahSeo .jadwalHomeHeading p { margin: 0; }
+.jadwalNikahSeo .jadwalHomeColumns {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr) minmax(0, .9fr);
+  align-items: start;
+  gap: 22px;
+}
+.jadwalNikahSeo .jadwalHomeList,
+.jadwalNikahSeo .jadwalHomePoster,
+.jadwalNikahSeo .jadwalHomeInfo {
+  min-width: 0;
+  padding: 20px;
+  border: 1px solid rgba(127,127,127,.2);
+  border-radius: 18px;
+  background: var(--card, #fff);
+  box-shadow: 0 8px 24px rgba(0,0,0,.06);
+}
+.jadwalNikahSeo .jadwalHomeSubheading {
+  margin: 0 0 16px;
+  font-size: 1.05rem;
+  line-height: 1.4;
+}
+.jadwalNikahSeo .jadwalHomeItems { display: grid; gap: 12px; }
+.jadwalNikahSeo .jadwalHomeItem {
+  padding: 14px;
+  border: 1px solid rgba(127,127,127,.18);
+  border-radius: 12px;
+  background: var(--background, #f8fafc);
+  overflow-wrap: anywhere;
+}
+.jadwalNikahSeo .jadwalHomeItem p {
+  margin: 6px 0 0;
+  font-size: .9rem;
+  line-height: 1.55;
+}
+.jadwalNikahSeo .jadwalHomeItem .jadwalHomeDate {
+  margin: 0;
+  font-size: .8rem;
+  font-weight: 700;
+  color: var(--accent, #0f766e);
+}
+.jadwalNikahSeo .jadwalHomeItem h4 { margin: 6px 0; font-size: 1rem; }
+.jadwalNikahSeo .jadwalHomePosterLink {
+  display: block;
+  color: inherit;
+  text-decoration: none;
+}
+.jadwalNikahSeo .jadwalHomePosterLink img {
+  display: block;
+  width: 100%;
+  height: auto;
+  max-height: 460px;
+  object-fit: contain;
+  border-radius: 10px;
+}
+.jadwalNikahSeo .jadwalHomePosterLink span {
+  display: block;
+  margin-top: 14px;
+  padding: 11px 14px;
+  border-radius: 10px;
+  background: var(--accent, #0f766e);
+  color: #fff;
+  font-weight: 700;
+  text-align: center;
+}
+.jadwalNikahSeo .jadwalHomeInfoBlock { margin-bottom: 18px; }
+.jadwalNikahSeo .jadwalHomeInfoIcon { font-size: 1.5rem; }
+.jadwalNikahSeo .jadwalHomeInfoBlock h4 {
+  margin: 8px 0 6px;
+  font-size: .98rem;
+}
+.jadwalNikahSeo .jadwalHomeInfoBlock p,
+.jadwalNikahSeo .jadwalHomeEmpty {
+  margin: 0;
+  font-size: .91rem;
+  line-height: 1.65;
+  overflow-wrap: anywhere;
+}
+.jadwalNikahSeo .jadwalHomeInfoLink {
+  display: inline-block;
+  margin-top: 2px;
+  font-weight: 700;
+  text-decoration: none;
+}
+@media (max-width: 1050px) {
+  .jadwalNikahSeo .jadwalHomeColumns {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  }
+  .jadwalNikahSeo .jadwalHomeInfo { grid-column: 1 / -1; }
+}
+@media (max-width: 680px) {
+  .jadwalNikahSeo .jadwalHomeColumns {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 16px;
+  }
+  .jadwalNikahSeo .jadwalHomeInfo { grid-column: auto; }
+  .jadwalNikahSeo .jadwalHomeList,
+  .jadwalNikahSeo .jadwalHomePoster,
+  .jadwalNikahSeo .jadwalHomeInfo { padding: 16px; }
+}
