@@ -16,11 +16,7 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const [gallery, setGallery] = useState([]);
   const [kegiatan, setKegiatan] = useState([]);
-  const [pengumuman, setPengumuman] = useState({
-    judul: 'PENGUMUMAN KUA PANCA LAUTANG',
-    isi: 'Mohon pastikan dokumen persyaratan lengkap sebelum mengurus layanan di KUA.',
-    aktif: true,
-  });
+ const [pengumuman, setPengumuman] = useState(null);
 const [selectedGallery, setSelectedGallery] = useState(null);
 
   useEffect(() => {
