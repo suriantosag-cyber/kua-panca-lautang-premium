@@ -207,6 +207,22 @@ const [selectedGallery, setSelectedGallery] = useState(null);
   <div className="listItem">
     <div className="icon">04</div>
     <div>
+      <b>Bimbingan Remaja Usia Sekolah (BRUS)</b>
+      <span>
+        Ruang edukasi bagi remaja untuk memperkuat akhlak,
+        pergaulan sehat, tanggung jawab, dan kesiapan merencanakan masa depan.
+      </span>
+      <div style={{ marginTop: 10 }}>
+        <a className="btn primary" href="/brus">
+          Buka Materi BRUS
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div className="listItem">
+    <div className="icon">05</div>
+    <div>
       <b>Profil dan Layanan Penyuluh Agama</b>
       <span>
         Informasi mengenai peran penyuluh, kegiatan pembinaan,
@@ -585,4 +601,5 @@ src="https://maps.google.com/maps?q=KUA%20Panca%20Lautang%2C%20Panca%20Lautang%2
 <TanyaAnto />
   </>;
 }
+
 
