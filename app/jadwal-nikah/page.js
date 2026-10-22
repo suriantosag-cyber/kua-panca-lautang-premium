@@ -1,4 +1,6 @@
+
 import Link from 'next/link';
+import JadwalNikahLengkap from '../components/JadwalNikahLengkap';
 
 const posterUrl = 'https://kua-pancalautang.my.id/poster/poster-pengantin.png';
 const shareUrl = 'https://kua-pancalautang.my.id/jadwal-nikah';
@@ -31,19 +33,16 @@ export const metadata = {
   },
 };
 
-export default function JadwalNikahSharePage() {
+export default async function JadwalNikahSharePage({ searchParams }) {
+  const params = await searchParams;
+  const jadwalId = typeof params?.id === 'string' ? params.id : '';
+
   return (
     <main style={{ maxWidth: 900, margin: '0 auto', padding: '24px 16px', textAlign: 'center' }}>
-      <h1>Jadwal Nikah KUA Panca Lautang</h1>
-      <p>Informasi jadwal akad nikah di wilayah Kecamatan Panca Lautang.</p>
-      <img
-        src="/poster/poster-pengantin.png"
-        alt="Poster Jadwal Nikah KUA Panca Lautang"
-        style={{ display: 'block', width: '100%', height: 'auto', borderRadius: 12 }}
-      />
       <p>
         <Link href="/">Kembali ke website KUA Panca Lautang</Link>
       </p>
+      <JadwalNikahLengkap selectedId={jadwalId} />
     </main>
   );
 }

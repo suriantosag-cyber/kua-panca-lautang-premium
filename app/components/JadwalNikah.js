@@ -71,28 +71,46 @@ export default function JadwalNikah() {
     ].join('\n');
   }
 
-  async function shareWhatsApp(item) {
-    const shareUrl = 'https://kua-pancalautang.my.id/jadwal-nikah';
-    const message = `${getShareText(item)}\n\nLihat poster jadwal: ${shareUrl}`;
-    const url = `https://wa.me/?text=${encodeURIComponent(message)}`;
-    window.open(url, '_blank', 'noopener,noreferrer');
+ async function shareWhatsApp(item) {
+  const url = new URL('https://kua-pancalautang.my.id/jadwal-nikah');
+
+  if (item?.id != null) {
+    url.searchParams.set('id', String(item.id));
   }
 
-  async function copyLink() {
+  const shareUrl = url.toString();
+  const message = `${getShareText(item)}\n\nLihat jadwal lengkap: ${shareUrl}`;
+  const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
+
+  window.open(whatsappUrl, '_blank', 'noopener,noreferrer');
+}
+
+  async function copyLink(item) {
+    const url = new URL('https://kua-pancalautang.my.id/jadwal-nikah');
+
+    if (item?.id != null) {
+      url.searchParams.set('id', String(item.id));
+    }
+
     try {
-      await navigator.clipboard.writeText('https://kua-pancalautang.my.id/jadwal-nikah');
+      await navigator.clipboard.writeText(url.toString());
       setCopied(true);
       setTimeout(() => setCopied(false), 2000);
     } catch {
-      window.prompt('Salin tautan Jadwal Nikah:', 'https://kua-pancalautang.my.id/jadwal-nikah');
+      window.prompt('Salin tautan Jadwal Nikah:', url.toString());
     }
   }
+async function sharePage(item) {
+    const url = new URL('https://kua-pancalautang.my.id/jadwal-nikah');
 
-  async function sharePage(item) {
+    if (item?.id != null) {
+      url.searchParams.set('id', String(item.id));
+    }
+
     const shareData = {
       title: 'Jadwal Nikah KUA Panca Lautang',
       text: getShareText(item),
-      url: 'https://kua-pancalautang.my.id/jadwal-nikah',
+      url: url.toString(),
     };
 
     if (navigator.share) {
@@ -104,9 +122,15 @@ export default function JadwalNikah() {
         }
       }
     } else {
-      await copyLink();
+      try {
+        await navigator.clipboard.writeText(url.toString());
+        window.alert('Tautan jadwal berhasil disalin.');
+      } catch {
+        window.prompt('Salin tautan Jadwal Nikah:', url.toString());
+      }
     }
   }
+
 
   return (
     <section id="jadwal-nikah" className="jadwalNikahSeo" aria-labelledby="jadwal-nikah-seo">
@@ -129,10 +153,10 @@ export default function JadwalNikah() {
                   <p className="jadwalHomeDate">{formatTanggal(item.tanggal)}</p>
                   <h4>{item.pengantin || 'Nama belum tersedia'}</h4>
                   <p><strong>Waktu:</strong> {formatWaktu(item.waktu)}</p>
-                  <p><strong>Lokasi:</strong> {item.desa || '-'}{item.lokasi ? ` — ${item.lokasi}` : ''}</p>
+                  <p><strong>Lokasi:</strong> {item.desa || '-'}{item.lokasi ? ' - ' + item.lokasi : ''}</p>
                   <div className="jadwalNikahActions">
                     <button type="button" onClick={() => shareWhatsApp(item)} className="jadwalNikahButton jadwalNikahWhatsApp">WhatsApp</button>
-                    <button type="button" onClick={copyLink} className="jadwalNikahButton">{copied ? 'Tersalin' : 'Salin Tautan'}</button>
+                    <button type="button" onClick={() => copyLink(item)} className="jadwalNikahButton">{copied ? 'Tersalin' : 'Salin Tautan'}</button>
                     <button type="button" onClick={() => sharePage(item)} className="jadwalNikahButton">Bagikan</button>
                   </div>
                 </article>
@@ -154,16 +178,16 @@ export default function JadwalNikah() {
         <aside className="jadwalHomeInfo">
           <h3 className="jadwalHomeSubheading">Informasi Layanan</h3>
           <div className="jadwalHomeInfoBlock">
-            <span className="jadwalHomeInfoIcon" aria-hidden="true">📋</span>
+            <span className="jadwalHomeInfoIcon" aria-hidden="true">&#x1F4CB;</span>
             <h4>Persiapan dokumen</h4>
             <p>Calon pengantin disarankan memastikan persyaratan administrasi telah lengkap sebelum proses pendaftaran.</p>
           </div>
           <div className="jadwalHomeInfoBlock">
-            <span className="jadwalHomeInfoIcon" aria-hidden="true">🤝</span>
+            <span className="jadwalHomeInfoIcon" aria-hidden="true">&#x1F91D;</span>
             <h4>Konsultasi dan bimbingan</h4>
             <p>Untuk informasi layanan, silakan menghubungi atau datang langsung ke KUA Kecamatan Panca Lautang.</p>
           </div>
-          <a className="jadwalHomeInfoLink" href="/jadwal-nikah">Buka informasi jadwal <span aria-hidden="true">→</span></a>
+          <a className="jadwalHomeInfoLink" href="/jadwal-nikah">Buka informasi jadwal <span aria-hidden="true">&#8594;</span></a>
         </aside>
       </div>
     </section>
