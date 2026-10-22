@@ -37,7 +37,7 @@ export default function JadwalNikahSharePage() {
       <h1>Jadwal Nikah KUA Panca Lautang</h1>
       <p>Informasi jadwal akad nikah di wilayah Kecamatan Panca Lautang.</p>
       <img
-        src="/poster/jadwal-nikah.png"
+        src="/poster/poster-pengantin.png"
         alt="Poster Jadwal Nikah KUA Panca Lautang"
         style={{ display: 'block', width: '100%', height: 'auto', borderRadius: 12 }}
       />
