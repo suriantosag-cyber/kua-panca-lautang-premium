@@ -2,11 +2,13 @@
 import JadwalNikahLengkap from '../components/JadwalNikahLengkap';
 
 const shareUrl = 'https://kua-pancalautang.my.id/jadwal-nikah';
+const posterUrl = 'https://kua-pancalautang.my.id/poster/poster-pengantin.png';
 
 export const metadata = {
   title: 'Jadwal Nikah | KUA Panca Lautang',
   description: 'Informasi jadwal akad nikah terbaru KUA Kecamatan Panca Lautang.',
   alternates: { canonical: shareUrl },
+
   openGraph: {
     title: 'Jadwal Nikah KUA Panca Lautang',
     description: 'Lihat jadwal akad nikah terdekat di Kecamatan Panca Lautang.',
@@ -14,11 +16,19 @@ export const metadata = {
     siteName: 'KUA Panca Lautang',
     locale: 'id_ID',
     type: 'website',
+    images: [
+      {
+        url: posterUrl,
+        alt: 'Poster Jadwal Nikah KUA Panca Lautang',
+      },
+    ],
   },
+
   twitter: {
-    card: 'summary',
+    card: 'summary_large_image',
     title: 'Jadwal Nikah KUA Panca Lautang',
     description: 'Informasi jadwal akad nikah terbaru.',
+    images: [posterUrl],
   },
 };
 
