@@ -144,9 +144,47 @@ export default function JadwalNikah() {
         </div>
 
         <div className="jadwalHomePoster">
-          <h3 className="jadwalHomeSubheading">Poster Jadwal Nikah</h3>
-          <a className="jadwalHomePosterLink" href="/jadwal-nikah" aria-label="Buka halaman lengkap Jadwal Nikah">
-            <img src="/poster/jadwal-nikah.png" alt="Poster Jadwal Nikah KUA Kecamatan Panca Lautang" loading="lazy" />
+          <div className="jadwalPosterDynamic">
+            <div className="jadwalPosterBrand">
+              <span className="jadwalPosterEyebrow">KUA KECAMATAN</span>
+              <h3>PANCA LAUTANG</h3>
+              <p>Melayani dengan Hati, Menuju Keluarga Sakinah</p>
+            </div>
+
+            <div className="jadwalPosterTitle">
+              <span aria-hidden="true">✦ ☾ ✦</span>
+              <h4>Jadwal Nikah</h4>
+              <p>Agenda Akad Terdekat</p>
+            </div>
+
+            {loading ? (
+              <p className="jadwalPosterEmpty">Memuat jadwal nikah...</p>
+            ) : jadwal.length > 0 ? (
+              <div className="jadwalPosterRows">
+                {jadwal.map((item, index) => (
+                  <article className="jadwalPosterRow" key={item.id}>
+                    <div className="jadwalPosterDate">
+                      <span>{new Date(`${item.tanggal}T00:00:00`).toLocaleDateString('id-ID', { day: '2-digit' })}</span>
+                      <small>{new Date(`${item.tanggal}T00:00:00`).toLocaleDateString('id-ID', { month: 'short' })}</small>
+                    </div>
+                    <div className="jadwalPosterDetails">
+                      <span className="jadwalPosterNumber">JADWAL {String(index + 1).padStart(2, '0')}</span>
+                      <strong>{item.pengantin || 'Nama belum tersedia'}</strong>
+                      <span>{formatWaktu(item.waktu)}</span>
+                      <small>{[item.desa, item.lokasi].filter(Boolean).join(' — ') || 'Lokasi belum ditentukan'}</small>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            ) : (
+              <p className="jadwalPosterEmpty">Belum ada jadwal akad nikah mendatang.</p>
+            )}
+
+            <div className="jadwalPosterFooter">
+              Semoga setiap langkah menuju pernikahan mendapatkan ridha Allah SWT.
+            </div>
+          </div>
+          <a className="jadwalHomePosterLink" href="/jadwal-nikah">
             <span>Lihat jadwal lengkap</span>
           </a>
         </div>
@@ -154,12 +192,12 @@ export default function JadwalNikah() {
         <aside className="jadwalHomeInfo">
           <h3 className="jadwalHomeSubheading">Informasi Layanan</h3>
           <div className="jadwalHomeInfoBlock">
-            <span className="jadwalHomeInfoIcon" aria-hidden="true">📋</span>
+            <span className="jadwalHomeInfoIcon" aria-hidden="true">Dok</span>
             <h4>Persiapan dokumen</h4>
             <p>Calon pengantin disarankan memastikan persyaratan administrasi telah lengkap sebelum proses pendaftaran.</p>
           </div>
           <div className="jadwalHomeInfoBlock">
-            <span className="jadwalHomeInfoIcon" aria-hidden="true">🤝</span>
+            <span className="jadwalHomeInfoIcon" aria-hidden="true">Info</span>
             <h4>Konsultasi dan bimbingan</h4>
             <p>Untuk informasi layanan, silakan menghubungi atau datang langsung ke KUA Kecamatan Panca Lautang.</p>
           </div>

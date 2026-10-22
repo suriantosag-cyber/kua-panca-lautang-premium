@@ -1512,3 +1512,350 @@
   .jadwalNikahSeo .jadwalHomePoster,
   .jadwalNikahSeo .jadwalHomeInfo { padding: 16px; }
 }
+
+/* Poster jadwal nikah dinamis - tema hijau dan emas */
+.jadwalNikahSeo .jadwalPosterDynamic {
+  position: relative;
+  overflow: hidden;
+  padding: 18px 14px 14px;
+  border: 1px solid #d8bd67;
+  border-radius: 16px;
+  background:
+    radial-gradient(ellipse at top right, rgba(222, 196, 111, .24), transparent 45%),
+    linear-gradient(155deg, #f9f8e9 0%, #fffdf5 48%, #e9f2df 100%);
+  color: #064e3b;
+  box-shadow: 0 8px 22px rgba(6, 78, 59, .12);
+}
+.jadwalNikahSeo .jadwalPosterBrand {
+  padding-bottom: 12px;
+  border-bottom: 1px solid rgba(6, 78, 59, .18);
+  text-align: center;
+}
+.jadwalNikahSeo .jadwalPosterEyebrow {
+  font-size: .62rem;
+  font-weight: 800;
+  letter-spacing: .13em;
+}
+.jadwalNikahSeo .jadwalPosterBrand h3 {
+  margin: 4px 0;
+  color: #07543e;
+  font-size: 1.05rem;
+  line-height: 1.25;
+}
+.jadwalNikahSeo .jadwalPosterBrand p {
+  margin: 4px 0 0;
+  font-size: .68rem;
+  line-height: 1.45;
+  font-style: italic;
+}
+.jadwalNikahSeo .jadwalPosterTitle {
+  margin: 14px 0;
+  padding: 12px 6px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #064e3b, #087653);
+  color: #fffdf0;
+  text-align: center;
+  box-shadow: 0 4px 0 #d7b95e;
+}
+.jadwalNikahSeo .jadwalPosterTitle > span {
+  color: #f5d879;
+  font-size: .8rem;
+}
+.jadwalNikahSeo .jadwalPosterTitle h4 {
+  margin: 3px 0;
+  font-size: 1.45rem;
+  line-height: 1.25;
+}
+.jadwalNikahSeo .jadwalPosterTitle p {
+  margin: 0;
+  color: #f5df9c;
+  font-size: .78rem;
+  font-weight: 700;
+}
+.jadwalNikahSeo .jadwalPosterRows {
+  display: grid;
+  gap: 9px;
+}
+.jadwalNikahSeo .jadwalPosterRow {
+  display: grid;
+  grid-template-columns: 52px minmax(0, 1fr);
+  align-items: center;
+  gap: 10px;
+  padding: 10px 8px;
+  border: 1px solid rgba(192, 157, 58, .55);
+  border-radius: 11px;
+  background: rgba(255, 255, 255, .78);
+}
+.jadwalNikahSeo .jadwalPosterDate {
+  display: flex;
+  min-height: 53px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 9px;
+  background: linear-gradient(145deg, #07543e, #087653);
+  color: white;
+}
+.jadwalNikahSeo .jadwalPosterDate span {
+  font-size: 1.45rem;
+  font-weight: 800;
+  line-height: 1.1;
+}
+.jadwalNikahSeo .jadwalPosterDate small {
+  font-size: .72rem;
+  text-transform: uppercase;
+}
+.jadwalNikahSeo .jadwalPosterDetails {
+  display: grid;
+  min-width: 0;
+  gap: 3px;
+}
+.jadwalNikahSeo .jadwalPosterNumber {
+  color: #92721d;
+  font-size: .59rem;
+  font-weight: 800;
+  letter-spacing: .1em;
+}
+.jadwalNikahSeo .jadwalPosterDetails strong {
+  overflow-wrap: anywhere;
+  font-size: .82rem;
+  line-height: 1.35;
+}
+.jadwalNikahSeo .jadwalPosterDetails > span:not(.jadwalPosterNumber) {
+  font-size: .72rem;
+  font-weight: 700;
+}
+.jadwalNikahSeo .jadwalPosterDetails small {
+  overflow-wrap: anywhere;
+  color: #48665b;
+  font-size: .68rem;
+  line-height: 1.4;
+}
+.jadwalNikahSeo .jadwalPosterEmpty {
+  padding: 18px 8px;
+  border: 1px dashed #bda24c;
+  border-radius: 10px;
+  text-align: center;
+  font-size: .82rem;
+}
+.jadwalNikahSeo .jadwalPosterFooter {
+  margin-top: 14px;
+  padding-top: 11px;
+  border-top: 1px solid rgba(6, 78, 59, .2);
+  color: #426b54;
+  font-size: .7rem;
+  font-style: italic;
+  line-height: 1.5;
+  text-align: center;
+}
+
+/* Halaman jadwal nikah lengkap: poster dinamis hijau-emas */
+.jadwalLengkapPage {
+  color: var(--foreground, #173b2e);
+}
+.jadwalLengkapHeading {
+  margin: 10px 0 24px;
+  text-align: center;
+}
+.jadwalLengkapHeading > span {
+  color: #a17c22;
+  font-size: .76rem;
+  font-weight: 800;
+  letter-spacing: .14em;
+}
+.jadwalLengkapHeading h1 {
+  margin: 7px 0;
+  font-size: clamp(1.8rem, 5vw, 2.8rem);
+}
+.jadwalLengkapHeading p {
+  margin: 0;
+  opacity: .78;
+}
+.jadwalLengkapPoster {
+  position: relative;
+  overflow: hidden;
+  max-width: 760px;
+  margin: 0 auto 32px;
+  padding: clamp(22px, 5vw, 44px);
+  border: 2px solid #c6a54b;
+  border-radius: 24px;
+  background:
+    radial-gradient(ellipse at 50% 0%, rgba(235, 207, 126, .23), transparent 48%),
+    linear-gradient(150deg, #07543e, #063d30 68%, #092e25);
+  color: #fffdf1;
+  text-align: center;
+  box-shadow: 0 18px 45px rgba(5, 55, 40, .18);
+}
+.jadwalLengkapOrnamen {
+  margin-bottom: 14px;
+  color: #f2d77d;
+  font-size: 1.4rem;
+}
+.jadwalLengkapLabel {
+  margin: 0 0 12px;
+  color: #f2d77d;
+  font-size: .76rem;
+  font-weight: 800;
+  letter-spacing: .15em;
+}
+.jadwalLengkapPoster h2 {
+  margin: 0 auto 12px;
+  color: #fffdf1;
+  font-size: clamp(1.55rem, 4vw, 2.35rem);
+  line-height: 1.25;
+  overflow-wrap: anywhere;
+}
+.jadwalLengkapTanggal {
+  margin: 12px 0;
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+.jadwalLengkapWaktu {
+  display: inline-block;
+  margin: 5px 0 12px;
+  padding: 9px 18px;
+  border: 1px solid #d8bd67;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, .08);
+  color: #f8e8ac;
+  font-weight: 800;
+}
+.jadwalLengkapLokasi {
+  line-height: 1.6;
+  overflow-wrap: anywhere;
+}
+.jadwalLengkapEmpty {
+  padding: 18px 0;
+  line-height: 1.6;
+}
+.jadwalLengkapShare {
+  margin-top: 10px;
+  padding: 12px 18px;
+  border: 0;
+  border-radius: 10px;
+  background: #e5c66b;
+  color: #123d2e;
+  font: inherit;
+  font-weight: 800;
+  cursor: pointer;
+}
+.jadwalLengkapPoster footer {
+  margin-top: 28px;
+  padding-top: 16px;
+  border-top: 1px solid rgba(242, 215, 125, .45);
+  color: #f2d77d;
+  font-size: .82rem;
+  font-style: italic;
+  line-height: 1.6;
+}
+.jadwalLengkapAgenda {
+  max-width: 900px;
+  margin: 0 auto;
+}
+.jadwalLengkapAgenda > h2 {
+  margin-bottom: 16px;
+}
+.jadwalLengkapDaftar {
+  display: grid;
+  gap: 12px;
+}
+.jadwalLengkapItem {
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 14px;
+  padding: 16px;
+  border: 1px solid rgba(160, 130, 55, .35);
+  border-radius: 14px;
+  background: var(--card, #fff);
+}
+.jadwalLengkapNomor {
+  display: grid;
+  width: 44px;
+  height: 44px;
+  place-items: center;
+  border-radius: 12px;
+  background: #07543e;
+  color: #f8e8ac;
+  font-weight: 800;
+}
+.jadwalLengkapItem h3 {
+  margin: 0 0 6px;
+  overflow-wrap: anywhere;
+}
+.jadwalLengkapItem p {
+  margin: 3px 0;
+  font-size: .9rem;
+  overflow-wrap: anywhere;
+}
+.jadwalLengkapItem button {
+  padding: 9px 12px;
+  border: 1px solid #b99a43;
+  border-radius: 9px;
+  background: transparent;
+  color: inherit;
+  font: inherit;
+  font-weight: 700;
+  cursor: pointer;
+}
+@media (max-width: 600px) {
+  .jadwalLengkapItem {
+    grid-template-columns: 40px minmax(0, 1fr);
+    gap: 10px;
+    padding: 12px;
+  }
+  .jadwalLengkapNomor {
+    width: 38px;
+    height: 38px;
+  }
+  .jadwalLengkapItem button {
+    grid-column: 2;
+    justify-self: start;
+  }
+}
+
+/* Tata letak ilustrasi pengantin di poster jadwal */
+.jadwalLengkapPoster {
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 1.1fr);
+  align-items: center;
+  gap: 24px;
+  text-align: center;
+}
+.jadwalLengkapIlustrasi {
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid rgba(242, 215, 125, .65);
+  border-radius: 18px;
+  background: rgba(255, 255, 255, .06);
+}
+.jadwalLengkapIlustrasi img {
+  display: block;
+  width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+.jadwalLengkapData {
+  min-width: 0;
+}
+.jadwalLengkapData h2 {
+  overflow-wrap: anywhere;
+}
+.jadwalLengkapData footer {
+  margin-top: 20px;
+}
+@media (max-width: 650px) {
+  .jadwalLengkapPoster {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 18px;
+    padding: 18px;
+  }
+  .jadwalLengkapIlustrasi {
+    width: 100%;
+    max-width: 340px;
+    margin: 0 auto;
+  }
+  .jadwalLengkapIlustrasi img {
+    max-height: 400px;
+  }
+}
