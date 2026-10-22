@@ -17,14 +17,30 @@ export default function JadwalNikah() {
         const result = await response.json();
 
         if (response.ok && result.ok) {
-          const hariIni = new Date();
-          hariIni.setHours(0, 0, 0, 0);
+          const bagianTanggal = new Intl.DateTimeFormat('en-CA', {
+  timeZone: 'Asia/Makassar',
+  year: 'numeric',
+  month: '2-digit',
+  day: '2-digit',
+}).formatToParts(new Date());
+
+const nilaiTanggal = Object.fromEntries(
+  bagianTanggal
+    .filter((bagian) => bagian.type !== 'literal')
+    .map((bagian) => [bagian.type, bagian.value])
+);
+
+const hariIni = `${nilaiTanggal.year}-${nilaiTanggal.month}-${nilaiTanggal.day}`;
 
           const jadwalTerdekat = (result.data || [])
             .filter((item) => {
               if (!item.tanggal) return false;
-              const tanggal = new Date(`${item.tanggal}T00:00:00`);
-              return !Number.isNaN(tanggal.getTime()) && tanggal >= hariIni;
+              const tanggal = item.tanggal;
+return (
+  /^\d{4}-\d{2}-\d{2}$/.test(tanggal) &&
+  !Number.isNaN(new Date(`${tanggal}T00:00:00+08:00`).getTime()) &&
+  tanggal >= hariIni
+);
             })
             .sort((a, b) => {
               const tanggalA = `${a.tanggal}T${a.waktu || '00:00'}`;

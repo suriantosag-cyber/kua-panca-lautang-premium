@@ -93,15 +93,26 @@ export default function JadwalNikahLengkap({ selectedId = '' }) {
   }
 
   const hariIni = tanggalHariIni();
-  const agendaMendatang = jadwal.filter(
-    (item) => item.tanggal >= hariIni
-  );
 
-  const jadwalPilihan = selectedId
-    ? jadwal.find((item) => String(item.id) === String(selectedId)) || null
-    : agendaMendatang[0] || null;
+const agendaMendatang = jadwal.filter(
+  (item) => item.tanggal >= hariIni
+);
 
-  const idTidakDitemukan = Boolean(selectedId) && !jadwalPilihan;
+const jadwalPilihan = selectedId
+  ? jadwal.find((item) => String(item.id) === String(selectedId)) || null
+  : agendaMendatang[0] || null;
+
+const idTidakDitemukan = Boolean(selectedId) && !jadwalPilihan;
+
+const agendaBerikutnya = agendaMendatang.filter((item) => {
+  if (!jadwalPilihan) return true;
+
+  const waktuItem = `${item.tanggal}T${item.waktu || '00:00'}`;
+  const waktuPilihan = `${jadwalPilihan.tanggal}T${jadwalPilihan.waktu || '00:00'}`;
+
+  return waktuItem > waktuPilihan;
+});
+
 
   return (
     <section className="jadwalLengkapPage">
@@ -166,9 +177,9 @@ export default function JadwalNikahLengkap({ selectedId = '' }) {
         <h2>Agenda Akad Berikutnya</h2>
         {loading ? (
           <p>Memuat agenda...</p>
-        ) : agendaMendatang.length > 0 ? (
+        ) : agendaBerikutnya.length > 0 ? (
           <div className="jadwalLengkapDaftar">
-            {agendaMendatang.map((item, index) => (
+            {agendaBerikutnya.map((item, index) => (
               <article
                 className="jadwalLengkapItem"
                 key={item.id || `${item.tanggal}-${index}`}
@@ -198,3 +209,4 @@ export default function JadwalNikahLengkap({ selectedId = '' }) {
     </section>
   );
 }
+
