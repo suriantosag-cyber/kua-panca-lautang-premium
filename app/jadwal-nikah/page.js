@@ -1,6 +1,6 @@
-﻿import Link from 'next/link';
+import Link from 'next/link';
 
-const posterUrl = 'https://kua-pancalautang.my.id/poster/jadwal-nikah.png';
+const posterUrl = 'https://kua-pancalautang.my.id/poster/poster-pengantin.png';
 const shareUrl = 'https://kua-pancalautang.my.id/jadwal-nikah';
 
 export const metadata = {
@@ -19,8 +19,6 @@ export const metadata = {
     images: [
       {
         url: posterUrl,
-        width: 1536,
-        height: 1024,
         alt: 'Poster Jadwal Nikah KUA Panca Lautang',
       },
     ],
