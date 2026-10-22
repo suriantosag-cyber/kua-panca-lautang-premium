@@ -1,126 +1,101 @@
+﻿'use client';
 
-'use client';
-
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
-
-const wilayahMasjid = [
-  {
-    wilayah: 'Desa Corawali',
-    lokasi: 'Ibu Kota Kecamatan Panca Lautang',
-    daftar: [
-      { nama: 'Masjid Baiturrahmah', lokasi: 'Corawali' },
-      { nama: 'Masjid Al-Ikhlas', lokasi: 'Corawali' },
-      { nama: "Masjid & Ponpes Tahfizul Qur'an Ar-Rayyan", lokasi: 'Corawali' },
-    ],
-  },
-  {
-    wilayah: 'Wanio dan Wanio Timoreng',
-    lokasi: 'Termasuk Dusun Maniangsalo, Cakkaleng, dan Sabbang',
-    daftar: [
-      { nama: 'Masjid Nurul Yaqin', lokasi: 'Dusun Maniangsalo, Wanio' },
-      { nama: 'Masjid Nurul Huda', lokasi: 'Wanio Timoreng' },
-      { nama: 'Masjid Nurul Amin', lokasi: 'Wanio' },
-      { nama: 'Masjid Nurul Falah', lokasi: 'Wanio' },
-      { nama: 'Masjid Al-Rahmah', lokasi: 'Cakkaleng, Wanio Timoreng' },
-      { nama: 'Masjid Nurul Hidayah', lokasi: 'Wanio' },
-      { nama: 'Mushalla Al-Madon', lokasi: 'Dusun Sabbang, Wanio' },
-    ],
-  },
-  {
-    wilayah: 'Desa Bapangi',
-    lokasi: 'Termasuk wilayah Padaelo',
-    daftar: [
-      { nama: 'Masjid Al-Muttahida / Al-Muttahidah', lokasi: 'Padaelo, Bapangi' },
-      { nama: 'Masjid Nurul Ilahi', lokasi: 'Bapangi' },
-      { nama: 'Masjid Quba', lokasi: 'Bapangi' },
-      { nama: 'Masjid Al-Muhajirin', lokasi: 'Bapangi' },
-      { nama: 'Masjid Darussalam', lokasi: 'Jl. Poros Soppeng, Kel. Bapangi' },
-    ],
-  },
-  {
-    wilayah: 'Desa Lise',
-    lokasi: 'Termasuk Dusun II Amessangeng',
-    daftar: [
-      { nama: 'Masjid Babul Jannah', lokasi: 'Dusun II Amessangeng, Lise' },
-      { nama: 'Masjid Nurul Iman', lokasi: 'Lise' },
-      { nama: 'Masjid Nurul Huda', lokasi: 'Lise' },
-      { nama: 'Masjid Al Muhajirin', lokasi: 'Lise' },
-    ],
-  },
-  {
-    wilayah: 'Desa Alesalewo',
-    lokasi: 'Nama wilayah juga ditulis Alessalewo pada daftar awal',
-    daftar: [
-      { nama: 'Masjid Babul Khaerat', lokasi: 'Alesalewo' },
-      { nama: 'Masjid Taqwa', lokasi: 'Alesalewo' },
-      { nama: 'Masjid Nurul Taqwa', lokasi: 'Alesalewo' },
-    ],
-  },
-  {
-    wilayah: 'Bilokka, Wette’e, dan Lajonga',
-    lokasi: 'Wilayah lainnya',
-    daftar: [
-      { nama: 'Masjid Al-Hazard', lokasi: 'Jalan Poros Soppeng, Bilokka' },
-      { nama: 'Masjid Nurul Hidayah', lokasi: 'Wette’e' },
-      { nama: 'Masjid Nurul Falah', lokasi: 'Wette’e' },
-      { nama: 'Masjid Nurussalam', lokasi: 'Lajonga' },
-    ],
-  },
-];
+import { supabaseBrowser } from '../../lib/supabase-browser';
 
 export default function DataMasjidPage() {
+  const [dataMasjid, setDataMasjid] = useState([]);
   const [kataKunci, setKataKunci] = useState('');
   const [jenisFilter, setJenisFilter] = useState('semua');
+  const [memuat, setMemuat] = useState(true);
+  const [pesanError, setPesanError] = useState('');
 
-  const wilayahTersaring = useMemo(() => {
+  useEffect(() => {
+    let aktif = true;
+
+    async function ambilData() {
+      const { data, error } = await supabaseBrowser
+        .from('data_masjid')
+        .select('id, nama, jenis, desa, alamat, keterangan')
+        .eq('status', 'tampil')
+        .order('desa')
+        .order('nama');
+
+      if (!aktif) return;
+
+      if (error) {
+        console.error('Gagal mengambil data masjid:', error.message);
+        setPesanError('Data belum dapat dimuat. Silakan coba lagi nanti.');
+      } else {
+        setDataMasjid(data || []);
+      }
+
+      setMemuat(false);
+    }
+
+    ambilData();
+
+    return () => {
+      aktif = false;
+    };
+  }, []);
+
+  const dataTersaring = useMemo(() => {
     const kata = kataKunci.trim().toLocaleLowerCase('id-ID');
 
-    return wilayahMasjid
-      .map((wilayah) => ({
-        ...wilayah,
-        daftar: wilayah.daftar.filter((item) => {
-          const cocokKata =
-            `${item.nama} ${item.lokasi} ${wilayah.wilayah}`
-              .toLocaleLowerCase('id-ID')
-              .includes(kata);
+    return dataMasjid.filter((item) => {
+      const cocokKata = [
+        item.nama,
+        item.desa,
+        item.alamat || '',
+        item.keterangan || '',
+      ]
+        .join(' ')
+        .toLocaleLowerCase('id-ID')
+        .includes(kata);
 
-          const cocokJenis =
-            jenisFilter === 'semua' ||
-            (jenisFilter === 'masjid' &&
-              item.nama.startsWith('Masjid ')) ||
-            (jenisFilter === 'mushalla' &&
-              item.nama.startsWith('Mushalla '));
+      return cocokKata &&
+        (jenisFilter === 'semua' || item.jenis === jenisFilter);
+    });
+  }, [dataMasjid, kataKunci, jenisFilter]);
 
-          return cocokKata && cocokJenis;
-        }),
-      }))
-      .filter((wilayah) => wilayah.daftar.length > 0);
-  }, [kataKunci, jenisFilter]);
+  const jumlahMasjid = dataMasjid.filter(
+    (item) => item.jenis === 'masjid'
+  ).length;
 
-  const jumlahMasjid = wilayahMasjid.reduce(
-    (total, wilayah) =>
-      total +
-      wilayah.daftar.filter((item) =>
-        item.nama.startsWith('Masjid ')
-      ).length,
-    0
-  );
+  const jumlahMushalla = dataMasjid.filter(
+    (item) => item.jenis === 'mushalla'
+  ).length;
 
-  const jumlahMushalla = wilayahMasjid.reduce(
-    (total, wilayah) =>
-      total +
-      wilayah.daftar.filter((item) =>
-        item.nama.startsWith('Mushalla ')
-      ).length,
-    0
-  );
+  const wilayahTersaring = useMemo(() => {
+    const kelompok = new Map();
+
+    dataTersaring.forEach((item) => {
+      const desa = item.desa || 'Wilayah belum ditentukan';
+      if (!kelompok.has(desa)) kelompok.set(desa, []);
+      kelompok.get(desa).push(item);
+    });
+
+    return Array.from(kelompok, ([desa, daftar]) => ({
+      wilayah: desa,
+      daftar,
+    }));
+  }, [dataTersaring]);
 
   const pilihFilter = (jenis) => {
     setJenisFilter((sebelumnya) =>
       sebelumnya === jenis ? 'semua' : jenis
     );
   };
+
+  const gayaFilter = (aktif) => ({
+    cursor: 'pointer',
+    textAlign: 'left',
+    font: 'inherit',
+    color: 'inherit',
+    border: aktif ? '2px solid var(--primary)' : undefined,
+  });
 
   return (
     <main>
@@ -129,12 +104,10 @@ export default function DataMasjidPage() {
           <div className="sectionHead">
             <div>
               <span className="tag">DATA WILAYAH</span>
-              <h1
-                style={{
-                  margin: '14px 0 8px',
-                  fontSize: 'clamp(28px, 5vw, 42px)',
-                }}
-              >
+              <h1 style={{
+                margin: '14px 0 8px',
+                fontSize: 'clamp(28px, 5vw, 42px)',
+              }}>
                 Daftar Masjid dan Mushalla
               </h1>
               <p>
@@ -149,25 +122,12 @@ export default function DataMasjidPage() {
               className="card"
               onClick={() => pilihFilter('masjid')}
               aria-pressed={jenisFilter === 'masjid'}
-              style={{
-                cursor: 'pointer',
-                textAlign: 'left',
-                font: 'inherit',
-                color: 'inherit',
-                border:
-                  jenisFilter === 'masjid'
-                    ? '2px solid var(--primary)'
-                    : undefined,
-              }}
+              style={gayaFilter(jenisFilter === 'masjid')}
             >
               <div className="icon" aria-hidden="true">🕌</div>
               <h3>{jumlahMasjid} Masjid</h3>
-              <p>Nama yang tercatat dalam daftar awal.</p>
-              <span>
-                {jenisFilter === 'masjid'
-                  ? 'Filter aktif — klik untuk tampilkan semua'
-                  : 'Klik untuk melihat daftar masjid'}
-              </span>
+              <p>Masjid yang sudah ditampilkan kepada publik.</p>
+              <span>Klik untuk memfilter masjid</span>
             </button>
 
             <button
@@ -175,43 +135,24 @@ export default function DataMasjidPage() {
               className="card"
               onClick={() => pilihFilter('mushalla')}
               aria-pressed={jenisFilter === 'mushalla'}
-              style={{
-                cursor: 'pointer',
-                textAlign: 'left',
-                font: 'inherit',
-                color: 'inherit',
-                border:
-                  jenisFilter === 'mushalla'
-                    ? '2px solid var(--primary)'
-                    : undefined,
-              }}
+              style={gayaFilter(jenisFilter === 'mushalla')}
             >
               <div className="icon" aria-hidden="true">🌙</div>
               <h3>{jumlahMushalla} Mushalla</h3>
-              <p>Nama yang tercatat dalam daftar awal.</p>
-              <span>
-                {jenisFilter === 'mushalla'
-                  ? 'Filter aktif — klik untuk tampilkan semua'
-                  : 'Klik untuk melihat daftar mushalla'}
-              </span>
+              <p>Mushalla yang sudah ditampilkan kepada publik.</p>
+              <span>Klik untuk memfilter mushalla</span>
             </button>
 
             <article className="card">
               <div className="icon" aria-hidden="true">📋</div>
-              <h3>Data sementara</h3>
-              <p>
-                Perlu verifikasi sebelum ditetapkan sebagai data resmi.
-              </p>
+              <h3>{dataMasjid.length} Data tampil</h3>
+              <p>Jumlah data rumah ibadah yang sudah diverifikasi.</p>
             </article>
           </div>
 
           <label
             htmlFor="cari-masjid"
-            style={{
-              display: 'block',
-              fontWeight: 700,
-              marginBottom: 8,
-            }}
+            style={{ display: 'block', fontWeight: 700, marginBottom: 8 }}
           >
             Cari nama masjid atau wilayah
           </label>
@@ -234,47 +175,46 @@ export default function DataMasjidPage() {
 
           {jenisFilter !== 'semua' && (
             <p>
-              Menampilkan:{' '}
-              <strong>
-                {jenisFilter === 'masjid' ? 'Masjid saja' : 'Mushalla saja'}
-              </strong>
-              {' — '}
-              <button
-                type="button"
-                onClick={() => setJenisFilter('semua')}
-              >
+              Filter aktif: <strong>{jenisFilter}</strong>{' '}
+              <button type="button" onClick={() => setJenisFilter('semua')}>
                 Tampilkan semua
               </button>
             </p>
           )}
 
-          {wilayahTersaring.length === 0 ? (
+          {memuat ? (
+            <p role="status">Memuat data dari database...</p>
+          ) : pesanError ? (
+            <p role="alert">{pesanError}</p>
+          ) : dataMasjid.length === 0 ? (
+            <article className="card">
+              <h2>Data belum tersedia untuk publik</h2>
+              <p>
+                Data awal sudah disiapkan, tetapi masih menunggu verifikasi
+                sebelum ditampilkan di website.
+              </p>
+            </article>
+          ) : dataTersaring.length === 0 ? (
             <p role="status">
               Tidak ada masjid atau mushalla yang cocok dengan pencarian.
             </p>
           ) : (
             wilayahTersaring.map((wilayah) => (
-              <section
-                key={wilayah.wilayah}
-                style={{ marginBottom: 30 }}
-              >
+              <section key={wilayah.wilayah} style={{ marginBottom: 30 }}>
                 <div className="sectionHead">
                   <div>
                     <h2 style={{ fontSize: 24, margin: 0 }}>
                       {wilayah.wilayah}
                     </h2>
-                    <p>{wilayah.lokasi}</p>
+                    <p>{wilayah.daftar.length} rumah ibadah</p>
                   </div>
                 </div>
 
                 <div className="grid3">
                   {wilayah.daftar.map((item) => (
-                    <article
-                      className="card"
-                      key={`${item.nama}-${item.lokasi}`}
-                    >
+                    <article className="card" key={item.id}>
                       <h3>{item.nama}</h3>
-                      <p>📍 {item.lokasi}</p>
+                      <p>📍 {item.alamat || item.desa}</p>
                     </article>
                   ))}
                 </div>
@@ -283,9 +223,8 @@ export default function DataMasjidPage() {
           )}
 
           <p style={{ color: 'var(--muted)', lineHeight: 1.7 }}>
-            Catatan: daftar ini disusun dari informasi awal yang diberikan
-            kepada KUA. Nama, ejaan, lokasi, dan jumlah rumah ibadah perlu
-            dikonfirmasi kembali sebelum dipublikasikan sebagai data resmi.
+            Data yang ditampilkan mengikuti status verifikasi. Nama dan
+            lokasi rumah ibadah perlu diperiksa oleh pengelola KUA.
           </p>
 
           <p style={{ marginTop: 24 }}>
