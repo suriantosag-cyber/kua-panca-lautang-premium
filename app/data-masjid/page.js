@@ -17,7 +17,7 @@ export default function DataMasjidPage() {
     async function ambilData() {
       const { data, error } = await supabaseBrowser
         .from('data_masjid')
-        .select('id, nama, jenis, desa, alamat, keterangan')
+        .select('id, nama, jenis, desa, alamat, keterangan, nomor_sertifikat, luas_tanah')
         .eq('status', 'tampil')
         .order('desa')
         .order('nama');
@@ -50,6 +50,8 @@ export default function DataMasjidPage() {
         item.desa,
         item.alamat || '',
         item.keterangan || '',
+        item.nomor_sertifikat || '',
+        item.luas_tanah || '',
       ]
         .join(' ')
         .toLocaleLowerCase('id-ID')
@@ -215,6 +217,12 @@ export default function DataMasjidPage() {
                     <article className="card" key={item.id}>
                       <h3>{item.nama}</h3>
                       <p>📍 {item.alamat || item.desa}</p>
+                      {item.nomor_sertifikat && (
+                        <p>Nomor sertifikat: {item.nomor_sertifikat}</p>
+                      )}
+                      {item.luas_tanah && (
+                        <p>Luas tanah: {item.luas_tanah}</p>
+                      )}
                     </article>
                   ))}
                 </div>

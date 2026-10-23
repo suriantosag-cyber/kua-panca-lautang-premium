@@ -8,6 +8,8 @@ const FORM_KOSONG = {
   jenis: "masjid",
   desa: "",
   alamat: "",
+  nomor_sertifikat: "",
+  luas_tanah: "",
   keterangan: "",
   status: "menunggu",
 };
@@ -69,6 +71,8 @@ export default function AdminDataMasjidPage() {
       jenis: item.jenis || "masjid",
       desa: item.desa || "",
       alamat: item.alamat || "",
+      nomor_sertifikat: item.nomor_sertifikat || "",
+      luas_tanah: item.luas_tanah || "",
       keterangan: item.keterangan || "",
       status: item.status || "menunggu",
     });
@@ -264,6 +268,14 @@ export default function AdminDataMasjidPage() {
                 <input id="alamat" name="alamat" value={form.alamat} onChange={ubahForm} maxLength={500} style={inputStyle} />
               </div>
               <div>
+                <label htmlFor="nomor_sertifikat" style={labelStyle}>Nomor Sertifikat</label>
+                <input id="nomor_sertifikat" name="nomor_sertifikat" value={form.nomor_sertifikat} onChange={ubahForm} maxLength={100} style={inputStyle} />
+              </div>
+              <div>
+                <label htmlFor="luas_tanah" style={labelStyle}>Luas Tanah</label>
+                <input id="luas_tanah" name="luas_tanah" value={form.luas_tanah} onChange={ubahForm} maxLength={100} placeholder="Contoh: 501 m2" style={inputStyle} />
+              </div>
+              <div>
                 <label htmlFor="status" style={labelStyle}>Status publikasi</label>
                 <select id="status" name="status" value={form.status} onChange={ubahForm} style={inputStyle}>
                   <option value="menunggu">Menunggu</option>
@@ -329,6 +341,8 @@ export default function AdminDataMasjidPage() {
                       <h3 style={{ margin: "0 0 6px", fontSize: 18, overflowWrap: "anywhere" }}>{item.nama}</h3>
                       <p style={{ margin: "0 0 5px", color: "#475569" }}>Desa: {item.desa}</p>
                       {item.alamat && <p style={{ margin: "0 0 5px", color: "#64748b" }}>Alamat: {item.alamat}</p>}
+                      {item.nomor_sertifikat && <p style={{ margin: "0 0 5px", color: "#64748b" }}>Nomor Sertifikat: {item.nomor_sertifikat}</p>}
+                      {item.luas_tanah && <p style={{ margin: "0 0 5px", color: "#64748b" }}>Luas Tanah: {item.luas_tanah}</p>}
                       {item.keterangan && <p style={{ margin: "8px 0 0", color: "#64748b", whiteSpace: "pre-wrap" }}>{item.keterangan}</p>}
                     </div>
                     <div style={{ display: "flex", gap: 8, flexWrap: "wrap" }}>

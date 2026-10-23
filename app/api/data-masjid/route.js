@@ -4,7 +4,7 @@ import { verifyAdminRequest } from '../../../lib/admin-auth';
 const ADMIN_ORIGIN = 'https://admin.kua-pancalautang.my.id';
 const JENIS_VALID = ['masjid', 'mushalla'];
 const STATUS_VALID = ['menunggu', 'tampil', 'ditolak'];
-const FIELD_EDIT = ['nama', 'jenis', 'desa', 'alamat', 'keterangan', 'status'];
+const FIELD_EDIT = ['nama', 'jenis', 'desa', 'alamat', 'nomor_sertifikat', 'luas_tanah', 'keterangan', 'status'];
 
 function corsHeaders(request) {
   const headers = new Headers({ Vary: 'Origin' });
@@ -164,6 +164,8 @@ export async function POST(request) {
         desa,
         jenis,
         alamat: teks(body.alamat) || null,
+        nomor_sertifikat: teks(body.nomor_sertifikat) || null,
+        luas_tanah: teks(body.luas_tanah) || null,
         keterangan: teks(body.keterangan) || null,
         status,
       })
@@ -214,7 +216,7 @@ export async function PATCH(request) {
     for (const field of FIELD_EDIT) {
       if (Object.prototype.hasOwnProperty.call(body, field)) {
         perubahan[field] =
-          field === 'alamat' || field === 'keterangan'
+          ['alamat', 'nomor_sertifikat', 'luas_tanah', 'keterangan'].includes(field)
             ? teks(body[field]) || null
             : teks(body[field]);
       }
