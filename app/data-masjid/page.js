@@ -1,8 +1,17 @@
 'use client';
 
 import { useEffect, useMemo, useState } from 'react';
+import dynamic from 'next/dynamic';
+
 import Link from 'next/link';
 import { supabaseBrowser } from '../../lib/supabase-browser';
+
+const PetaMasjid = dynamic(() => import('../components/PetaMasjid'), {
+  ssr: false,
+  loading: () => <p>Memuat komponen peta...</p>,
+});
+
+
 
 export default function DataMasjidPage() {
   const [dataMasjid, setDataMasjid] = useState([]);
@@ -188,6 +197,10 @@ export default function DataMasjidPage() {
             </p>
           )}
 
+          <PetaMasjid data={dataTersaring} memuat={memuat} />
+
+
+
           {memuat ? (
             <p role="status">Memuat data dari database...</p>
           ) : pesanError ? (
@@ -250,8 +263,7 @@ export default function DataMasjidPage() {
           </p>
 
           <p style={{ marginTop: 24 }}>
-            <Link className="btn primary" href="/">
-              ← Kembali ke website KUA
+            <Link className="btn primary" href="/">← Kembali ke website KUA
             </Link>
           </p>
         </div>
