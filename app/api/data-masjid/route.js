@@ -1,10 +1,11 @@
-﻿import { createClient } from '@supabase/supabase-js';
+import { createClient } from '@supabase/supabase-js';
 import { verifyAdminRequest } from '../../../lib/admin-auth';
 
 const ADMIN_ORIGIN = 'https://admin.kua-pancalautang.my.id';
 const JENIS_VALID = ['masjid', 'mushalla'];
 const STATUS_VALID = ['menunggu', 'tampil', 'ditolak'];
-const FIELD_EDIT = ['nama', 'jenis', 'desa', 'alamat', 'nomor_sertifikat', 'luas_tanah', 'keterangan', 'status'];
+const SIMAS_VALID = ['belum_diverifikasi', 'terverifikasi'];
+const FIELD_EDIT = ['nama', 'jenis', 'desa', 'alamat', 'nomor_sertifikat', 'luas_tanah', 'keterangan', 'status', 'nomor_simas', 'status_verifikasi_simas', 'latitude', 'longitude'];
 
 function corsHeaders(request) {
   const headers = new Headers({ Vary: 'Origin' });
@@ -55,6 +56,36 @@ async function periksaAdmin(request) {
 
 function teks(value) {
   return typeof value === 'string' ? value.trim() : '';
+}
+
+function koordinatValid(value, min, max) {
+  if (value === null || value === undefined || value === '') return true;
+  const angka = typeof value === 'number' ? value : Number(value);
+  return Number.isFinite(angka) && angka >= min && angka <= max;
+}
+
+function nilaiKoordinat(value) {
+  if (value === null || value === undefined || value === '') return null;
+  return Number(value);
+}
+function koordinatBerpasanganValid(latitude, longitude) {
+  const latKosong =
+    latitude === null ||
+    latitude === undefined ||
+    String(latitude).trim() === '';
+
+  const lonKosong =
+    longitude === null ||
+    longitude === undefined ||
+    String(longitude).trim() === '';
+
+  if (latKosong && lonKosong) return true;
+  if (latKosong || lonKosong) return false;
+
+  return (
+    koordinatValid(latitude, -90, 90) &&
+    koordinatValid(longitude, -180, 180)
+  );
 }
 
 export async function OPTIONS(request) {
@@ -135,6 +166,18 @@ export async function POST(request) {
       }, 400);
     }
 
+    const statusSimas = teks(body.status_verifikasi_simas) || 'belum_diverifikasi';
+
+    if (
+      !SIMAS_VALID.includes(statusSimas) ||
+      !koordinatBerpasanganValid(body.latitude, body.longitude)
+    ) {
+      return jsonResponse(request, {
+        ok: false,
+        error: 'Status SIMAS atau koordinat tidak valid.',
+      }, 400);
+    }
+
     const supabase = getSupabaseAdmin();
 
     const { data: duplikat, error: cekError } = await supabase
@@ -165,6 +208,10 @@ export async function POST(request) {
         jenis,
         alamat: teks(body.alamat) || null,
         nomor_sertifikat: teks(body.nomor_sertifikat) || null,
+        nomor_simas: teks(body.nomor_simas) || null,
+        status_verifikasi_simas: teks(body.status_verifikasi_simas) || 'belum_diverifikasi',
+        latitude: nilaiKoordinat(body.latitude),
+        longitude: nilaiKoordinat(body.longitude),
         luas_tanah: teks(body.luas_tanah) || null,
         keterangan: teks(body.keterangan) || null,
         status,
@@ -212,13 +259,31 @@ export async function PATCH(request) {
       }, 400);
     }
 
+    if (
+      !(teks(body.status_verifikasi_simas) === '' || SIMAS_VALID.includes(teks(body.status_verifikasi_simas))) ||
+      !koordinatBerpasanganValid(body.latitude, body.longitude)
+    ) {
+      return jsonResponse(request, {
+        ok: false,
+        error: 'Status SIMAS atau koordinat tidak valid.',
+      }, 400);
+    }
+
     const perubahan = {};
     for (const field of FIELD_EDIT) {
       if (Object.prototype.hasOwnProperty.call(body, field)) {
-        perubahan[field] =
-          ['alamat', 'nomor_sertifikat', 'luas_tanah', 'keterangan'].includes(field)
-            ? teks(body[field]) || null
-            : teks(body[field]);
+        if (field === 'latitude') {
+          perubahan[field] = nilaiKoordinat(body[field]);
+        } else if (field === 'longitude') {
+          perubahan[field] = nilaiKoordinat(body[field]);
+        } else if (field === 'status_verifikasi_simas') {
+          perubahan[field] = teks(body[field]) || 'belum_diverifikasi';
+        } else {
+          perubahan[field] =
+            ['alamat', 'nomor_sertifikat', 'luas_tanah', 'keterangan', 'nomor_simas'].includes(field)
+              ? teks(body[field]) || null
+              : teks(body[field]);
+        }
       }
     }
 

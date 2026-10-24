@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useCallback, useEffect, useState } from "react";
 import { adminFetch } from "../../../lib/admin-client";
@@ -10,6 +10,10 @@ const FORM_KOSONG = {
   alamat: "",
   nomor_sertifikat: "",
   luas_tanah: "",
+  nomor_simas: "",
+  status_verifikasi_simas: "belum_diverifikasi",
+  latitude: "",
+  longitude: "",
   keterangan: "",
   status: "menunggu",
 };
@@ -73,6 +77,10 @@ export default function AdminDataMasjidPage() {
       alamat: item.alamat || "",
       nomor_sertifikat: item.nomor_sertifikat || "",
       luas_tanah: item.luas_tanah || "",
+      nomor_simas: item.nomor_simas || "",
+      status_verifikasi_simas: item.status_verifikasi_simas || "belum_diverifikasi",
+      latitude: item.latitude == null ? "" : String(item.latitude),
+      longitude: item.longitude == null ? "" : String(item.longitude),
       keterangan: item.keterangan || "",
       status: item.status || "menunggu",
     });
@@ -274,6 +282,25 @@ export default function AdminDataMasjidPage() {
               <div>
                 <label htmlFor="luas_tanah" style={labelStyle}>Luas Tanah</label>
                 <input id="luas_tanah" name="luas_tanah" value={form.luas_tanah} onChange={ubahForm} maxLength={100} placeholder="Contoh: 501 m2" style={inputStyle} />
+              </div>
+              <div>
+                <label htmlFor="nomor_simas" style={labelStyle}>Nomor SIMAS</label>
+                <input id="nomor_simas" name="nomor_simas" value={form.nomor_simas} onChange={ubahForm} maxLength={100} style={inputStyle} />
+              </div>
+              <div>
+                <label htmlFor="status_verifikasi_simas" style={labelStyle}>Status verifikasi SIMAS</label>
+                <select id="status_verifikasi_simas" name="status_verifikasi_simas" value={form.status_verifikasi_simas} onChange={ubahForm} style={inputStyle}>
+                  <option value="belum_diverifikasi">Belum diverifikasi</option>
+                  <option value="terverifikasi">Terverifikasi</option>
+                </select>
+              </div>
+              <div>
+                <label htmlFor="latitude" style={labelStyle}>Latitude (lintang)</label>
+                <input id="latitude" name="latitude" type="number" step="any" min="-90" max="90" value={form.latitude} onChange={ubahForm} placeholder="Contoh: -3.800000" style={inputStyle} />
+              </div>
+              <div>
+                <label htmlFor="longitude" style={labelStyle}>Longitude (bujur)</label>
+                <input id="longitude" name="longitude" type="number" step="any" min="-180" max="180" value={form.longitude} onChange={ubahForm} placeholder="Contoh: 119.600000" style={inputStyle} />
               </div>
               <div>
                 <label htmlFor="status" style={labelStyle}>Status publikasi</label>

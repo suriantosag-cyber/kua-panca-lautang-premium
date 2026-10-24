@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
@@ -17,7 +17,7 @@ export default function DataMasjidPage() {
     async function ambilData() {
       const { data, error } = await supabaseBrowser
         .from('data_masjid')
-        .select('id, nama, jenis, desa, alamat, keterangan, nomor_sertifikat, luas_tanah')
+        .select('id, nama, jenis, desa, alamat, keterangan, nomor_sertifikat, luas_tanah, nomor_simas, status_verifikasi_simas, latitude, longitude')
         .eq('status', 'tampil')
         .order('desa')
         .order('nama');
@@ -52,6 +52,10 @@ export default function DataMasjidPage() {
         item.keterangan || '',
         item.nomor_sertifikat || '',
         item.luas_tanah || '',
+        item.nomor_simas || '',
+        item.status_verifikasi_simas || '',
+        item.latitude ?? '',
+        item.longitude ?? '',
       ]
         .join(' ')
         .toLocaleLowerCase('id-ID')
@@ -223,6 +227,16 @@ export default function DataMasjidPage() {
                       {item.luas_tanah && (
                         <p>Luas tanah: {item.luas_tanah}</p>
                       )}
+                      {item.nomor_simas && (
+                        <p>Nomor SIMAS: {item.nomor_simas}</p>
+                      )}
+                      <p>
+                        Status SIMAS: {
+                          item.status_verifikasi_simas === 'terverifikasi'
+                            ? 'Terverifikasi'
+                            : 'Belum diverifikasi'
+                        }
+                      </p>
                     </article>
                   ))}
                 </div>
