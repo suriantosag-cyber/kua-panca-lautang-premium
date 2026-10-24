@@ -1,10 +1,13 @@
 
 import { verifyAdminRequest } from '../../../../lib/admin-auth';
 
-const ADMIN_ORIGIN = 'https://kua-pancalautang.my.id';
+const ADMIN_ORIGINS = new Set([
+  'https://kua-pancalautang.my.id',
+  'https://kua-panca-lautang-premium-dnismwbry-kua-panca-lautang.vercel.app',
+]);
 
 function originDiizinkan(origin) {
-  if (origin === ADMIN_ORIGIN) return true;
+  if (ADMIN_ORIGINS.has(origin)) return true;
 
   return (
     process.env.NODE_ENV === 'development' &&
@@ -53,19 +56,24 @@ export async function OPTIONS(request) {
 export async function POST(request) {
   try {
     if (!originDiizinkan(request.headers.get('origin'))) {
-      return jsonResponse(request, {
-        ok: false,
-        error: 'Asal permintaan tidak diizinkan.',
-      }, 403);
+      return jsonResponse(
+        request,
+        { ok: false, error: 'Asal permintaan tidak diizinkan.' },
+        403
+      );
     }
 
     const auth = await verifyAdminRequest(request);
 
     if (!auth.ok) {
-      return jsonResponse(request, {
-        ok: false,
-        error: auth.error || 'Akses admin diperlukan.',
-      }, auth.status || 401);
+      return jsonResponse(
+        request,
+        {
+          ok: false,
+          error: auth.error || 'Akses admin diperlukan.',
+        },
+        auth.status || 401
+      );
     }
 
     let body;
@@ -73,20 +81,25 @@ export async function POST(request) {
     try {
       body = await request.json();
     } catch {
-      return jsonResponse(request, {
-        ok: false,
-        error: 'Data pencarian tidak valid.',
-      }, 400);
+      return jsonResponse(
+        request,
+        { ok: false, error: 'Data pencarian tidak valid.' },
+        400
+      );
     }
 
     const nama = typeof body.nama === 'string' ? body.nama.trim() : '';
     const desa = typeof body.desa === 'string' ? body.desa.trim() : '';
 
     if (!nama || !desa || nama.length > 200 || desa.length > 150) {
-      return jsonResponse(request, {
-        ok: false,
-        error: 'Nama masjid dan desa wajib diisi.',
-      }, 400);
+      return jsonResponse(
+        request,
+        {
+          ok: false,
+          error: 'Nama masjid dan desa wajib diisi.',
+        },
+        400
+      );
     }
 
     const query = [
@@ -116,10 +129,14 @@ export async function POST(request) {
     });
 
     if (!response.ok) {
-      return jsonResponse(request, {
-        ok: false,
-        error: 'Layanan pencarian lokasi sedang tidak tersedia.',
-      }, 502);
+      return jsonResponse(
+        request,
+        {
+          ok: false,
+          error: 'Layanan pencarian lokasi sedang tidak tersedia.',
+        },
+        502
+      );
     }
 
     const hasil = await response.json();
@@ -136,9 +153,13 @@ export async function POST(request) {
   } catch (error) {
     console.error('Geocoding masjid gagal:', error);
 
-    return jsonResponse(request, {
-      ok: false,
-      error: 'Pencarian lokasi gagal. Silakan coba kembali.',
-    }, 500);
+    return jsonResponse(
+      request,
+      {
+        ok: false,
+        error: 'Pencarian lokasi gagal. Silakan coba kembali.',
+      },
+      500
+    );
   }
 }
