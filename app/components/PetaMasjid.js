@@ -47,13 +47,9 @@ export default function PetaMasjid({ data = [], memuat = false }) {
     <section style={{ margin: '28px 0 36px' }}>
       <div style={{ marginBottom: 14 }}>
         <span className="tag">PETA LOKASI</span>
-        <h2 style={{ fontSize: 24, margin: '10px 0 6px' }}>
+        <h2 style={{ fontSize: 24, margin: '10px 0 14px' }}>
           Peta Masjid dan Mushalla
         </h2>
-        <p style={{ color: 'var(--muted)', lineHeight: 1.7 }}>
-          Penanda peta hanya ditampilkan untuk rumah ibadah yang memiliki
-          koordinat valid.
-        </p>
       </div>
 
       <div style={{
