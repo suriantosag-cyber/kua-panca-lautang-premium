@@ -18,7 +18,7 @@ export default function ProfilPage() {
 
           <div style={{ padding: "24px 0" }}>
 
-            <h1>Profil KUA Kecamatan Panca Lautang</h1>
+            <h1 id="profil-kua">Profil KUA Kecamatan Panca Lautang</h1>
 
             <p>
               Kantor Urusan Agama (KUA) Kecamatan Panca Lautang merupakan
@@ -41,7 +41,7 @@ export default function ProfilPage() {
               harmonis dan sejahtera.
             </p>
 
-            <h2>Wilayah Kerja</h2>
+            <h2 id="wilayah-kerja">Wilayah Kerja</h2>
 
             <p>
               Wilayah kerja KUA Kecamatan Panca Lautang meliputi
@@ -71,7 +71,7 @@ export default function ProfilPage() {
               keagamaan dan penguatan kerukunan umat beragama.
             </p>
 
-            <h2>Visi</h2>
+            <h2 id="visi">Visi</h2>
 
             <p>
               Terwujudnya KUA Panca Lautang sebagai pusat pelayanan,
@@ -295,9 +295,9 @@ export default function ProfilPage() {
 
 <hr />
 
-<h2>💍 Panduan Layanan Pernikahan</h2>
+<h2 id="layanan-perkawinan">💍 Panduan Layanan Pernikahan</h2>
 
-<h3>Persyaratan Umum</h3>
+<h3 id="persyaratan-perkawinan">Persyaratan Umum</h3>
 <ul>
   <li>Calon pengantin menyiapkan dokumen administrasi sesuai ketentuan.</li>
   <li>Data calon pengantin dan wali harus diisi dengan benar.</li>
@@ -348,7 +348,7 @@ export default function ProfilPage() {
 
 <hr />
 
-<h2>🕌 Panduan Layanan Kemasjidan</h2>
+<h2 id="layanan-kemasjidan">🕌 Panduan Layanan Kemasjidan</h2>
 
 <h3>Pendaftaran Masjid dan Mushala melalui SIMAS</h3>
 <p>
@@ -452,7 +452,7 @@ export default function ProfilPage() {
 
 <hr />
 
-<h2>🤲 Layanan Zakat, Wakaf & Ibadah Sosial</h2>
+<h2 id="layanan-sosial">🤲 Layanan Zakat, Wakaf & Ibadah Sosial</h2>
 
 <h3>Wakaf</h3>
 <p>
@@ -508,6 +508,105 @@ export default function ProfilPage() {
   </p>
 </div>
 
+<section
+  id="struktur-organisasi"
+  style={{
+    marginTop: "36px",
+    marginBottom: "36px",
+    padding: "24px",
+    borderRadius: "18px",
+    background: "#f8fafc",
+    border: "1px solid #e2e8f0"
+  }}
+>
+  <h2 style={{ textAlign: "center", marginBottom: "8px" }}>
+    Struktur Organisasi dan Staf
+  </h2>
+  <p style={{ textAlign: "center", color: "#475569", marginBottom: "24px" }}>
+    Kantor Urusan Agama Kecamatan Panca Lautang
+  </p>
+
+  <div style={{ display: "flex", justifyContent: "center", marginBottom: "24px" }}>
+    <div style={{
+      width: "100%",
+      maxWidth: "420px",
+      padding: "22px",
+      textAlign: "center",
+      background: "#ecfdf5",
+      border: "2px solid #16805d",
+      borderRadius: "16px"
+    }}>
+      <div style={{ fontSize: "30px", marginBottom: "8px" }}>🏛️</div>
+      <strong style={{ display: "block", fontSize: "20px", color: "#14532d", fontWeight: 800, lineHeight: 1.5 }}>
+        Arwan, S.Ag., M.Pd.I.
+      </strong>
+      <span style={{ display: "block", marginTop: "6px", color: "#166534" }}>
+        Kepala KUA
+      </span>
+    </div>
+  </div>
+
+  <div style={{
+    display: "grid",
+    gridTemplateColumns: "repeat(auto-fit, minmax(210px, 1fr))",
+    gap: "14px"
+  }}>
+    {[
+      { nama: "Hj. Nurhayati, S.Ag.", jabatan: "Staf KUA" },
+      { nama: "Sahiruddin, S.Ag.", jabatan: "Penghulu" },
+      { nama: "Syuhada, S.Pd.I", jabatan: "Penyuluh Agama Islam" },
+      { nama: "Badiraah, S.HI.", jabatan: "Staf KUA" },
+      { nama: "Alimuddin, S.HI.", jabatan: "Penyuluh Agama Islam" },
+      { nama: "Surianto, S.Ag.", jabatan: "Penyuluh Agama Islam" },
+      { nama: "Ishar, S.HI.", jabatan: "Penyuluh Agama Islam" },
+      { nama: "Syamsiah, S.HI.", jabatan: "Penyuluh Agama Islam" },
+      { nama: "Hamsiah, S.Pd.I.", jabatan: "Penyuluh Agama Islam" },
+      { nama: "Sukma Dewi, S.HI.", jabatan: "Staf KUA" }
+    ].map((pegawai) => (
+      <div
+        key={pegawai.nama}
+        style={{
+          padding: "18px",
+          borderRadius: "14px",
+          background: "#ffffff",
+          border: "1px solid #e2e8f0",
+          textAlign: "center"
+        }}
+      >
+        <div style={{
+          width: "48px",
+          height: "48px",
+          margin: "0 auto 12px",
+          borderRadius: "50%",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          background: "#d1fae5",
+          color: "#065f46",
+          fontSize: "21px"
+        }}>
+          👤
+        </div>
+        <strong style={{ display: "block", color: "#0f172a" }}>
+          {pegawai.nama}
+        </strong>
+        <span style={{
+          display: "block",
+          marginTop: "7px",
+          fontSize: "14px",
+          color: "#475569"
+        }}>
+          {pegawai.jabatan}
+        </span>
+      </div>
+    ))}
+  </div>
+
+  <p style={{ marginTop: "20px", fontSize: "13px", color: "#64748b" }}>
+    Jabatan staf yang belum dikonfirmasi ditampilkan sebagai Staf KUA.
+    Informasi ini dapat diperbarui sesuai data kepegawaian resmi.
+  </p>
+</section>
 {/* Profil Penyuluh Agama Islam sementara ditutup. Data lengkap tersimpan di page.js.backup dan akan dibuka kembali setelah final verifikasi. */}<h2>Komitmen Pelayanan</h2>
             <p>
               KUA Kecamatan Panca Lautang berkomitmen memberikan
