@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState } from 'react';
@@ -22,7 +21,10 @@ const menus = [
       ['Bimbingan Perkawinan', '/bimbingan-perkawinan'],
       ['Kemasjidan, Zakat dan Wakaf', '/profil#layanan-kemasjidan'],
       ['Layanan Halal (SEHATI)', '/layanan-halal'],
-      ['Konsultasi Keagamaan', '/profil#layanan-sosial'],    ],
+      ['Konsultasi Keagamaan', '/profil#layanan-sosial'],
+      ['Ajukan Layanan', '/ajukan-layanan'],
+      ['Cek Status Berkas', '/cek-status-berkas'],
+    ],
   },
   {
     label: 'Data & Statistik',
@@ -33,9 +35,17 @@ const menus = [
     ],
   },
   {
+    label: 'Pusat Informasi',
+    items: [
+      ['FAQ — Pertanyaan Umum', '/faq'],
+      ['Tarif Layanan', '/tarif-layanan'],
+    ],
+  },
+  {
     label: 'Pusat Unduhan',
     items: [
       ['Persyaratan Perkawinan', '/profil#persyaratan-perkawinan'],
+      ['Formulir dan Panduan', '/unduhan'],
       ['Materi Dakwah', '/materi-dakwah'],
       ['Khutbah Jumat', '/khutbah-jumat'],
     ],
