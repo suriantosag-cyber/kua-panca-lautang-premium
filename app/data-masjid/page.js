@@ -1,245 +1,253 @@
-﻿'use client';
+'use client';
 
 import { useEffect, useMemo, useState } from 'react';
+import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { supabaseBrowser } from '../../lib/supabase-browser';
+
+const PetaMasjid = dynamic(() => import('../components/PetaMasjid'), {
+  ssr: false,
+  loading: () => <p className="dm-mapLoading">Memuat peta lokasi...</p>,
+});
 
 export default function DataMasjidPage() {
   const [dataMasjid, setDataMasjid] = useState([]);
   const [kataKunci, setKataKunci] = useState('');
   const [jenisFilter, setJenisFilter] = useState('semua');
+  const [desaFilter, setDesaFilter] = useState('semua');
   const [memuat, setMemuat] = useState(true);
   const [pesanError, setPesanError] = useState('');
 
   useEffect(() => {
     let aktif = true;
-
     async function ambilData() {
       const { data, error } = await supabaseBrowser
         .from('data_masjid')
-        .select('id, nama, jenis, desa, alamat, keterangan, nomor_sertifikat, luas_tanah')
+        .select('id, nama, jenis, desa, alamat, keterangan, nomor_sertifikat, luas_tanah, nomor_simas, status_verifikasi_simas, latitude, longitude')
         .eq('status', 'tampil')
         .order('desa')
         .order('nama');
 
       if (!aktif) return;
-
       if (error) {
         console.error('Gagal mengambil data masjid:', error.message);
         setPesanError('Data belum dapat dimuat. Silakan coba lagi nanti.');
       } else {
         setDataMasjid(data || []);
       }
-
       setMemuat(false);
     }
-
     ambilData();
-
-    return () => {
-      aktif = false;
-    };
+    return () => { aktif = false; };
   }, []);
+
+  const daftarDesa = useMemo(() => [...new Set(
+    dataMasjid.map((item) => item.desa?.trim()).filter(Boolean)
+  )].sort((a, b) => a.localeCompare(b, 'id')), [dataMasjid]);
 
   const dataTersaring = useMemo(() => {
     const kata = kataKunci.trim().toLocaleLowerCase('id-ID');
-
     return dataMasjid.filter((item) => {
       const cocokKata = [
-        item.nama,
-        item.desa,
-        item.alamat || '',
-        item.keterangan || '',
-        item.nomor_sertifikat || '',
-        item.luas_tanah || '',
-      ]
-        .join(' ')
-        .toLocaleLowerCase('id-ID')
-        .includes(kata);
-
+        item.nama, item.jenis, item.desa, item.alamat, item.keterangan,
+        item.nomor_sertifikat, item.luas_tanah, item.nomor_simas,
+        item.status_verifikasi_simas,
+      ].map((nilai) => nilai ?? '').join(' ')
+        .toLocaleLowerCase('id-ID').includes(kata);
       return cocokKata &&
-        (jenisFilter === 'semua' || item.jenis === jenisFilter);
+        (jenisFilter === 'semua' || item.jenis === jenisFilter) &&
+        (desaFilter === 'semua' || item.desa?.trim() === desaFilter);
     });
-  }, [dataMasjid, kataKunci, jenisFilter]);
+  }, [dataMasjid, kataKunci, jenisFilter, desaFilter]);
 
-  const jumlahMasjid = dataMasjid.filter(
-    (item) => item.jenis === 'masjid'
-  ).length;
-
-  const jumlahMushalla = dataMasjid.filter(
-    (item) => item.jenis === 'mushalla'
+  const jumlahMasjid = dataMasjid.filter((item) => item.jenis === 'masjid').length;
+  const jumlahMushalla = dataMasjid.filter((item) => item.jenis === 'mushalla').length;
+  const jumlahTerverifikasi = dataMasjid.filter(
+    (item) => item.status_verifikasi_simas === 'terverifikasi'
   ).length;
 
   const wilayahTersaring = useMemo(() => {
     const kelompok = new Map();
-
     dataTersaring.forEach((item) => {
-      const desa = item.desa || 'Wilayah belum ditentukan';
+      const desa = item.desa?.trim() || 'Wilayah belum ditentukan';
       if (!kelompok.has(desa)) kelompok.set(desa, []);
       kelompok.get(desa).push(item);
     });
-
-    return Array.from(kelompok, ([desa, daftar]) => ({
-      wilayah: desa,
-      daftar,
-    }));
+    return Array.from(kelompok, ([wilayah, daftar]) => ({ wilayah, daftar }));
   }, [dataTersaring]);
 
-  const pilihFilter = (jenis) => {
-    setJenisFilter((sebelumnya) =>
-      sebelumnya === jenis ? 'semua' : jenis
-    );
-  };
+  function resetFilter() {
+    setKataKunci('');
+    setJenisFilter('semua');
+    setDesaFilter('semua');
+  }
 
-  const gayaFilter = (aktif) => ({
-    cursor: 'pointer',
-    textAlign: 'left',
-    font: 'inherit',
-    color: 'inherit',
-    border: aktif ? '2px solid var(--primary)' : undefined,
-  });
+  const filterAktif = kataKunci.trim() !== '' ||
+    jenisFilter !== 'semua' || desaFilter !== 'semua';
 
   return (
-    <main>
-      <section className="section">
+    <main className="dm-page">
+      <section className="section dm-section">
         <div className="wrap">
-          <div className="sectionHead">
-            <div>
-              <span className="tag">DATA WILAYAH</span>
-              <h1 style={{
-                margin: '14px 0 8px',
-                fontSize: 'clamp(28px, 5vw, 42px)',
-              }}>
-                Daftar Masjid dan Mushalla
-              </h1>
-              <p>
-                Kecamatan Panca Lautang, Kabupaten Sidenreng Rappang.
-              </p>
-            </div>
-          </div>
-
-          <div className="grid3" style={{ marginBottom: 28 }}>
-            <button
-              type="button"
-              className="card"
-              onClick={() => pilihFilter('masjid')}
-              aria-pressed={jenisFilter === 'masjid'}
-              style={gayaFilter(jenisFilter === 'masjid')}
-            >
-              <div className="icon" aria-hidden="true">🕌</div>
-              <h3>{jumlahMasjid} Masjid</h3>
-              <p>Masjid yang sudah ditampilkan kepada publik.</p>
-              <span>Klik untuk memfilter masjid</span>
-            </button>
-
-            <button
-              type="button"
-              className="card"
-              onClick={() => pilihFilter('mushalla')}
-              aria-pressed={jenisFilter === 'mushalla'}
-              style={gayaFilter(jenisFilter === 'mushalla')}
-            >
-              <div className="icon" aria-hidden="true">🌙</div>
-              <h3>{jumlahMushalla} Mushalla</h3>
-              <p>Mushalla yang sudah ditampilkan kepada publik.</p>
-              <span>Klik untuk memfilter mushalla</span>
-            </button>
-
-            <article className="card">
-              <div className="icon" aria-hidden="true">📋</div>
-              <h3>{dataMasjid.length} Data tampil</h3>
-              <p>Jumlah data rumah ibadah yang sudah diverifikasi.</p>
-            </article>
-          </div>
-
-          <label
-            htmlFor="cari-masjid"
-            style={{ display: 'block', fontWeight: 700, marginBottom: 8 }}
-          >
-            Cari nama masjid atau wilayah
-          </label>
-
-          <input
-            id="cari-masjid"
-            type="search"
-            value={kataKunci}
-            onChange={(event) => setKataKunci(event.target.value)}
-            placeholder="Contoh: Baiturrahmah, Wanio, Bapangi..."
-            style={{
-              width: '100%',
-              padding: '14px 16px',
-              borderRadius: 12,
-              border: '1px solid var(--line)',
-              marginBottom: 28,
-              fontSize: 16,
-            }}
-          />
-
-          {jenisFilter !== 'semua' && (
-            <p>
-              Filter aktif: <strong>{jenisFilter}</strong>{' '}
-              <button type="button" onClick={() => setJenisFilter('semua')}>
-                Tampilkan semua
-              </button>
+          <header className="dm-hero">
+            <span className="tag">DATA WILAYAH</span>
+            <p className="dm-eyebrow">KANTOR URUSAN AGAMA</p>
+            <h1>Data Masjid dan Mushalla</h1>
+            <p className="dm-intro">
+              Informasi rumah ibadah di Kecamatan Panca Lautang,
+              Kabupaten Sidenreng Rappang.
             </p>
-          )}
+            <div className="dm-heroMeta">
+              <span>Data rumah ibadah</span><span aria-hidden="true">•</span>
+              <span>{dataMasjid.length} data tersedia</span>
+            </div>
+          </header>
+
+          <section className="dm-stats" aria-label="Statistik rumah ibadah">
+            <button type="button"
+              className={`dm-stat dm-statMasjid ${jenisFilter === 'masjid' ? 'is-active' : ''}`}
+              onClick={() => setJenisFilter((v) => v === 'masjid' ? 'semua' : 'masjid')}
+              aria-pressed={jenisFilter === 'masjid'}>
+              <span className="dm-statIcon" aria-hidden="true">M</span>
+              <span className="dm-statLabel">Jumlah Masjid</span>
+              <strong>{jumlahMasjid}</strong>
+              <span className="dm-statHint">Klik untuk memfilter masjid</span>
+            </button>
+            <button type="button"
+              className={`dm-stat dm-statMushalla ${jenisFilter === 'mushalla' ? 'is-active' : ''}`}
+              onClick={() => setJenisFilter((v) => v === 'mushalla' ? 'semua' : 'mushalla')}
+              aria-pressed={jenisFilter === 'mushalla'}>
+              <span className="dm-statIcon" aria-hidden="true">U</span>
+              <span className="dm-statLabel">Jumlah Mushalla</span>
+              <strong>{jumlahMushalla}</strong>
+              <span className="dm-statHint">Klik untuk memfilter mushalla</span>
+            </button>
+            <article className="dm-stat dm-statVerified">
+              <span className="dm-statIcon" aria-hidden="true">✓</span>
+              <span className="dm-statLabel">Terverifikasi SIMAS</span>
+              <strong>{jumlahTerverifikasi}</strong>
+              <span className="dm-statHint">Dari {dataMasjid.length} data publik</span>
+            </article>
+          </section>
+
+          <section className="dm-tools" aria-label="Pencarian dan filter">
+            <div className="dm-toolsHeading">
+              <h2>Temukan Rumah Ibadah</h2>
+              <p>Cari berdasarkan nama, lokasi, atau informasi SIMAS.</p>
+            </div>
+            <div className="dm-filterGrid">
+              <div className="dm-field dm-searchField">
+                <label htmlFor="dm-search">Pencarian</label>
+                <input id="dm-search" type="search" value={kataKunci}
+                  onChange={(event) => setKataKunci(event.target.value)}
+                  placeholder="Nama masjid, alamat, nomor SIMAS..." />
+              </div>
+              <div className="dm-field">
+                <label htmlFor="dm-desa">Desa / Kelurahan</label>
+                <select id="dm-desa" value={desaFilter}
+                  onChange={(event) => setDesaFilter(event.target.value)}>
+                  <option value="semua">Semua wilayah</option>
+                  {daftarDesa.map((desa) => <option key={desa} value={desa}>{desa}</option>)}
+                </select>
+              </div>
+              <div className="dm-field">
+                <label htmlFor="dm-jenis">Jenis rumah ibadah</label>
+                <select id="dm-jenis" value={jenisFilter}
+                  onChange={(event) => setJenisFilter(event.target.value)}>
+                  <option value="semua">Semua jenis</option>
+                  <option value="masjid">Masjid</option>
+                  <option value="mushalla">Mushalla</option>
+                </select>
+              </div>
+            </div>
+            <div className="dm-resultBar" aria-live="polite">
+              <span>Menampilkan <strong>{dataTersaring.length}</strong> dari <strong>{dataMasjid.length}</strong> rumah ibadah</span>
+              {filterAktif && <button type="button" className="dm-reset" onClick={resetFilter}>Reset filter</button>}
+            </div>
+          </section>
 
           {memuat ? (
-            <p role="status">Memuat data dari database...</p>
+            <div className="dm-message" role="status">Memuat data rumah ibadah...</div>
           ) : pesanError ? (
-            <p role="alert">{pesanError}</p>
+            <div className="dm-message dm-error" role="alert">
+              <h2>Data belum dapat dimuat</h2><p>{pesanError}</p>
+              <button type="button" className="btn primary" onClick={() => window.location.reload()}>Muat ulang halaman</button>
+            </div>
           ) : dataMasjid.length === 0 ? (
-            <article className="card">
+            <div className="dm-message">
               <h2>Data belum tersedia untuk publik</h2>
-              <p>
-                Data awal sudah disiapkan, tetapi masih menunggu verifikasi
-                sebelum ditampilkan di website.
-              </p>
-            </article>
-          ) : dataTersaring.length === 0 ? (
-            <p role="status">
-              Tidak ada masjid atau mushalla yang cocok dengan pencarian.
-            </p>
+              <p>Data rumah ibadah akan ditampilkan setelah statusnya diatur menjadi tampil oleh pengelola.</p>
+            </div>
           ) : (
-            wilayahTersaring.map((wilayah) => (
-              <section key={wilayah.wilayah} style={{ marginBottom: 30 }}>
-                <div className="sectionHead">
-                  <div>
-                    <h2 style={{ fontSize: 24, margin: 0 }}>
-                      {wilayah.wilayah}
-                    </h2>
-                    <p>{wilayah.daftar.length} rumah ibadah</p>
+            <>
+              <PetaMasjid data={dataTersaring} memuat={memuat} />
+              {dataTersaring.length === 0 ? (
+                <div className="dm-message">
+                  <h2>Data tidak ditemukan</h2><p>Coba kata pencarian atau filter wilayah lain.</p>
+                  <button type="button" className="btn primary" onClick={resetFilter}>Tampilkan semua data</button>
+                </div>
+              ) : (
+                <section className="dm-directory">
+                  <div className="dm-directoryHeading">
+                    <span className="tag">DIREKTORI</span>
+                    <h2>Daftar Rumah Ibadah</h2>
+                    <p>Data dikelompokkan berdasarkan desa atau kelurahan.</p>
                   </div>
-                </div>
-
-                <div className="grid3">
-                  {wilayah.daftar.map((item) => (
-                    <article className="card" key={item.id}>
-                      <h3>{item.nama}</h3>
-                      <p>📍 {item.alamat || item.desa}</p>
-                      {item.nomor_sertifikat && (
-                        <p>Nomor sertifikat: {item.nomor_sertifikat}</p>
-                      )}
-                      {item.luas_tanah && (
-                        <p>Luas tanah: {item.luas_tanah}</p>
-                      )}
-                    </article>
+                  {wilayahTersaring.map((wilayah) => (
+                    <section key={wilayah.wilayah} className="dm-village">
+                      <div className="dm-villageHeading">
+                        <div className="dm-villageMark" aria-hidden="true">W</div>
+                        <div><h3>{wilayah.wilayah}</h3><p>{wilayah.daftar.length} rumah ibadah</p></div>
+                      </div>
+                      <div className="dm-cardGrid">
+                        {wilayah.daftar.map((item) => {
+                          const terverifikasi = item.status_verifikasi_simas === 'terverifikasi';
+                          const jenis = item.jenis === 'mushalla' ? 'Mushalla' : 'Masjid';
+                          const koordinatValid = item.latitude !== null && item.latitude !== '' &&
+                            item.longitude !== null && item.longitude !== '' &&
+                            Number.isFinite(Number(item.latitude)) && Number.isFinite(Number(item.longitude)) &&
+                            Number(item.latitude) >= -90 && Number(item.latitude) <= 90 &&
+                            Number(item.longitude) >= -180 && Number(item.longitude) <= 180;
+                          const urlPeta = koordinatValid
+                            ? `https://www.google.com/maps?q=${encodeURIComponent(`${item.latitude},${item.longitude}`)}`
+                            : null;
+                          return (
+                            <article className="dm-placeCard" key={item.id}>
+                              <div className="dm-placeTop">
+                                <span className={`dm-kind ${item.jenis === 'mushalla' ? 'dm-kindMushalla' : 'dm-kindMasjid'}`}>{jenis}</span>
+                                <span className={`dm-status ${terverifikasi ? 'dm-statusVerified' : 'dm-statusPending'}`}>
+                                  {terverifikasi ? '✓ SIMAS terverifikasi' : '• SIMAS belum terverifikasi'}
+                                </span>
+                              </div>
+                              <h4>{item.nama || 'Nama belum diisi'}</h4>
+                              <div className="dm-placeAddress">
+                                <span aria-hidden="true">⌖</span>
+                                <p>{item.alamat || 'Alamat belum diisi'}{item.desa ? `, ${item.desa}` : ''}</p>
+                              </div>
+                              {(item.nomor_simas || item.nomor_sertifikat || item.luas_tanah || item.keterangan) && (
+                                <div className="dm-details">
+                                  {item.nomor_simas && <div className="dm-detailRow"><span>Nomor SIMAS</span><strong>{item.nomor_simas}</strong></div>}
+                                  {item.nomor_sertifikat && <div className="dm-detailRow"><span>Sertifikat</span><strong>{item.nomor_sertifikat}</strong></div>}
+                                  {item.luas_tanah && <div className="dm-detailRow"><span>Luas tanah</span><strong>{item.luas_tanah}</strong></div>}
+                                  {item.keterangan && <p className="dm-description">{item.keterangan}</p>}
+                                </div>
+                              )}
+                              {urlPeta && <a className="dm-mapLink" href={urlPeta} target="_blank" rel="noopener noreferrer">Lihat lokasi di peta <span aria-hidden="true">↗</span></a>}
+                            </article>
+                          );
+                        })}
+                      </div>
+                    </section>
                   ))}
-                </div>
-              </section>
-            ))
+                </section>
+              )}
+            </>
           )}
 
-          <p style={{ color: 'var(--muted)', lineHeight: 1.7 }}>
-            Data yang ditampilkan mengikuti status verifikasi. Nama dan
-            lokasi rumah ibadah perlu diperiksa oleh pengelola KUA.
-          </p>
-
-          <p style={{ marginTop: 24 }}>
-            <Link className="btn primary" href="/">
-              ← Kembali ke website KUA
-            </Link>
-          </p>
+          <footer className="dm-footer">
+            <p>Data ditampilkan sesuai status publikasi. Informasi administrasi dan lokasi perlu diperiksa oleh pengelola KUA.</p>
+            <Link className="btn primary" href="/">Kembali ke website KUA</Link>
+          </footer>
         </div>
       </section>
     </main>

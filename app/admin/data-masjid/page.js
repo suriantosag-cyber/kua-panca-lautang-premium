@@ -10,6 +10,10 @@ const FORM_KOSONG = {
   alamat: "",
   nomor_sertifikat: "",
   luas_tanah: "",
+  nomor_simas: "",
+  status_verifikasi_simas: "belum_diverifikasi",
+  latitude: "",
+  longitude: "",
   keterangan: "",
   status: "menunggu",
 };
@@ -30,7 +34,8 @@ export default function AdminDataMasjidPage() {
   const [saving, setSaving] = useState(false);
   const [pesan, setPesan] = useState("");
   const [error, setError] = useState("");
-
+const [mencariKoordinat, setMencariKoordinat] = useState(false);
+const [kandidatKoordinat, setKandidatKoordinat] = useState([]);
   const muatData = useCallback(async () => {
     setLoading(true);
     setError("");
@@ -57,6 +62,61 @@ export default function AdminDataMasjidPage() {
     muatData();
   }, [muatData]);
 
+async function cariKoordinat() {
+  if (!form.nama.trim() || !form.desa.trim()) {
+    setError("Isi nama masjid dan desa terlebih dahulu.");
+    return;
+  }
+
+  setMencariKoordinat(true);
+  setKandidatKoordinat([]);
+  setPesan("");
+  setError("");
+
+  try {
+    const response = await adminFetch("/api/data-masjid/geocode", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        nama: form.nama,
+        desa: form.desa,
+      }),
+    });
+
+    const result = await response.json();
+
+    if (!response.ok || !result.ok) {
+      throw new Error(result.error || "Pencarian koordinat gagal.");
+    }
+
+    setKandidatKoordinat(
+      Array.isArray(result.kandidat) ? result.kandidat : []
+    );
+
+    if (!result.kandidat?.length) {
+      setPesan(
+        "Lokasi belum ditemukan. Silakan coba dengan nama atau alamat yang lebih lengkap."
+      );
+    }
+  } catch (err) {
+    setError(err.message || "Pencarian koordinat gagal.");
+  } finally {
+    setMencariKoordinat(false);
+  }
+}
+
+function pilihKoordinat(lokasi) {
+  setForm((sebelumnya) => ({
+    ...sebelumnya,
+    latitude: String(lokasi.latitude),
+    longitude: String(lokasi.longitude),
+  }));
+
+  setKandidatKoordinat([]);
+  setPesan("Koordinat terpilih. Periksa titiknya, lalu simpan perubahan.");
+  setError("");
+}
+
   function ubahForm(e) {
     setForm((sebelumnya) => ({
       ...sebelumnya,
@@ -73,6 +133,10 @@ export default function AdminDataMasjidPage() {
       alamat: item.alamat || "",
       nomor_sertifikat: item.nomor_sertifikat || "",
       luas_tanah: item.luas_tanah || "",
+      nomor_simas: item.nomor_simas || "",
+      status_verifikasi_simas: item.status_verifikasi_simas || "belum_diverifikasi",
+      latitude: item.latitude == null ? "" : String(item.latitude),
+      longitude: item.longitude == null ? "" : String(item.longitude),
       keterangan: item.keterangan || "",
       status: item.status || "menunggu",
     });
@@ -200,7 +264,7 @@ export default function AdminDataMasjidPage() {
     <main style={{ minHeight: "100vh", background: "#f1f5f9", padding: "24px 16px 48px", color: "#172033" }}>
       <div style={{ maxWidth: 1100, margin: "0 auto" }}>
         <a href="/admin" style={{ color: "#166534", textDecoration: "none", fontWeight: 600 }}>
-          ← Kembali ke Dashboard Admin
+          Kembali ke Dashboard Admin
         </a>
 
         <header style={{ margin: "20px 0 24px" }}>
@@ -276,6 +340,78 @@ export default function AdminDataMasjidPage() {
                 <input id="luas_tanah" name="luas_tanah" value={form.luas_tanah} onChange={ubahForm} maxLength={100} placeholder="Contoh: 501 m2" style={inputStyle} />
               </div>
               <div>
+                <label htmlFor="nomor_simas" style={labelStyle}>Nomor SIMAS</label>
+                <input id="nomor_simas" name="nomor_simas" value={form.nomor_simas} onChange={ubahForm} maxLength={100} style={inputStyle} />
+              </div>
+              <div>
+                <label htmlFor="status_verifikasi_simas" style={labelStyle}>Status verifikasi SIMAS</label>
+                <select id="status_verifikasi_simas" name="status_verifikasi_simas" value={form.status_verifikasi_simas} onChange={ubahForm} style={inputStyle}>
+                  <option value="belum_diverifikasi">Belum diverifikasi</option>
+                  <option value="terverifikasi">Terverifikasi</option>
+                </select>
+              </div>
+              <div>
+                <label htmlFor="latitude" style={labelStyle}>Latitude (lintang)</label>
+                <input id="latitude" name="latitude" type="number" step="any" min="-90" max="90" value={form.latitude} onChange={ubahForm} placeholder="Contoh: -3.800000" style={inputStyle} />
+              </div>
+              <div>
+  <label htmlFor="longitude" style={labelStyle}>Longitude (bujur)</label>
+  <input
+    id="longitude"
+    name="longitude"
+    type="number"
+    step="any"
+    min="-180"
+    max="180"
+    value={form.longitude}
+    onChange={ubahForm}
+    placeholder="Contoh: 119.600000"
+    style={inputStyle}
+  />
+</div>
+
+<div style={{ gridColumn: "1 / -1" }}>
+  <button
+    type="button"
+    onClick={cariKoordinat}
+    disabled={mencariKoordinat || saving}
+    style={{ ...tombol, background: "#166534", color: "#fff" }}
+  >
+    {mencariKoordinat ? "Mencari lokasi..." : "Cari Koordinat Otomatis"}
+  </button>
+
+  <p style={{ color: "#64748b", fontSize: 13, lineHeight: 1.6 }}>
+    Hasil pencarian berasal dari OpenStreetMap. Periksa nama dan lokasi sebelum memilih koordinat.
+  </p>
+
+  {kandidatKoordinat.map((lokasi, index) => (
+    <div
+      key={`${lokasi.latitude}-${lokasi.longitude}-${index}`}
+      style={{
+        border: "1px solid #cbd5e1",
+        borderRadius: 10,
+        padding: 12,
+        marginTop: 10,
+        overflowWrap: "anywhere",
+      }}
+    >
+      <p style={{ margin: "0 0 8px", fontWeight: 600 }}>
+        {lokasi.namaLokasi}
+      </p>
+      <p style={{ margin: "0 0 10px", fontSize: 13, color: "#475569" }}>
+        Latitude: {lokasi.latitude} - Longitude: {lokasi.longitude}
+      </p>
+      <button
+        type="button"
+        onClick={() => pilihKoordinat(lokasi)}
+        style={{ ...tombol, background: "#dbeafe", color: "#1d4ed8" }}
+      >
+        Pilih Lokasi Ini
+      </button>
+    </div>
+  ))}
+</div>
+<div>
                 <label htmlFor="status" style={labelStyle}>Status publikasi</label>
                 <select id="status" name="status" value={form.status} onChange={ubahForm} style={inputStyle}>
                   <option value="menunggu">Menunggu</option>
@@ -306,7 +442,7 @@ export default function AdminDataMasjidPage() {
           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", gap: 12, flexWrap: "wrap" }}>
             <h2 style={{ margin: 0, fontSize: 21 }}>Daftar Data</h2>
             <button type="button" onClick={muatData} disabled={loading} style={{ ...tombol, background: "#e2e8f0", color: "#334155" }}>
-              {loading ? "Memuat..." : "↻ Muat Ulang"}
+              {loading ? "Memuat..." : "Muat Ulang"}
             </button>
           </div>
 

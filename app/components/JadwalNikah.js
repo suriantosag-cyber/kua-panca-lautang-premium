@@ -9,14 +9,28 @@ export default function JadwalNikah() {
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
+    let aktif = true;
+    const controller = new AbortController();
+    const timer = setTimeout(() => controller.abort(), 12000);
+
     async function loadJadwal() {
       try {
         const response = await fetch('/api/jadwal-nikah', {
           cache: 'no-store',
+          signal: controller.signal,
         });
+
+        if (!response.ok) {
+          throw new Error(`API jadwal gagal: HTTP ${response.status}`);
+        }
+
         const result = await response.json();
 
-        if (response.ok && result.ok) {
+        if (!result || result.ok !== true || !Array.isArray(result.data)) {
+          throw new Error('Format respons API jadwal tidak valid.');
+        }
+
+        if (aktif) {
           const bagianTanggal = new Intl.DateTimeFormat('en-CA', {
   timeZone: 'Asia/Makassar',
   year: 'numeric',
@@ -52,13 +66,22 @@ return (
           setJadwal(jadwalTerdekat);
         }
       } catch (error) {
-        console.error('Gagal mengambil jadwal nikah:', error);
+        if (aktif) {
+          console.error('Gagal mengambil jadwal nikah:', error);
+        }
       } finally {
-        setLoading(false);
+        clearTimeout(timer);
+        if (aktif) setLoading(false);
       }
     }
 
     loadJadwal();
+
+    return () => {
+      aktif = false;
+      clearTimeout(timer);
+      controller.abort();
+    };
   }, []);
 
   function formatTanggal(tanggal) {

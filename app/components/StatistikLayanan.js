@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 
 import { useEffect, useRef, useState } from 'react';
 import { supabaseBrowser } from '../../lib/supabase-browser';
@@ -7,23 +7,42 @@ export default function StatistikLayanan() {
   const sectionRef = useRef(null);
   const [terlihat, setTerlihat] = useState(false);
   const [jumlahMasjid, setJumlahMasjid] = useState(null);
+  const [statusMasjid, setStatusMasjid] = useState('memuat');
 
   useEffect(() => {
     let aktif = true;
+    let timer;
 
     async function ambilJumlahMasjid() {
-      const { count, error } = await supabaseBrowser
-        .from('data_masjid')
-        .select('id', { count: 'exact', head: true })
-        .eq('status', 'tampil');
+      try {
+        const permintaan = supabaseBrowser
+          .from('data_masjid')
+          .select('id', { count: 'exact', head: true })
+          .eq('status', 'tampil');
 
-      if (!aktif) return;
+        const batasWaktu = new Promise((_, reject) => {
+          timer = setTimeout(() => {
+            reject(new Error('Permintaan statistik melewati batas 12 detik.'));
+          }, 12000);
+        });
 
-      if (error) {
-        console.error('Gagal mengambil statistik masjid:', error.message);
-        setJumlahMasjid(null);
-      } else {
-        setJumlahMasjid(count ?? 0);
+        const { count, error } = await Promise.race([
+          permintaan,
+          batasWaktu,
+        ]);
+
+        if (error) throw error;
+
+        if (aktif) {
+          setJumlahMasjid(count ?? 0);
+          setStatusMasjid('siap');
+        }
+      } catch (error) {
+        console.error('Gagal mengambil statistik masjid:', error);
+
+        if (aktif) setStatusMasjid('gagal');
+      } finally {
+        clearTimeout(timer);
       }
     }
 
@@ -31,6 +50,7 @@ export default function StatistikLayanan() {
 
     return () => {
       aktif = false;
+      clearTimeout(timer);
     };
   }, []);
 
@@ -63,9 +83,11 @@ export default function StatistikLayanan() {
       judul: 'Data Masjid',
       keterangan: 'Informasi rumah ibadah di wilayah Panca Lautang',
       nilai:
-        jumlahMasjid === null
+        statusMasjid === 'memuat'
           ? 'Memuat data...'
-          : `${jumlahMasjid} rumah ibadah terverifikasi`,
+          : statusMasjid === 'gagal'
+            ? 'Data belum dapat dimuat'
+            : `${jumlahMasjid} rumah ibadah terverifikasi`,
       href: '/data-masjid',
     },
     {

@@ -8,22 +8,21 @@ const menus = [
   {
     label: 'Profil',
     items: [
-      ['Profil KUA', '/profil'],
-      ['Visi dan Misi', '/profil'],
-      ['Wilayah Kerja', '/profil'],
-      ['Struktur Organisasi dan Staf', '/profil'],
+      ['Profil KUA', '/profil#profil-kua'],
+      ['Visi dan Misi', '/profil#visi'],
+      ['Wilayah Kerja', '/profil#wilayah-kerja'],
+      ['Struktur Organisasi dan Staf', '/profil#struktur-organisasi'],
     ],
   },
   {
     label: 'Ruang Layanan',
     items: [
-      ['Layanan Perkawinan', '/profil'],
+      ['Layanan Perkawinan', '/profil#layanan-perkawinan'],
       ['Jadwal Akad Nikah', '/jadwal-nikah'],
       ['Bimbingan Perkawinan', '/bimbingan-perkawinan'],
-      ['Kemasjidan, Zakat dan Wakaf', '/profil'],
+      ['Kemasjidan, Zakat dan Wakaf', '/profil#layanan-kemasjidan'],
       ['Layanan Halal (SEHATI)', '/layanan-halal'],
-      ['Konsultasi Keagamaan', '/#kontak'],
-    ],
+      ['Konsultasi Keagamaan', '/profil#layanan-sosial'],    ],
   },
   {
     label: 'Data & Statistik',
@@ -36,7 +35,7 @@ const menus = [
   {
     label: 'Pusat Unduhan',
     items: [
-      ['Persyaratan Perkawinan', '/profil'],
+      ['Persyaratan Perkawinan', '/profil#persyaratan-perkawinan'],
       ['Materi Dakwah', '/materi-dakwah'],
       ['Khutbah Jumat', '/khutbah-jumat'],
     ],
@@ -79,7 +78,7 @@ export default function Navbar() {
           aria-controls="kua-navigation"
           onClick={() => setMobileOpen((value) => !value)}
         >
-          <span aria-hidden="true">{mobileOpen ? '✕' : '☰'}</span>
+          <span aria-hidden="true">{mobileOpen ? '\u2715' : '\u2630'}</span>
           <span>{mobileOpen ? 'Tutup' : 'Menu'}</span>
         </button>
 
@@ -103,7 +102,7 @@ export default function Navbar() {
                 }
               >
                 {menu.label}
-                <span aria-hidden="true">⌄</span>
+                <span aria-hidden="true">{'\u2304'}</span>
               </button>
 
               <div
