@@ -23,7 +23,7 @@ export default function DataMasjidPage() {
     async function ambilData() {
       const { data, error } = await supabaseBrowser
         .from('data_masjid')
-        .select('id, nama, jenis, desa, alamat, keterangan, nomor_sertifikat, luas_tanah, nomor_simas, status_verifikasi_simas, latitude, longitude')
+        .select('id, nama, jenis, desa, kecamatan, alamat, keterangan, id_masjid, tipologi, status_tanah, luas_bangunan, tahun_berdiri, nomor_sertifikat, luas_tanah, nomor_simas, status_verifikasi_simas, latitude, longitude')
         .eq('status', 'tampil')
         .order('desa')
         .order('nama');
@@ -49,7 +49,9 @@ export default function DataMasjidPage() {
     const kata = kataKunci.trim().toLocaleLowerCase('id-ID');
     return dataMasjid.filter((item) => {
       const cocokKata = [
-        item.nama, item.jenis, item.desa, item.alamat, item.keterangan,
+        item.nama, item.jenis, item.desa, item.kecamatan, item.alamat,
+        item.id_masjid, item.tipologi, item.status_tanah,
+        item.luas_bangunan, item.tahun_berdiri, item.keterangan,
         item.nomor_sertifikat, item.luas_tanah, item.nomor_simas,
         item.status_verifikasi_simas,
       ].map((nilai) => nilai ?? '').join(' ')
@@ -191,7 +193,43 @@ export default function DataMasjidPage() {
                   <div className="dm-directoryHeading">
                     <span className="tag">DIREKTORI</span>
                     <h2>Daftar Rumah Ibadah</h2>
-                    <p>Data dikelompokkan berdasarkan desa atau kelurahan.</p>
+                    <p>Tabel resmi data rumah ibadah. Geser tabel ke samping untuk melihat seluruh kolom.</p>
+                  </div>
+                  <div className="dm-tableWrap" role="region" aria-label="Tabel resmi data masjid dan mushalla" tabIndex={0}>
+                    <table className="dm-table">
+                      <thead>
+                        <tr>
+                          <th scope="col">NO</th>
+                          <th scope="col">KECAMATAN</th>
+                          <th scope="col">NAMA MASJID</th>
+                          <th scope="col">ID MASJID</th>
+                          <th scope="col">TIPOLOGI</th>
+                          <th scope="col">ALAMAT</th>
+                          <th scope="col">LUAS TANAH</th>
+                          <th scope="col">STATUS TANAH</th>
+                          <th scope="col">LUAS BANGUNAN</th>
+                          <th scope="col">TAHUN BERDIRI</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {dataTersaring.map((item, index) => (
+                          <tr key={item.id}>
+                            <td>{index + 1}</td>
+                            <td>{item.kecamatan || 'Panca Lautang'}</td>
+                            <td className="dm-tableName">{item.nama || '—'}</td>
+                            <td>{item.id_masjid || '—'}</td>
+                            <td>{item.tipologi || '—'}</td>
+                            <td>
+                              {[item.alamat, item.desa].filter(Boolean).join(', ') || '—'}
+                            </td>
+                            <td>{item.luas_tanah || '—'}</td>
+                            <td>{item.status_tanah || '—'}</td>
+                            <td>{item.luas_bangunan || '—'}</td>
+                            <td>{item.tahun_berdiri || '—'}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
                   </div>
                   {wilayahTersaring.map((wilayah) => (
                     <section key={wilayah.wilayah} className="dm-village">

@@ -5,7 +5,14 @@ const ADMIN_ORIGIN = 'https://admin.kua-pancalautang.my.id';
 const JENIS_VALID = ['masjid', 'mushalla'];
 const STATUS_VALID = ['menunggu', 'tampil', 'ditolak'];
 const SIMAS_VALID = ['belum_diverifikasi', 'terverifikasi'];
-const FIELD_EDIT = ['nama', 'jenis', 'desa', 'alamat', 'nomor_sertifikat', 'luas_tanah', 'keterangan', 'status', 'nomor_simas', 'status_verifikasi_simas', 'latitude', 'longitude'];
+const FIELD_EDIT = [
+  'nama', 'jenis', 'desa', 'kecamatan', 'alamat', 'id_masjid',
+  'tipologi', 'nomor_sertifikat', 'luas_tanah', 'status_tanah',
+  'luas_bangunan', 'tahun_berdiri', 'jumlah_jamaah', 'jumlah_imam',
+  'jumlah_khatib', 'jumlah_muazin', 'jumlah_remaja', 'nama_pengurus',
+  'no_telepon_pengurus', 'keterangan', 'status', 'nomor_simas',
+  'status_verifikasi_simas', 'latitude', 'longitude',
+];
 
 function corsHeaders(request) {
   const headers = new Headers({ Vary: 'Origin' });
@@ -207,6 +214,19 @@ export async function POST(request) {
         desa,
         jenis,
         alamat: teks(body.alamat) || null,
+        kecamatan: teks(body.kecamatan) || 'Panca Lautang',
+        id_masjid: teks(body.id_masjid) || null,
+        tipologi: teks(body.tipologi) || null,
+        status_tanah: teks(body.status_tanah) || null,
+        luas_bangunan: teks(body.luas_bangunan) || null,
+        tahun_berdiri: teks(body.tahun_berdiri) || null,
+        jumlah_jamaah: teks(body.jumlah_jamaah) || null,
+        jumlah_imam: teks(body.jumlah_imam) || null,
+        jumlah_khatib: teks(body.jumlah_khatib) || null,
+        jumlah_muazin: teks(body.jumlah_muazin) || null,
+        jumlah_remaja: teks(body.jumlah_remaja) || null,
+        nama_pengurus: teks(body.nama_pengurus) || null,
+        no_telepon_pengurus: teks(body.no_telepon_pengurus) || null,
         nomor_sertifikat: teks(body.nomor_sertifikat) || null,
         nomor_simas: teks(body.nomor_simas) || null,
         status_verifikasi_simas: teks(body.status_verifikasi_simas) || 'belum_diverifikasi',
@@ -279,10 +299,16 @@ export async function PATCH(request) {
         } else if (field === 'status_verifikasi_simas') {
           perubahan[field] = teks(body[field]) || 'belum_diverifikasi';
         } else {
-          perubahan[field] =
-            ['alamat', 'nomor_sertifikat', 'luas_tanah', 'keterangan', 'nomor_simas'].includes(field)
-              ? teks(body[field]) || null
-              : teks(body[field]);
+          perubahan[field] = [
+            'alamat', 'kecamatan', 'id_masjid', 'tipologi',
+            'nomor_sertifikat', 'luas_tanah', 'status_tanah',
+            'luas_bangunan', 'tahun_berdiri', 'jumlah_jamaah',
+            'jumlah_imam', 'jumlah_khatib', 'jumlah_muazin',
+            'jumlah_remaja', 'nama_pengurus', 'no_telepon_pengurus',
+            'keterangan', 'nomor_simas',
+          ].includes(field)
+            ? teks(body[field]) || null
+            : teks(body[field]);
         }
       }
     }

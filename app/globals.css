@@ -1848,3 +1848,73 @@ button.dm-stat.is-active{border:2px solid var(--dm-green);padding:23px;backgroun
 @media(max-width:1000px){.dm-filterGrid{grid-template-columns:repeat(2,minmax(0,1fr))}.dm-searchField{grid-column:1/-1}.dm-cardGrid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:650px){.dm-section{padding-top:28px}.dm-hero{padding:25px 21px;border-radius:21px}.dm-hero h1{font-size:32px;letter-spacing:-.8px}.dm-intro{font-size:14px}.dm-stats{grid-template-columns:1fr;gap:12px}.dm-stat{display:grid;grid-template-columns:44px minmax(0,1fr);column-gap:13px;padding:17px}button.dm-stat.is-active{padding:16px}.dm-statIcon{grid-column:1;grid-row:1/span 3;margin:0}.dm-statLabel,.dm-stat strong,.dm-statHint{grid-column:2}.dm-stat strong{margin:2px 0;font-size:29px}.dm-tools{padding:20px 16px;border-radius:19px}.dm-filterGrid{grid-template-columns:minmax(0,1fr);gap:15px}.dm-searchField{grid-column:auto}.dm-resultBar{align-items:flex-start}.dm-cardGrid{grid-template-columns:minmax(0,1fr)}.dm-placeCard{padding:19px}.dm-villageHeading h3{font-size:18px}.dm-footer{align-items:flex-start;flex-direction:column}}
 @media(prefers-reduced-motion:reduce){.dm-stat,.dm-placeCard{transition:none}}
+/* Tabel resmi data masjid dan mushalla */
+.dm-tableWrap {
+  width: 100%;
+  max-width: 100%;
+  margin: 22px 0 32px;
+  overflow-x: auto;
+  border: 1px solid var(--dm-border);
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 6px 22px rgba(18, 63, 49, .04);
+  -webkit-overflow-scrolling: touch;
+}
+.dm-tableWrap:focus-visible {
+  outline: 2px solid #159a72;
+  outline-offset: 3px;
+}
+.dm-table {
+  width: 100%;
+  min-width: 1120px;
+  border-collapse: separate;
+  border-spacing: 0;
+  color: #263f33;
+  font-size: 13px;
+  line-height: 1.55;
+}
+.dm-table th,
+.dm-table td {
+  padding: 13px 14px;
+  border-bottom: 1px solid #e8eee9;
+  border-right: 1px solid #edf1ee;
+  text-align: left;
+  vertical-align: top;
+  overflow-wrap: anywhere;
+}
+.dm-table th {
+  background: #eaf5ed;
+  color: #0b4935;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: .35px;
+  white-space: nowrap;
+}
+.dm-table tbody tr:nth-child(even) {
+  background: #f8fbf9;
+}
+.dm-table tbody tr:hover {
+  background: #eef8f1;
+}
+.dm-table tbody tr:last-child td {
+  border-bottom: 0;
+}
+.dm-table th:last-child,
+.dm-table td:last-child {
+  border-right: 0;
+}
+.dm-tableName {
+  min-width: 190px;
+  color: #145b40;
+  font-weight: 800;
+}
+@media (max-width: 650px) {
+  .dm-tableWrap {
+    margin-top: 16px;
+    border-radius: 12px;
+  }
+  .dm-table th,
+  .dm-table td {
+    padding: 11px 12px;
+  }
+}

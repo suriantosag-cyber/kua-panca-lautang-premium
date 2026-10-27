@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import { useCallback, useEffect, useState } from "react";
 import { adminFetch } from "../../../lib/admin-client";
@@ -7,6 +7,19 @@ const FORM_KOSONG = {
   nama: "",
   jenis: "masjid",
   desa: "",
+  kecamatan: "Panca Lautang",
+  id_masjid: "",
+  tipologi: "",
+  status_tanah: "",
+  luas_bangunan: "",
+  tahun_berdiri: "",
+  jumlah_jamaah: "",
+  jumlah_imam: "",
+  jumlah_khatib: "",
+  jumlah_muazin: "",
+  jumlah_remaja: "",
+  nama_pengurus: "",
+  no_telepon_pengurus: "",
   alamat: "",
   nomor_sertifikat: "",
   luas_tanah: "",
@@ -130,6 +143,19 @@ function pilihKoordinat(lokasi) {
       nama: item.nama || "",
       jenis: item.jenis || "masjid",
       desa: item.desa || "",
+      kecamatan: item.kecamatan || "Panca Lautang",
+      id_masjid: item.id_masjid || "",
+      tipologi: item.tipologi || "",
+      status_tanah: item.status_tanah || "",
+      luas_bangunan: item.luas_bangunan || "",
+      tahun_berdiri: item.tahun_berdiri || "",
+      jumlah_jamaah: item.jumlah_jamaah || "",
+      jumlah_imam: item.jumlah_imam || "",
+      jumlah_khatib: item.jumlah_khatib || "",
+      jumlah_muazin: item.jumlah_muazin || "",
+      jumlah_remaja: item.jumlah_remaja || "",
+      nama_pengurus: item.nama_pengurus || "",
+      no_telepon_pengurus: item.no_telepon_pengurus || "",
       alamat: item.alamat || "",
       nomor_sertifikat: item.nomor_sertifikat || "",
       luas_tanah: item.luas_tanah || "",
@@ -328,6 +354,18 @@ function pilihKoordinat(lokasi) {
                 <input id="desa" name="desa" value={form.desa} onChange={ubahForm} required maxLength={150} style={inputStyle} />
               </div>
               <div>
+                <label htmlFor="kecamatan" style={labelStyle}>Kecamatan</label>
+                <input id="kecamatan" name="kecamatan" value={form.kecamatan} onChange={ubahForm} maxLength={150} style={inputStyle} />
+              </div>
+              <div>
+                <label htmlFor="id_masjid" style={labelStyle}>ID Masjid</label>
+                <input id="id_masjid" name="id_masjid" value={form.id_masjid} onChange={ubahForm} maxLength={100} style={inputStyle} />
+              </div>
+              <div>
+                <label htmlFor="tipologi" style={labelStyle}>Tipologi</label>
+                <input id="tipologi" name="tipologi" value={form.tipologi} onChange={ubahForm} maxLength={150} placeholder="Contoh: Masjid Jami" style={inputStyle} />
+              </div>
+              <div>
                 <label htmlFor="alamat" style={labelStyle}>Alamat</label>
                 <input id="alamat" name="alamat" value={form.alamat} onChange={ubahForm} maxLength={500} style={inputStyle} />
               </div>
@@ -340,6 +378,18 @@ function pilihKoordinat(lokasi) {
                 <input id="luas_tanah" name="luas_tanah" value={form.luas_tanah} onChange={ubahForm} maxLength={100} placeholder="Contoh: 501 m2" style={inputStyle} />
               </div>
               <div>
+                <label htmlFor="status_tanah" style={labelStyle}>Status Tanah</label>
+                <input id="status_tanah" name="status_tanah" value={form.status_tanah} onChange={ubahForm} maxLength={150} placeholder="Contoh: Wakaf" style={inputStyle} />
+              </div>
+              <div>
+                <label htmlFor="luas_bangunan" style={labelStyle}>Luas Bangunan</label>
+                <input id="luas_bangunan" name="luas_bangunan" value={form.luas_bangunan} onChange={ubahForm} maxLength={100} placeholder="Contoh: 200 m2" style={inputStyle} />
+              </div>
+              <div>
+                <label htmlFor="tahun_berdiri" style={labelStyle}>Tahun Berdiri</label>
+                <input id="tahun_berdiri" name="tahun_berdiri" value={form.tahun_berdiri} onChange={ubahForm} maxLength={20} placeholder="Contoh: 1998" style={inputStyle} />
+              </div>
+              <div>
                 <label htmlFor="nomor_simas" style={labelStyle}>Nomor SIMAS</label>
                 <input id="nomor_simas" name="nomor_simas" value={form.nomor_simas} onChange={ubahForm} maxLength={100} style={inputStyle} />
               </div>
@@ -349,6 +399,34 @@ function pilihKoordinat(lokasi) {
                   <option value="belum_diverifikasi">Belum diverifikasi</option>
                   <option value="terverifikasi">Terverifikasi</option>
                 </select>
+              </div>
+              <div>
+                <label htmlFor="jumlah_jamaah" style={labelStyle}>Jumlah Jamaah</label>
+                <input id="jumlah_jamaah" name="jumlah_jamaah" value={form.jumlah_jamaah} onChange={ubahForm} maxLength={50} style={inputStyle} />
+              </div>
+              <div>
+                <label htmlFor="jumlah_imam" style={labelStyle}>Jumlah Imam</label>
+                <input id="jumlah_imam" name="jumlah_imam" value={form.jumlah_imam} onChange={ubahForm} maxLength={50} style={inputStyle} />
+              </div>
+              <div>
+                <label htmlFor="jumlah_khatib" style={labelStyle}>Jumlah Khatib</label>
+                <input id="jumlah_khatib" name="jumlah_khatib" value={form.jumlah_khatib} onChange={ubahForm} maxLength={50} style={inputStyle} />
+              </div>
+              <div>
+                <label htmlFor="jumlah_muazin" style={labelStyle}>Jumlah Muazin</label>
+                <input id="jumlah_muazin" name="jumlah_muazin" value={form.jumlah_muazin} onChange={ubahForm} maxLength={50} style={inputStyle} />
+              </div>
+              <div>
+                <label htmlFor="jumlah_remaja" style={labelStyle}>Jumlah Remaja</label>
+                <input id="jumlah_remaja" name="jumlah_remaja" value={form.jumlah_remaja} onChange={ubahForm} maxLength={50} style={inputStyle} />
+              </div>
+              <div>
+                <label htmlFor="nama_pengurus" style={labelStyle}>Nama Pengurus</label>
+                <input id="nama_pengurus" name="nama_pengurus" value={form.nama_pengurus} onChange={ubahForm} maxLength={200} style={inputStyle} />
+              </div>
+              <div>
+                <label htmlFor="no_telepon_pengurus" style={labelStyle}>Nomor Telepon Pengurus</label>
+                <input id="no_telepon_pengurus" name="no_telepon_pengurus" value={form.no_telepon_pengurus} onChange={ubahForm} maxLength={50} style={inputStyle} />
               </div>
               <div>
                 <label htmlFor="latitude" style={labelStyle}>Latitude (lintang)</label>
