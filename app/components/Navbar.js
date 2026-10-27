@@ -21,6 +21,7 @@ const menus = [
       ['Jadwal Akad Nikah', '/jadwal-nikah'],
       ['Bimbingan Perkawinan', '/bimbingan-perkawinan'],
       ['Kemasjidan, Zakat dan Wakaf', '/profil'],
+      ['Layanan Halal (SEHATI)', '/layanan-halal'],
       ['Konsultasi Keagamaan', '/#kontak'],
     ],
   },
@@ -61,16 +62,13 @@ export default function Navbar() {
   return (
     <header className="top kuaNavbar">
       <div className="wrap kuaNavInner">
-        <Link href="/" className="brand" onClick={closeMenu}>
+        <Link href="/" className="brand kuaBrand" onClick={closeMenu}>
           <img
-            className="brandmark"
-            src="/logo-kua.png"
-            alt="Logo KUA Panca Lautang"
+            className="brandmark kuaBrandmark"
+            src="/logo-kemenag-kua.png"
+            alt="Lambang Kementerian Agama Republik Indonesia"
           />
-          <span>
-            KUA Panca Lautang
-            <small>Portal Informasi dan Layanan Masyarakat</small>
-          </span>
+          <span className="kuaBrandTitle">KUA Panca Lautang</span>
         </Link>
 
         <button
