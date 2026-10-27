@@ -1717,3 +1717,47 @@
     padding: 20px;
   }
 }
+
+/* Identitas header KUA Panca Lautang */
+.kuaBrand {
+  display: inline-flex;
+  align-items: center;
+  gap: 11px;
+  flex-shrink: 0;
+  text-decoration: none;
+}
+
+.kuaBrandmark {
+  display: block;
+  width: 46px;
+  height: 46px;
+  flex: 0 0 46px;
+  object-fit: contain;
+  border-radius: 0;
+  background: transparent;
+  box-shadow: none;
+}
+
+.kuaBrandTitle {
+  display: block;
+  font-size: clamp(16px, 1.5vw, 20px);
+  line-height: 1.2;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+@media (max-width: 480px) {
+  .kuaBrand {
+    gap: 8px;
+  }
+
+  .kuaBrandmark {
+    width: 39px;
+    height: 39px;
+    flex-basis: 39px;
+  }
+
+  .kuaBrandTitle {
+    font-size: 16px;
+  }
+}
