@@ -21,6 +21,7 @@ const menus = [
       ['Jadwal Akad Nikah', '/jadwal-nikah'],
       ['Bimbingan Perkawinan', '/bimbingan-perkawinan'],
       ['Kemasjidan, Zakat dan Wakaf', '/profil'],
+      ['Layanan Halal (SEHATI)', '/layanan-halal'],
       ['Konsultasi Keagamaan', '/#kontak'],
     ],
   },
