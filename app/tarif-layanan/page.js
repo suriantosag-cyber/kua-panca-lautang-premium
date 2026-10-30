@@ -1,4 +1,4 @@
-
+﻿
 export const metadata = {
   title: 'Tarif Layanan Nikah dan Rujuk',
   description: 'Informasi transparan tarif PNBP nikah dan rujuk sesuai ketentuan yang berlaku.',
@@ -81,6 +81,85 @@ export default function TarifLayananPage() {
           </p>
         </header>
 
+        <section
+          aria-labelledby="poster-prosedur-nikah"
+          style={{
+            background: '#ffffff',
+            color: '#334155',
+            border: '1px solid #d5e3ed',
+            borderRadius: '16px',
+            padding: 'clamp(20px, 4vw, 30px)',
+            marginTop: '22px',
+            boxShadow: '0 5px 18px rgba(18, 61, 101, .05)',
+          }}
+        >
+          <h2
+            id="poster-prosedur-nikah"
+            style={{
+              ...headingStyle,
+              fontSize: 'clamp(22px, 3vw, 28px)',
+              marginTop: 0,
+            }}
+          >
+            Mau Nikah? Ini Prosedurnya
+          </h2>
+
+          <p style={{ color: '#475569', lineHeight: 1.8 }}>
+            Simak panduan prosedur dan persyaratan nikah melalui poster
+            informasi berikut.
+          </p>
+
+          <img
+            src="/images/mau-nikah-terbaru2023.jpeg"
+            alt="Poster prosedur nikah"
+            loading="lazy"
+            style={{
+              display: 'block',
+              width: '100%',
+              maxWidth: '760px',
+              height: 'auto',
+              margin: '20px auto 0',
+              borderRadius: '10px',
+            }}
+          />
+          <div
+            id="identitas-website-poster"
+            style={{
+              textAlign: 'center',
+              marginTop: '18px',
+              padding: '16px 12px',
+              borderTop: '1px solid #d5e3ed',
+            }}
+          >
+            <p style={{
+              color: '#123d65',
+              fontWeight: 800,
+              margin: '0 0 4px',
+              letterSpacing: '.04em',
+            }}>
+              KUA KECAMATAN PANCA LAUTANG
+            </p>
+            <p style={{
+              color: '#475569',
+              fontSize: '14px',
+              margin: '0 0 6px',
+            }}>
+              Informasi dan Layanan Masyarakat
+            </p>
+            <a
+              href="https://kua-pancalautang.my.id"
+              style={{
+                color: '#075985',
+                fontWeight: 700,
+                textDecoration: 'underline',
+                textUnderlineOffset: '3px',
+                overflowWrap: 'anywhere',
+              }}
+            >
+              https://kua-pancalautang.my.id
+            </a>
+          </div>
+        </section>
         <section aria-label="Daftar tarif resmi" style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 280px), 1fr))',
@@ -166,17 +245,17 @@ export default function TarifLayananPage() {
           <ul style={{ paddingLeft: '24px', lineHeight: 2.1 }}>
             <li>
               <a style={linkStyle} href="https://simbi.kemenag.go.id/faq" target="_blank" rel="noreferrer">
-                FAQ resmi Bimas Islam — biaya nikah
+                FAQ resmi Bimas Islam - biaya nikah
               </a>
             </li>
             <li>
               <a style={linkStyle} href="https://bimasislam.kemenag.go.id/info-nikah/prosedur" target="_blank" rel="noreferrer">
-                Prosedur nikah — Ditjen Bimas Islam
+                Prosedur nikah - Ditjen Bimas Islam
               </a>
             </li>
             <li>
               <a style={linkStyle} href="https://jdih.kemenag.go.id/regulation/peraturan-menteri-agama-nomor-14-tahun-2024-tentang-persyaratan-dan-tata-cara-pengenaan-tarif-atas-jenis-penerimaan-negara-bukan-pajak-nol-rupiah-atas-jasa-layanan-nikah-atau-rujuk-di-luar-ka" target="_blank" rel="noreferrer">
-                PMA Nomor 14 Tahun 2024 — ketentuan tarif Rp0 untuk kondisi tertentu
+                PMA Nomor 14 Tahun 2024 - ketentuan tarif Rp0 untuk kondisi tertentu
               </a>
             </li>
           </ul>
@@ -194,3 +273,7 @@ export default function TarifLayananPage() {
     </main>
   );
 }
+
+
+
+

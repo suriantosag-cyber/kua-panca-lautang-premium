@@ -527,7 +527,6 @@ src="https://maps.google.com/maps?q=KUA%20Panca%20Lautang%2C%20Panca%20Lautang%2
   </div>
 </section>
 
-    <footer><div className="wrap footer"><div><b>KUA Panca Lautang</b><div><small>Penyuluh Agama Islam - Website informasi masyarakat</small></div></div><small>(c) 2026 KUA Panca Lautang</small></div></footer>
 {selectedGallery && (
   <div
     onClick={() => setSelectedGallery(null)}
@@ -597,5 +596,6 @@ src="https://maps.google.com/maps?q=KUA%20Panca%20Lautang%2C%20Panca%20Lautang%2
 <TanyaAnto />
   </>;
 }
+
 
 

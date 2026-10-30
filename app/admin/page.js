@@ -494,8 +494,17 @@ const result = await response.json();
         {" "}
         <h1>Dashboard Admin</h1>
         <p style={{ color: "#667085" }}>KUA Panca Lautang - Kelola Berita</p>
-        <a href="/admin/laporan" style={{ display: "inline-block", margin: "12px 10px 20px 0", padding: "10px 16px", background: "#146c43", color: "#fff", borderRadius: 8, textDecoration: "none", fontWeight: 600 }}>Rekapitulasi Kinerja Tahunan</a>
-        <a href="/admin/data-masjid" style={{ display: "inline-block", margin: "12px 0 20px", padding: "10px 16px", background: "#b8860b", color: "#fff", borderRadius: 8, textDecoration: "none", fontWeight: 600 }}>Kelola Data Masjid &amp; Mushalla</a>
+<div style={{ display: "flex", flexWrap: "wrap", gap: 10, marginTop: 12 }}>
+  <a href="/admin/kajian-keluarga-sakinah" style={{ display: "inline-block", padding: "10px 16px", background: "#1d4ed8", color: "#fff", borderRadius: 8, textDecoration: "none", fontWeight: 600 }}>
+    Kelola Kajian Keluarga Sakinah
+  </a>
+  <a href="/admin/laporan" style={{ display: "inline-block", padding: "10px 16px", background: "#146c43", color: "#fff", borderRadius: 8, textDecoration: "none", fontWeight: 600 }}>
+    Rekapitulasi Kinerja Tahunan
+  </a>
+  <a href="/admin/data-masjid" style={{ display: "inline-block", padding: "10px 16px", background: "#b8860b", color: "#fff", borderRadius: 8, textDecoration: "none", fontWeight: 600 }}>
+    Kelola Data Masjid &amp; Mushalla
+  </a>
+</div>
         <section style={{ background: "#fff", padding: 24, borderRadius: 16, boxShadow: "0 5px 20px rgba(0,0,0,.06)", marginTop: 24 }}>
           <h2>Kelola Pengumuman</h2>
           <p style={{ color: "#667085" }}>Ubah pengumuman yang tampil di halaman utama website KUA.</p>

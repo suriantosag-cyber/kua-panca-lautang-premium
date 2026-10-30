@@ -20,6 +20,8 @@ const menus = [
       ['Jadwal Akad Nikah', '/jadwal-nikah'],
       ['Bimbingan Perkawinan', '/bimbingan-perkawinan'],
       ['Kemasjidan, Zakat dan Wakaf', '/profil#layanan-kemasjidan'],
+      ['Kalkulator Zakat', '/layanan-zakat'],
+      ['Layanan Kemasjidan', '/layanan/kemasjidan'],
       ['Layanan Halal (SEHATI)', '/layanan-halal'],
       ['Konsultasi Keagamaan', '/profil#layanan-sosial'],
       ['Ajukan Layanan', '/ajukan-layanan'],
@@ -30,6 +32,7 @@ const menus = [
     label: 'Data & Statistik',
     items: [
       ['Data Masjid dan Mushalla', '/data-masjid'],
+      ['Data Wakaf', '/data-wakaf'],
       ['Statistik Layanan', '/'],
       ['Jadwal Akad Nikah', '/jadwal-nikah'],
     ],
@@ -133,3 +136,4 @@ export default function Navbar() {
     </header>
   );
 }
+

@@ -291,6 +291,40 @@ export default function ProfilPage() {
 
   </div>
 
+  <div style={{
+    padding: "22px",
+    borderRadius: "16px",
+    background: "#f0fdf4",
+    border: "1px solid #bbf7d0"
+  }}>
+    <h3>Layanan Muallaf</h3>
+
+    <p>
+      Layanan informasi dan pendampingan bagi masyarakat yang ingin
+      memeluk agama Islam, termasuk bimbingan syahadat dan pembinaan
+      keislaman sesuai kebutuhan.
+    </p>
+
+    <p>
+      <strong>Prosedur:</strong> Hubungi atau kunjungi KUA Kecamatan
+      Panca Lautang untuk berkonsultasi mengenai tahapan pelayanan
+      dan pendampingan oleh petugas.
+    </p>
+
+    <p>
+      <strong>Administrasi:</strong> Informasi mengenai pencatatan
+      dan pengurusan Piagam Masuk Islam Tahun 2026 dapat diperoleh
+      langsung dari petugas yang berwenang. Persyaratan dan penerbitan
+      mengikuti prosedur yang berlaku.
+    </p>
+
+    <p>
+      <a href="/layanan-muallaf">
+        Lihat panduan Layanan Muallaf
+      </a>
+    </p>
+  </div>
+
 </div>
 
 <hr />
@@ -470,11 +504,28 @@ export default function ProfilPage() {
   sesuai kewenangannya.
 </p>
 
-<h3>Muallaf</h3>
+<h3 id="layanan-muallaf">Layanan Muallaf</h3>
 <p>
-  Masyarakat yang membutuhkan bimbingan keagamaan bagi muallaf dapat
-  berkonsultasi dengan KUA untuk memperoleh arahan dan pembinaan sesuai
-  kebutuhan.
+  KUA Kecamatan Panca Lautang menyediakan informasi dan arahan bagi
+  masyarakat yang ingin memeluk agama Islam. Calon muallaf dapat
+  berkonsultasi dengan petugas mengenai proses pengucapan dua kalimat
+  syahadat, pendampingan, dan pembinaan keislaman.
+</p>
+
+<h4>Prosedur dan Pendampingan</h4>
+<ol>
+  <li>Hubungi atau datang ke KUA untuk menyampaikan kebutuhan pelayanan.</li>
+  <li>Konsultasikan proses syahadat dan pendampingan dengan petugas.</li>
+  <li>Ikuti arahan petugas mengenai pencatatan dan administrasi yang diperlukan.</li>
+  <li>Tanyakan persyaratan serta prosedur penerbitan Piagam Masuk Islam.</li>
+</ol>
+
+<h4>Piagam Masuk Islam Tahun 2026</h4>
+<p>
+  Informasi mengenai pengurusan piagam, dokumen pendukung, dan
+  mekanisme penerbitan dapat diminta kepada petugas KUA. Piagam resmi
+  hanya diterbitkan setelah proses dan data diverifikasi oleh pihak
+  yang berwenang.
 </p>
 
 <h3>Kelembagaan Keagamaan</h3>

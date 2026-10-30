@@ -232,6 +232,168 @@ export default function UnduhanPage() {
               ))}
             </div>
 
+            <section
+              aria-labelledby="pusat-layanan-digital"
+              style={{
+                marginTop: '32px',
+                padding: 'clamp(20px, 4vw, 30px)',
+                borderRadius: '20px',
+                background: 'linear-gradient(135deg, #f0fdfa 0%, #eff6ff 100%)',
+                border: '1px solid #cbdfe8',
+              }}
+            >
+              <div style={{ marginBottom: '24px' }}>
+                <span
+                  style={{
+                    display: 'inline-block',
+                    padding: '6px 10px',
+                    borderRadius: '999px',
+                    background: '#d1fae5',
+                    color: '#065f46',
+                    fontSize: '11px',
+                    fontWeight: 800,
+                    letterSpacing: '1px',
+                  }}
+                >
+                  AKSES LAYANAN
+                </span>
+                <h2
+                  id="pusat-layanan-digital"
+                  style={{
+                    color: '#123d65',
+                    fontSize: 'clamp(23px, 4vw, 30px)',
+                    lineHeight: 1.3,
+                    margin: '12px 0 8px',
+                    fontWeight: 800,
+                  }}
+                >
+                  Pusat Layanan Digital
+                </h2>
+                <p style={{ color: '#475569', lineHeight: 1.8, margin: 0, fontSize: '15px' }}>
+                  Akses layanan KUA Panca Lautang dengan mudah melalui ponsel
+                  atau komputer. Pindai QR Code untuk membuka situs resmi kami.
+                </p>
+              </div>
+
+              <div
+                style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 240px), 1fr))',
+                  gap: '24px',
+                  alignItems: 'stretch',
+                }}
+              >
+                <div
+                  style={{
+                    background: '#ffffff',
+                    border: '1px solid #dbe4ee',
+                    borderRadius: '16px',
+                    padding: '22px',
+                    textAlign: 'center',
+                    display: 'flex',
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                  }}
+                >
+                  <img
+                    src="/images/qr-kua-panca-lautang.png"
+                    alt="QR Code untuk membuka situs resmi KUA Panca Lautang"
+                    width="240"
+                    height="240"
+                    loading="lazy"
+                    style={{
+                      display: 'block',
+                      width: 'min(100%, 240px)',
+                      height: 'auto',
+                      borderRadius: '10px',
+                      border: '1px solid #e2e8f0',
+                    }}
+                  />
+                  <h3 style={{ color: '#123d65', fontSize: '17px', fontWeight: 800, margin: '16px 0 6px' }}>
+                    Pindai untuk Mengakses
+                  </h3>
+                  <p style={{ color: '#64748b', fontSize: '13px', lineHeight: 1.7, margin: 0 }}>
+                    Arahkan kamera ponsel ke QR Code untuk membuka situs resmi.
+                  </p>
+                  <a
+                    href="https://kua-pancalautang.my.id/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    style={{
+                      display: 'inline-flex',
+                      justifyContent: 'center',
+                      marginTop: '16px',
+                      padding: '11px 16px',
+                      borderRadius: '10px',
+                      background: '#123d65',
+                      color: '#ffffff',
+                      textDecoration: 'none',
+                      fontSize: '14px',
+                      fontWeight: 800,
+                    }}
+                  >
+                    Buka Situs Resmi
+                  </a>
+                </div>
+
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '12px' }}>
+                  {[
+                    {
+                      title: 'Persyaratan Perkawinan',
+                      description: 'Informasi dan panduan layanan perkawinan.',
+                      href: '/profil#layanan-perkawinan',
+                      color: '#1d4ed8',
+                      background: '#eff6ff',
+                    },
+                    {
+                      title: 'Pusat Unduhan',
+                      description: 'Dokumen contoh dan tautan panduan resmi.',
+                      href: '/unduhan',
+                      color: '#0f766e',
+                      background: '#ecfdf5',
+                    },
+                    {
+                      title: 'Cek Status Berkas',
+                      description: 'Periksa perkembangan permohonan layanan.',
+                      href: '/cek-status-berkas',
+                      color: '#7c3aed',
+                      background: '#f5f3ff',
+                    },
+                    {
+                      title: 'Jadwal Nikah',
+                      description: 'Lihat informasi jadwal perkawinan.',
+                      href: '/jadwal-nikah',
+                      color: '#b45309',
+                      background: '#fffbeb',
+                    },
+                  ].map((item) => (
+                    <a
+                      key={item.href}
+                      href={item.href}
+                      style={{
+                        display: 'block',
+                        padding: '17px 18px',
+                        borderRadius: '13px',
+                        border: '1px solid #dbe4ee',
+                        borderLeft: `4px solid ${item.color}`,
+                        background: '#ffffff',
+                        textDecoration: 'none',
+                        minWidth: 0,
+                      }}
+                    >
+                      <span style={{ display: 'block', color: item.color, fontSize: '15px', fontWeight: 800, marginBottom: '5px' }}>
+                        {item.title}
+                      </span>
+                      <span style={{ display: 'block', color: '#475569', fontSize: '13px', lineHeight: 1.7 }}>
+                        {item.description}
+                      </span>
+                    </a>
+                  ))}
+                </div>
+              </div>
+            </section>
+            
             <aside
               style={{
                 marginTop: '28px',
