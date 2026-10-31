@@ -11,6 +11,13 @@ export const runtime = "nodejs";
 
 const scrypt = promisify(scryptCallback);
 
+function jsonNoStore(body, init = {}) {
+  const headers = new Headers(init.headers);
+  headers.set("Cache-Control", "no-store, max-age=0");
+  headers.set("Pragma", "no-cache");
+  return Response.json(body, { ...init, headers });
+}
+
 function getSupabaseAdmin() {
   const url =
     process.env.SUPABASE_URL ||
@@ -78,7 +85,7 @@ export async function POST(request) {
       !/^KUA-\d{4}-[A-F0-9]{10}$/.test(kode_tracking) ||
       !/^\d{10}$/.test(pin)
     ) {
-      return Response.json(
+      return jsonNoStore(
         {
           ok: false,
           error: "Kode pelacakan atau PIN tidak valid.",
@@ -109,7 +116,7 @@ export async function POST(request) {
     if (error) {
       console.error("Gagal mencari permohonan:", error.message);
 
-      return Response.json(
+      return jsonNoStore(
         { ok: false, error: "Status belum dapat diperiksa. Silakan coba lagi." },
         { status: 500 }
       );
@@ -120,7 +127,7 @@ export async function POST(request) {
       await verifyPin(pin, permohonan.pin_hash);
 
     if (!validPin) {
-      return Response.json(
+      return jsonNoStore(
         {
           ok: false,
           error: "Kode pelacakan atau PIN tidak valid.",
@@ -139,13 +146,13 @@ export async function POST(request) {
     if (historyError) {
       console.error("Gagal membaca riwayat:", historyError.message);
 
-      return Response.json(
+      return jsonNoStore(
         { ok: false, error: "Riwayat status belum dapat dimuat." },
         { status: 500 }
       );
     }
 
-    return Response.json({
+    return jsonNoStore({
       ok: true,
       data: {
         kode_tracking: permohonan.kode_tracking,
@@ -166,7 +173,7 @@ export async function POST(request) {
   } catch (error) {
     console.error("Kesalahan API cek status:", error.message);
 
-    return Response.json(
+    return jsonNoStore(
       { ok: false, error: "Terjadi kesalahan server saat memeriksa status." },
       { status: 500 }
     );

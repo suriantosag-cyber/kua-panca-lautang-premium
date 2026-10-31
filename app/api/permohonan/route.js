@@ -8,6 +8,13 @@ export const runtime = "nodejs";
 
 const scrypt = promisify(scryptCallback);
 
+function jsonNoStore(body, init = {}) {
+  const headers = new Headers(init.headers);
+  headers.set("Cache-Control", "no-store, max-age=0");
+  headers.set("Pragma", "no-cache");
+  return Response.json(body, { ...init, headers });
+}
+
 function getSupabaseAdmin() {
   const url =
     process.env.SUPABASE_URL ||
@@ -53,7 +60,7 @@ export async function POST(request) {
 
     // Honeypot sederhana untuk menyaring bot formulir.
     if (cleanText(body.website, 200)) {
-      return Response.json(
+      return jsonNoStore(
         { ok: false, error: "Pengajuan tidak dapat diproses." },
         { status: 400 }
       );
@@ -73,7 +80,7 @@ export async function POST(request) {
       !jenis_layanan ||
       !keperluan
     ) {
-      return Response.json(
+      return jsonNoStore(
         {
           ok: false,
           error:
@@ -84,14 +91,14 @@ export async function POST(request) {
     }
 
     if (!/^[0-9+().\-\s]{8,30}$/.test(nomor_hp)) {
-      return Response.json(
+      return jsonNoStore(
         { ok: false, error: "Format nomor HP tidak valid." },
         { status: 400 }
       );
     }
 
     if (email && !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      return Response.json(
+      return jsonNoStore(
         { ok: false, error: "Format email tidak valid." },
         { status: 400 }
       );
@@ -142,7 +149,7 @@ export async function POST(request) {
     if (!permohonan) {
       console.error("Gagal menyimpan pengajuan:", insertError?.message);
 
-      return Response.json(
+      return jsonNoStore(
         { ok: false, error: "Pengajuan belum dapat disimpan. Silakan coba lagi." },
         { status: 500 }
       );
@@ -165,13 +172,13 @@ export async function POST(request) {
         .delete()
         .eq("id", permohonan.id);
 
-      return Response.json(
+      return jsonNoStore(
         { ok: false, error: "Pengajuan belum dapat diselesaikan. Silakan coba lagi." },
         { status: 500 }
       );
     }
 
-    return Response.json(
+    return jsonNoStore(
       {
         ok: true,
         message: "Pengajuan berhasil diterima.",
@@ -187,7 +194,7 @@ export async function POST(request) {
   } catch (error) {
     console.error("Kesalahan API permohonan:", error.message);
 
-    return Response.json(
+    return jsonNoStore(
       { ok: false, error: "Terjadi kesalahan server saat memproses pengajuan." },
       { status: 500 }
     );
