@@ -12,7 +12,7 @@ function jsonNoStore(body, init = {}) {
   const headers = new Headers(init.headers);
   headers.set("Cache-Control", "no-store, max-age=0");
   headers.set("Pragma", "no-cache");
-  return jsonNoStore(body, { ...init, headers });
+  return Response.json(body, { ...init, headers });
 }
 
 function getSupabaseAdmin() {
