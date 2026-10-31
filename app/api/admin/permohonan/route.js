@@ -32,6 +32,13 @@ function getSupabaseAdmin() {
   });
 }
 
+function jsonNoStore(body, init = {}) {
+  const headers = new Headers(init.headers);
+  headers.set("Cache-Control", "no-store, max-age=0");
+  headers.set("Pragma", "no-cache");
+  return Response.json(body, { ...init, headers });
+}
+
 function cleanText(value, maxLength) {
   if (typeof value !== "string") return "";
   return value.trim().slice(0, maxLength);
@@ -41,7 +48,7 @@ export async function GET(request) {
   const auth = await verifyAdminRequest(request);
 
   if (!auth.ok) {
-    return Response.json(
+    return jsonNoStore(
       { ok: false, error: auth.error },
       { status: auth.status }
     );
@@ -53,7 +60,7 @@ export async function GET(request) {
     const search = cleanText(searchParams.get("q") || "", 100);
 
     if (status && !STATUS_VALID.includes(status)) {
-      return Response.json(
+      return jsonNoStore(
         { ok: false, error: "Filter status tidak valid." },
         { status: 400 }
       );
@@ -100,16 +107,16 @@ export async function GET(request) {
 
     if (error) {
       console.error("Gagal mengambil permohonan:", error.message);
-      return Response.json(
+      return jsonNoStore(
         { ok: false, error: "Daftar permohonan belum dapat dimuat." },
         { status: 500 }
       );
     }
 
-    return Response.json({ ok: true, data: data || [] });
+    return jsonNoStore({ ok: true, data: data || [] });
   } catch (error) {
     console.error("Kesalahan API admin permohonan:", error.message);
-    return Response.json(
+    return jsonNoStore(
       { ok: false, error: "Terjadi kesalahan server." },
       { status: 500 }
     );
@@ -120,7 +127,7 @@ export async function PATCH(request) {
   const auth = await verifyAdminRequest(request);
 
   if (!auth.ok) {
-    return Response.json(
+    return jsonNoStore(
       { ok: false, error: auth.error },
       { status: auth.status }
     );
@@ -134,7 +141,7 @@ export async function PATCH(request) {
     const catatan_internal = cleanText(body.catatan_internal, 2000);
 
     if (!id || !STATUS_VALID.includes(status)) {
-      return Response.json(
+      return jsonNoStore(
         { ok: false, error: "ID permohonan atau status tidak valid." },
         { status: 400 }
       );
@@ -150,14 +157,14 @@ export async function PATCH(request) {
 
     if (cariError) {
       console.error("Gagal mencari permohonan:", cariError.message);
-      return Response.json(
+      return jsonNoStore(
         { ok: false, error: "Permohonan belum dapat diperiksa." },
         { status: 500 }
       );
     }
 
     if (!sebelumnya) {
-      return Response.json(
+      return jsonNoStore(
         { ok: false, error: "Permohonan tidak ditemukan." },
         { status: 404 }
       );
@@ -179,9 +186,16 @@ export async function PATCH(request) {
         id,
         kode_tracking,
         nama_pemohon,
+        nomor_hp,
+        email,
+        jenis_layanan,
+        keperluan,
+        desa,
+        catatan_pemohon,
         status,
         catatan_publik,
         catatan_internal,
+        created_at,
         updated_at,
         selesai_at
       `)
@@ -189,7 +203,7 @@ export async function PATCH(request) {
 
     if (updateError) {
       console.error("Gagal memperbarui permohonan:", updateError.message);
-      return Response.json(
+      return jsonNoStore(
         { ok: false, error: "Status permohonan gagal diperbarui." },
         { status: 500 }
       );
@@ -210,7 +224,7 @@ export async function PATCH(request) {
       if (historyError) {
         console.error("Gagal menyimpan riwayat:", historyError.message);
 
-        return Response.json(
+        return jsonNoStore(
           {
             ok: true,
             warning:
@@ -222,14 +236,14 @@ export async function PATCH(request) {
       }
     }
 
-    return Response.json({
+    return jsonNoStore({
       ok: true,
       message: "Permohonan berhasil diperbarui.",
       data: updated,
     });
   } catch (error) {
     console.error("Kesalahan pembaruan permohonan:", error.message);
-    return Response.json(
+    return jsonNoStore(
       { ok: false, error: "Terjadi kesalahan server." },
       { status: 500 }
     );
