@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { supabaseKegiatan } from "../kegiatan/supabase-kegiatan";
 import JadwalNikahAdmin from "./JadwalNikahAdmin";
 import { supabaseBrowser } from "../../lib/supabase-browser";
 import { adminFetch } from "../../lib/admin-client";
