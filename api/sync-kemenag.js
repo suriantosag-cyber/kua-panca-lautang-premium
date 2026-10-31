@@ -91,8 +91,8 @@ function articleFrom(html,url,fallbackTitle){
   const published=parseDate(html);
   const category=(url.match(/kemenag\.go\.id\/([^/]+)\//i)||[])[1]||'Kemenag';
   const summary=desc.slice(0,420);
-  const content=`<p>${escHtml(summary || 'Berita terbaru dari Kementerian Agama Republik Indonesia.')}</p><p><strong>Sumber resmi:</strong> Kementerian Agama Republik Indonesia.</p><p><a href="${escHtml(url)}" target="_blank" rel="noopener noreferrer">Baca berita lengkap di Kemenag â†’</a></p>`;
-  return {title,date:normalizeDate(published),category:'Kemenag â€¢ '+category.replace(/-/g,' '),excerpt:summary,content,photoUrl:image,sourceUrl:url};
+  const content=`<p>${escHtml(summary || 'Berita terbaru dari Kementerian Agama Republik Indonesia.')}</p><p><strong>Sumber resmi:</strong> Kementerian Agama Republik Indonesia.</p><p><a href="${escHtml(url)}" target="_blank" rel="noopener noreferrer">Baca berita lengkap di Kemenag →</a></p>`;
+  return {title,date:normalizeDate(published),category:'Kemenag • '+category.replace(/-/g,' '),excerpt:summary,content,photoUrl:image,sourceUrl:url};
 }
 async function supabase(path, options={}){
   const r=await fetch(`${SUPABASE_URL}/rest/v1/${path}`,{...options,headers:{apikey:SUPABASE_KEY,Authorization:`Bearer ${SUPABASE_KEY}`, 'Content-Type':'application/json',Prefer:'return=representation',...(options.headers||{})}});
