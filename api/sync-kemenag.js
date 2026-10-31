@@ -44,7 +44,7 @@ function escHtml(s = '') {
   return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 }
 function meta(html, key, attr = 'property') {
-  const escapedKey = key.replace(/[.*+?^$\\{\\}()|[\\]\\\\]/g, '\\$&');
+  const escapedKey = key;
   const re = new RegExp(
     `<meta\\b[^>]*\\b${attr}=["']${escapedKey}["'][^>]*\\bcontent=["']([^"']*)["'][^>]*>`,
     'i'
@@ -153,8 +153,7 @@ function articleFrom(html, url, fallbackTitle) {
   const heading = (html.match(/<h1[^>]*>([\s\S]*?)<\/h1>/i) || [])[1] || '';
   const title = decode(metaAny(html, ['og:title', 'twitter:title'])) || decode(heading) || fallbackTitle;
   const desc = decode(metaAny(html, ['og:description', 'description', 'twitter:description']));
-  const imageCandidate = absUrl(firstImage(html));
-  const image = isAllowedKemenagUrl(imageCandidate) ? imageCandidate : '';
+  const image = absUrl(firstImage(html));
   const published = normalizeDate(parseDate(html));
   if (!published || !title) return null;
   const category = (url.match(/kemenag\.go\.id\/([^/]+)\//i) || [])[1] || 'Kemenag';
