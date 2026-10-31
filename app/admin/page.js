@@ -504,6 +504,9 @@ const result = await response.json();
   <a href="/admin/data-masjid" style={{ display: "inline-block", padding: "10px 16px", background: "#b8860b", color: "#fff", borderRadius: 8, textDecoration: "none", fontWeight: 600 }}>
     Kelola Data Masjid &amp; Mushalla
   </a>
+  <a href="/admin/cek-status-berkas" style={{ display: "inline-block", padding: "10px 16px", background: "#0f766e", color: "#fff", borderRadius: 8, textDecoration: "none", fontWeight: 600 }}>
+    Permohonan Layanan
+  </a>
 </div>
         <section style={{ background: "#fff", padding: 24, borderRadius: 16, boxShadow: "0 5px 20px rgba(0,0,0,.06)", marginTop: 24 }}>
           <h2>Kelola Pengumuman</h2>
