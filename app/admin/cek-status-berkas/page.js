@@ -112,19 +112,50 @@ export default function AdminCekStatusBerkasPage() {
         throw new Error(result.error || "Gagal menyimpan perubahan.");
       }
 
+      if (!result.data?.id || result.data.id !== pilihan.id) {
+        throw new Error("Server belum mengembalikan data permohonan yang sesuai. Periksa kembali sebelum menyimpan ulang.");
+      }
+
+      // Respons PATCH hanya mengembalikan sebagian kolom. Gabungkan dengan
+      // detail lengkap yang sudah dipilih agar data pemohon tidak berubah menjadi "-".
+      const dataTersimpan = { ...pilihan, ...result.data };
+      setPilihan(dataTersimpan);
+      setData((sebelumnya) =>
+        sebelumnya.map((item) =>
+          item.id === dataTersimpan.id ? { ...item, ...result.data } : item
+        )
+      );
+      setStatusBaru(dataTersimpan.status || statusBaru);
+      setCatatanPublik(dataTersimpan.catatan_publik || "");
+      setCatatanInternal(dataTersimpan.catatan_internal || "");
+
       setPesan(
-        result.warning ||
-        result.message ||
-        "Perubahan berhasil disimpan."
+        result.warning
+          ? result.warning
+          : `Perubahan tersimpan. Status terbaru: ${LABEL[dataTersimpan.status] || dataTersimpan.status}.`
       );
 
-      await muatData();
-
-      if (result.data) {
-        setPilihan(result.data);
-        setStatusBaru(result.data.status || statusBaru);
-        setCatatanPublik(result.data.catatan_publik || catatanPublik);
-        setCatatanInternal(result.data.catatan_internal || catatanInternal);
+      // Muat ulang daftar tanpa menghilangkan detail lengkap yang sedang dibuka.
+      try {
+        const params = new URLSearchParams();
+        if (filter) params.set("status", filter);
+        if (cari.trim()) params.set("q", cari.trim());
+        const refresh = await adminFetch(
+          `/api/admin/permohonan?${params.toString()}`,
+          { cache: "no-store" }
+        );
+        const refreshed = await refresh.json();
+        if (refresh.ok && refreshed.ok && Array.isArray(refreshed.data)) {
+          setData(refreshed.data);
+          const recordTerbaru = refreshed.data.find((item) => item.id === dataTersimpan.id);
+          if (recordTerbaru) {
+            const detailLengkap = { ...dataTersimpan, ...recordTerbaru };
+            setPilihan(detailLengkap);
+          }
+        }
+      } catch {
+        // Penyimpanan sudah dikonfirmasi server; kegagalan refresh daftar
+        // tidak boleh menghapus hasil yang baru saja dikembalikan.
       }
     } catch (err) {
       setError(err.message || "Gagal menyimpan perubahan.");
