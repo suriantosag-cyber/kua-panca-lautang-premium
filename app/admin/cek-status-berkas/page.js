@@ -135,10 +135,11 @@ export default function AdminCekStatusBerkasPage() {
           : `Perubahan tersimpan. Status terbaru: ${LABEL[dataTersimpan.status] || dataTersimpan.status}.`
       );
 
-      // Muat ulang daftar tanpa menghilangkan detail lengkap yang sedang dibuka.
+      // Setelah penyimpanan, tampilkan semua status agar permohonan
+      // tidak menghilang hanya karena filter lama tidak lagi cocok.
+      setFilter("");
       try {
         const params = new URLSearchParams();
-        if (filter) params.set("status", filter);
         if (cari.trim()) params.set("q", cari.trim());
         const refresh = await adminFetch(
           `/api/admin/permohonan?${params.toString()}`,
@@ -148,12 +149,16 @@ export default function AdminCekStatusBerkasPage() {
         if (refresh.ok && refreshed.ok && Array.isArray(refreshed.data)) {
           setData(refreshed.data);
           const recordTerbaru = refreshed.data.find((item) => item.id === dataTersimpan.id);
-          if (recordTerbaru) {
-            const detailLengkap = { ...dataTersimpan, ...recordTerbaru };
-            setPilihan(detailLengkap);
-          }
+          setPilihan(
+            recordTerbaru
+              ? { ...dataTersimpan, ...recordTerbaru }
+              : dataTersimpan
+          );
+        } else {
+          setPilihan(dataTersimpan);
         }
       } catch {
+        setPilihan(dataTersimpan);
         // Penyimpanan sudah dikonfirmasi server; kegagalan refresh daftar
         // tidak boleh menghapus hasil yang baru saja dikembalikan.
       }
