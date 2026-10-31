@@ -1,8 +1,20 @@
-const SUPABASE_URL = process.env.SUPABASE_URL || 'https://gefbibbmqvphpwmaanzv.supabase.co';
-const SUPABASE_KEY = process.env.SUPABASE_ANON_KEY || 'sb_publishable_RhTlOQcwdcNJwnuqdmYMvA_2etFZF_f';
+const crypto = require('node:crypto');
+
+const SUPABASE_URL = process.env.SUPABASE_URL || process.env.NEXT_PUBLIC_SUPABASE_URL;
+const SUPABASE_KEY = process.env.SUPABASE_SERVICE_ROLE_KEY;
+const CRON_SECRET = process.env.CRON_SECRET;
 const HOME_URL = 'https://m.kemenag.go.id/';
 const ALLOWED_HOSTS = new Set(['kemenag.go.id','www.kemenag.go.id','m.kemenag.go.id']);
 const KEMENAG_HOST = 'https://kemenag.go.id';
+function isAuthorized(req) {
+  if (!CRON_SECRET) return false;
+
+  const actual = Buffer.from(req.headers.authorization || '');
+  const expected = Buffer.from('Bearer ' + CRON_SECRET);
+
+  return actual.length === expected.length &&
+    crypto.timingSafeEqual(actual, expected);
+}
 
 function cleanText(s='') {
   return s.replace(/<script[\s\S]*?<\/script>/gi,' ')
@@ -19,9 +31,14 @@ function absUrl(href) {
 function escHtml(s='') {
   return String(s).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
 }
-function meta(html, key, attr='property') {
-  const re = new RegExp(`<meta[^>]+${attr}=["']${key.replace(/[.*+?^${}()|[\\]\\]/g,'\\$&')}["'][^>]+content=["']([^"']*)["'][^>]*>`, 'i');
-  const m = html.match(re); return m ? m[1].trim() : '';
+function meta(html, key, attr = 'property') {
+  const escapedKey = key.replace(/[.*+?^${}()|[\\]\\\\]/g, '\\$&');
+  const re = new RegExp(
+    `<meta\\b[^>]*\\b${attr}=["']${escapedKey}["'][^>]*\\bcontent=["']([^"']*)["'][^>]*>`,
+    'i'
+  );
+  const m = html.match(re);
+  return m ? m[1].trim() : '';
 }
 function metaAny(html, keys) {
   for (const k of keys) { const a=meta(html,k,'property')||meta(html,k,'name'); if(a) return a; }
@@ -55,8 +72,8 @@ function discover(html) {
       if(!ALLOWED_HOSTS.has(u.hostname.toLowerCase())) continue;
       // The current Kemenag homepage is served from m.kemenag.go.id,
       // while article pages may use kemenag.go.id. Accept both.
-      const path=u.pathname.replace(/\\/+$/, '');
-      if(!/^\/(nasional|internasional|pers-rilis|daerah|opini|feature|islam|hindu|kristen|katolik|buddha|khonghucu)\\//i.test(path)) continue;
+      const path=u.pathname.replace(/\/+$/, '');
+      if(!/^\/(nasional|internasional|pers-rilis|daerah|opini|feature|islam|hindu|kristen|katolik|buddha|khonghucu)\//i.test(path)) continue;
     } catch { continue; }
     if(seen.has(href)) continue; seen.add(href); out.push({url:href,title});
     if(out.length>=10) break;
@@ -74,8 +91,8 @@ function articleFrom(html,url,fallbackTitle){
   const published=parseDate(html);
   const category=(url.match(/kemenag\.go\.id\/([^/]+)\//i)||[])[1]||'Kemenag';
   const summary=desc.slice(0,420);
-  const content=`<p>${escHtml(summary || 'Berita terbaru dari Kementerian Agama Republik Indonesia.')}</p><p><strong>Sumber resmi:</strong> Kementerian Agama Republik Indonesia.</p><p><a href="${escHtml(url)}" target="_blank" rel="noopener noreferrer">Baca berita lengkap di Kemenag →</a></p>`;
-  return {title,date:normalizeDate(published),category:'Kemenag • '+category.replace(/-/g,' '),excerpt:summary,content,photoUrl:image,sourceUrl:url};
+  const content=`<p>${escHtml(summary || 'Berita terbaru dari Kementerian Agama Republik Indonesia.')}</p><p><strong>Sumber resmi:</strong> Kementerian Agama Republik Indonesia.</p><p><a href="${escHtml(url)}" target="_blank" rel="noopener noreferrer">Baca berita lengkap di Kemenag â†’</a></p>`;
+  return {title,date:normalizeDate(published),category:'Kemenag â€¢ '+category.replace(/-/g,' '),excerpt:summary,content,photoUrl:image,sourceUrl:url};
 }
 async function supabase(path, options={}){
   const r=await fetch(`${SUPABASE_URL}/rest/v1/${path}`,{...options,headers:{apikey:SUPABASE_KEY,Authorization:`Bearer ${SUPABASE_KEY}`, 'Content-Type':'application/json',Prefer:'return=representation',...(options.headers||{})}});
@@ -84,7 +101,17 @@ async function supabase(path, options={}){
 }
 module.exports=async function handler(req,res){
   try{
-    if(req.method!=='GET' && req.method!=='POST') return res.status(405).json({ok:false,error:'Method not allowed'});
+    if (req.method !== 'GET') {
+      return res.status(405).json({ ok: false, error: 'Method not allowed' });
+    }
+
+    if (!SUPABASE_URL || !SUPABASE_KEY || !CRON_SECRET) {
+      return res.status(500).json({ ok: false, error: 'Konfigurasi sinkronisasi belum lengkap.' });
+    }
+
+    if (!isAuthorized(req)) {
+      return res.status(401).json({ ok: false, error: 'Unauthorized' });
+    }
     const home=await get(HOME_URL);
     const links=discover(home);
     if(!links.length) throw new Error('Tidak menemukan tautan berita pada halaman resmi Kemenag.');
