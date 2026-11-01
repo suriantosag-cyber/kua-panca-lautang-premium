@@ -24,7 +24,6 @@ export const metadata = {
     title: 'KUA Panca Lautang | Portal Informasi Penyuluh Agama Islam',
     description:
       'Portal informasi dan edukasi masyarakat KUA Panca Lautang: layanan, jadwal nikah, bimbingan perkawinan, kegiatan, dan informasi keagamaan.',
-    url: 'https://kua-pancalautang.my.id/',
     siteName: 'KUA Panca Lautang',
     locale: 'id_ID',
     type: 'website',
