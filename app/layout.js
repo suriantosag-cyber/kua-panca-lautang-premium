@@ -6,12 +6,12 @@ export const metadata = {
   metadataBase: new URL('https://kua-pancalautang.my.id'),
 
   title: {
-    default: 'KUA Panca Lautang | Kantor Urusan Agama Kecamatan Panca Lautang',
+    default: 'KUA Panca Lautang | Portal Informasi Penyuluh Agama Islam',
     template: '%s | KUA Panca Lautang',
   },
 
   description:
-    'Website resmi Kantor Urusan Agama Kecamatan Panca Lautang, Kabupaten Sidenreng Rappang, Sulawesi Selatan. Informasi layanan administrasi KUA, jadwal nikah, bimbingan perkawinan, kegiatan, materi dakwah, dan informasi keagamaan.',
+    'Portal informasi dan edukasi masyarakat yang dikelola Penyuluh Agama Islam di lingkungan KUA Kecamatan Panca Lautang, Kabupaten Sidenreng Rappang, Sulawesi Selatan. Memuat informasi layanan, jadwal nikah, bimbingan perkawinan, kegiatan, materi dakwah, dan informasi keagamaan. Bukan pengganti sistem administrasi resmi Kementerian Agama.',
 
   keywords: [
     'KUA Panca Lautang',
@@ -21,9 +21,9 @@ export const metadata = {
   ],
 
   openGraph: {
-    title: 'KUA Panca Lautang | Kantor Urusan Agama Kecamatan Panca Lautang',
+    title: 'KUA Panca Lautang | Portal Informasi Penyuluh Agama Islam',
     description:
-      'Website resmi KUA Panca Lautang untuk informasi layanan, jadwal nikah, bimbingan perkawinan, kegiatan, dan informasi keagamaan.',
+      'Portal informasi dan edukasi masyarakat KUA Panca Lautang: layanan, jadwal nikah, bimbingan perkawinan, kegiatan, dan informasi keagamaan.',
     url: 'https://kua-pancalautang.my.id/',
     siteName: 'KUA Panca Lautang',
     locale: 'id_ID',
@@ -40,9 +40,9 @@ export const metadata = {
 
   twitter: {
     card: 'summary_large_image',
-    title: 'KUA Panca Lautang | Kantor Urusan Agama Kecamatan Panca Lautang',
+    title: 'KUA Panca Lautang | Portal Informasi Penyuluh Agama Islam',
     description:
-      'Website resmi KUA Panca Lautang: layanan, jadwal nikah, kegiatan, dan informasi masyarakat.',
+      'Portal informasi Penyuluh Agama Islam KUA Panca Lautang: layanan, jadwal nikah, kegiatan, dan informasi masyarakat.',
     images: ['/kantor-kua.jpeg'],
   },
 };
