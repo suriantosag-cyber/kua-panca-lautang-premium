@@ -221,9 +221,9 @@ const [selectedGallery, setSelectedGallery] = useState(null);
     <div>
       <b>Profil dan Layanan Penyuluh Agama</b>
       <span>
-        Informasi mengenai peran penyuluh, kegiatan pembinaan,
-        dan wilayah layanan akan ditampilkan setelah data petugas
-        diverifikasi.
+        Kenali peran Penyuluh Agama Islam, wilayah kerja, struktur
+        organisasi, serta layanan pembinaan dan pendampingan masyarakat
+        melalui halaman profil KUA.
       </span>
       <div style={{ marginTop: 10 }}>
         <a className="btn primary" href="/profil">
