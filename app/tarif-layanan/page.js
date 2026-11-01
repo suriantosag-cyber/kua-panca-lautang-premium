@@ -1,7 +1,21 @@
 ﻿
+const pageTitle = 'Tarif Layanan Nikah dan Rujuk';
+const pageDescription =
+  'Informasi tarif resmi PNBP nikah dan rujuk di KUA Kecamatan Panca Lautang: Rp0 untuk akad di kantor pada hari dan jam kerja, serta Rp600.000 untuk akad di luar kantor dan/atau di luar jam kerja.';
+
 export const metadata = {
-  title: 'Tarif Layanan Nikah dan Rujuk',
-  description: 'Informasi transparan tarif PNBP nikah dan rujuk sesuai ketentuan yang berlaku.',
+  title: pageTitle,
+  description: pageDescription,
+  openGraph: {
+    title: 'Tarif Layanan Nikah dan Rujuk | KUA Panca Lautang',
+    description: pageDescription,
+    url: '/tarif-layanan',
+    type: 'website',
+  },
+  twitter: {
+    title: 'Tarif Layanan Nikah dan Rujuk | KUA Panca Lautang',
+    description: pageDescription,
+  },
 };
 
 const feeItems = [
