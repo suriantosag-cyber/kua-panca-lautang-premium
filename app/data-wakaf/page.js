@@ -1,10 +1,23 @@
 import data from "./data.json";
 import WakafTableClient from "./WakafTableClient";
 
+const pageTitle = "Data Objek Wakaf Tahun 2026";
+const pageDescription =
+  "Lihat 45 data objek wakaf di Kecamatan Panca Lautang, Kabupaten Sidenreng Rappang, beserta lokasi, luas tanah, peruntukan, status AIW/APAIW, sertifikat, wakif, dan nazhir.";
+
 export const metadata = {
-  title: "Data Objek Wakaf 2026 | KUA Panca Lautang",
-  description:
-    "Informasi data objek wakaf tahun 2026 di Kecamatan Panca Lautang, Kabupaten Sidenreng Rappang.",
+  title: pageTitle,
+  description: pageDescription,
+  openGraph: {
+    title: "Data Objek Wakaf Tahun 2026 | KUA Panca Lautang",
+    description: pageDescription,
+    url: "/data-wakaf",
+    type: "website",
+  },
+  twitter: {
+    title: "Data Objek Wakaf Tahun 2026 | KUA Panca Lautang",
+    description: pageDescription,
+  },
 };
 
 function statusLabel(value) {
@@ -70,4 +83,3 @@ export default function DataWakafPage() {
     </main>
   );
 }
-

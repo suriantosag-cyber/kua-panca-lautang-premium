@@ -1,0 +1,688 @@
+'use client';
+import TanyaAnto from './components/TanyaAnto';
+import JadwalNikah from './components/JadwalNikah';
+import StatistikLayanan from './components/StatistikLayanan';
+import { useEffect, useState } from 'react';
+
+function formatNewsDate(value) {
+  if (!value) return null;
+  const date = new Date(value);
+  if (Number.isNaN(date.getTime())) return null;
+  return new Intl.DateTimeFormat('id-ID', {
+    day: 'numeric', month: 'long', year: 'numeric', timeZone: 'Asia/Makassar'
+  }).format(date);
+}
+
+function getNewsImage(item) {
+  if (item?.image_url) return item.image_url;
+  return item?.article_blocks?.find((block) => block?.type === 'image' && typeof block.url === 'string' && block.url.trim())?.url || null;
+}
+
+function getNewsExcerpt(item) {
+  const firstBlockText = item?.article_blocks?.find((block) => block?.type === 'text' && typeof block.text === 'string' && block.text.trim())?.text;
+  const source = (item?.content || firstBlockText || '').replace(/\\s+/g, ' ').trim();
+  if (!source) return 'Buka artikel untuk membaca informasi dan dokumentasi kegiatan selengkapnya.';
+  return source.length > 190 ? source.slice(0, 187).trimEnd() + '…' : source;
+}
+
+const features = [
+  ['PR','Kegiatan','Informasi kegiatan KUA, penyuluhan, pembinaan masyarakat, dan agenda keagamaan.','/kegiatan','Lihat Kegiatan'],
+  ['MD','Materi Dakwah','Panduan ibadah, khutbah, akhlak mulia, moderasi beragama, dan materi pembinaan masyarakat.','/materi-dakwah','Buka Materi'],
+  ['LK','Dokumentasi Kegiatan','Dokumentasi kegiatan masyarakat ditampilkan melalui galeri website.','#galeri','Lihat Galeri'],
+];
+
+function HomeClient({ initialNews = [] }) {
+  const [news, setNews] = useState(initialNews);
+  const [kemenagNews, setKemenagNews] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [gallery, setGallery] = useState([]);
+  const [kegiatan, setKegiatan] = useState([]);
+ const [pengumuman, setPengumuman] = useState(null);
+const [selectedGallery, setSelectedGallery] = useState(null);
+
+  useEffect(() => {
+    fetch('/api/kemenag').then(r => r.json()).then(j => setKemenagNews((j?.data || []).slice(0, 2))).catch(() => setKemenagNews([]));
+
+    fetch('/api/gallery').then(r => r.json()).then(result => { if (result.ok) setGallery(result.data || []); }).catch(() => setGallery([]));
+    fetch('/api/kegiatan-publik').then(r => r.json()).then(result => { if (result.ok) setKegiatan((result.data || []).slice(0, 3)); }).catch(() => setKegiatan([]));
+    fetch('/api/pengumuman', { cache: 'no-store' })
+      .then(r => r.json())
+      .then(result => {
+        if (result.ok && result.data) setPengumuman(result.data);
+      })
+      .catch(() => {});
+  }, []);
+
+  const newsImageUrls = new Set(
+    (news || []).flatMap((item) => [
+      item?.image_url,
+      ...(item?.article_blocks || [])
+        .filter((block) => block?.type === 'image')
+        .map((block) => block?.url)
+    ].filter(Boolean))
+  );
+
+  const visibleGallery = gallery.filter((item, index, arr) => {
+    if (!item?.url) return false;
+    if (newsImageUrls.has(item.url)) return false;
+
+    return arr.findIndex((other) => other?.url === item.url) === index;
+  });
+
+
+  return <>
+
+
+    <main>
+
+<div className="kemenagTicker">
+  <a className="kemenagTickerLabel" href="/info-haji-umrah">
+  INFO HAJI & UMRAH
+</a>
+  <div className="kemenagTickerTrack">
+    <div className="kemenagTickerMove">
+      {kemenagNews.map((item) => (
+        <a key={item.url} href={item.url} target="_blank" rel="noreferrer">
+          {item.title}
+        </a>
+      ))}
+    </div>
+  </div>
+</div>
+{pengumuman?.aktif !== false && pengumuman && (
+  <div className="pengumumanTicker">
+    <div className="pengumumanTickerLabel">
+      <span aria-hidden="true">[INFO]</span> {pengumuman.judul || 'PENGUMUMAN KUA PANCA LAUTANG'}
+    </div>
+    <div className="pengumumanTickerTrack">
+      <div className="pengumumanTickerMove">
+        <span>{pengumuman.isi} &nbsp; - Melayani dengan sepenuh hati.</span>
+      </div>
+    </div>
+  </div>
+)}
+
+      <section id="beranda" className="hero">
+        <div className="wrap heroGrid">
+          <div>
+            <span className="eyebrow"><span className="pulse"/> Portal Informasi KUA Panca Lautang</span>
+            <h1>Pelayanan yang <span>dekat</span> dengan masyarakat.</h1>
+            <p>Portal informasi dan layanan KUA Kecamatan Panca Lautang yang memudahkan masyarakat menemukan informasi administrasi KUA, layanan perkawinan, penyuluhan dan pembinaan keagamaan, kegiatan masyarakat, serta berita Kementerian Agama.</p>
+            <div className="actions"><a className="btn primary" href="#kemenag">Berita Kemenag Hari Ini</a><a className="btn" href="#kontak">Hubungi Kami</a></div>
+          </div>
+          <div className="heroCard"><div className="heroBadge">KUA PANCA LAUTANG - SIDRAP</div><img src="/kantor-kua.jpeg" alt="Kantor KUA Panca Lautang" style={{width:"100%",height:"280px",objectFit:"cover",borderRadius:"18px"}} /></div>
+        </div>
+      </section>
+
+      <StatistikLayanan />
+
+      <JadwalNikah />
+
+      <section id="profil" className="section" style={{ paddingTop: 30 }}>
+        <div className="wrap profile">
+          <div className="profileMain"><div className="avatar">PAI</div><h3>Profil Penyuluh</h3><p>Ruang informasi untuk memperkenalkan Penyuluh Agama Islam, bidang pembinaan, layanan masyarakat, dan aktivitas penyuluhan di wilayah Panca Lautang.</p><a className="btn primary" href="#kontak">Lihat informasi layanan</a></div>
+
+<div className="card">
+  <div className="sectionHead">
+    <div>
+      <h2>Ruang Layanan KUA</h2>
+      <p>Layanan administrasi dan pembinaan keagamaan untuk masyarakat Panca Lautang.</p>
+    </div>
+  </div>
+
+  
+<div className="list">
+  <div className="listItem">
+    <div className="icon">01</div>
+    <div>
+      <b>Pendaftaran Nikah dan Rujuk</b>
+      <span>
+        Panduan awal untuk calon pengantin dan masyarakat yang
+        membutuhkan informasi pencatatan pernikahan.
+      </span>
+
+      <div style={{ marginTop: 12, display: "flex", gap: 8, flexWrap: "wrap" }}>
+        <a
+          className="btn primary"
+          href="https://simkah4.kemenag.go.id/"
+          target="_blank"
+          rel="noreferrer"
+        >
+          Buka SIMKAH Resmi
+        </a>
+      </div>
+
+      <div
+        style={{
+          marginTop: 16,
+          padding: 16,
+          background: "#f0f8f4",
+          borderRadius: 14
+        }}
+      >
+        <b>Checklist Persiapan Dokumen</b>
+        <ul style={{ margin: "10px 0 0 18px", padding: 0, fontSize: 13, lineHeight: 1.8 }}>
+          <li>KTP dan Kartu Keluarga calon pengantin.</li>
+          <li>Surat pengantar atau dokumen persyaratan dari desa/kelurahan sesuai prosedur.</li>
+          <li>Akta kelahiran atau dokumen pendukung jika dipersyaratkan.</li>
+          <li>Pasfoto sesuai ketentuan yang berlaku.</li>
+          <li>Dokumen tambahan sesuai keadaan, misalnya akta cerai atau surat kematian pasangan terdahulu jika relevan.</li>
+          <li>Surat rekomendasi nikah jika diperlukan karena lokasi pencatatan berbeda wilayah.</li>
+        </ul>
+        <p style={{ margin: "12px 0 0", fontSize: 12, lineHeight: 1.7, color: "#38534a" }}>
+          Daftar ini merupakan panduan awal, bukan daftar final untuk semua kondisi.
+          Konfirmasikan persyaratan, dokumen rujuk, dan batas waktu pendaftaran
+          kepada petugas KUA sebelum mengurus berkas.
+        </p>
+      </div>
+
+      <div style={{ marginTop: 16 }}>
+        <b>Alur Singkat</b>
+        <ol style={{ margin: "8px 0 0 18px", padding: 0, fontSize: 13, lineHeight: 1.8 }}>
+          <li>Siapkan dokumen dan konfirmasikan persyaratan kepada petugas.</li>
+          <li>Ikuti petunjuk pendaftaran melalui SIMKAH atau KUA sesuai prosedur.</li>
+          <li>Lengkapi dokumen dan ikuti pemeriksaan berkas dari petugas.</li>
+          <li>Ikuti jadwal dan arahan layanan yang telah dikonfirmasi.</li>
+        </ol>
+      </div>
+    </div>
+  </div>
+
+  <div className="listItem">
+    <div className="icon">02</div>
+    <div>
+      <b>Konsultasi dan Pembinaan Keagamaan</b>
+      <span>
+        Informasi konsultasi keagamaan, pembinaan masjid dan majelis taklim,
+        serta edukasi zakat, wakaf, dan kehidupan keluarga.
+      </span>
+      <div style={{ marginTop: 10 }}>
+        <a className="btn primary" href="#kontak">
+          Lihat Informasi Kontak
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div className="listItem">
+    <div className="icon">03</div>
+    <div>
+      <b>Bimbingan Perkawinan dan Keluarga Sakinah</b>
+      <span>
+        Pelajari persiapan calon pengantin, komunikasi pasangan,
+        tanggung jawab keluarga, dan pengelolaan rumah tangga.
+      </span>
+      <div style={{ marginTop: 10 }}>
+        <a className="btn primary" href="/bimbingan-perkawinan">
+          Buka Panduan Bimbingan
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div className="listItem">
+    <div className="icon">04</div>
+    <div>
+      <b>Bimbingan Remaja Usia Sekolah (BRUS)</b>
+      <span>
+        Ruang edukasi bagi remaja untuk memperkuat akhlak,
+        pergaulan sehat, tanggung jawab, dan kesiapan merencanakan masa depan.
+      </span>
+      <div style={{ marginTop: 10 }}>
+        <a className="btn primary" href="/brus">
+          Buka Materi BRUS
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <div className="listItem">
+    <div className="icon">05</div>
+    <div>
+      <b>Profil dan Layanan Penyuluh Agama</b>
+      <span>
+        Kenali peran Penyuluh Agama Islam, wilayah kerja, struktur
+        organisasi, serta layanan pembinaan dan pendampingan masyarakat
+        melalui halaman profil KUA.
+      </span>
+      <div style={{ marginTop: 10 }}>
+        <a className="btn primary" href="/profil">
+          Lihat Profil KUA
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+      </div>
+    </div>
+  </section>
+
+
+      <section id="kegiatan" className="section" style={{paddingTop:0}}><div className="wrap"><div className="sectionHead"><div><h2>Kegiatan</h2><p>Program dan aktivitas penyuluhan untuk masyarakat.</p></div></div><div className="grid3">{features.map(([i,t,d,link,label])=><article className="card" key={t}><div className="icon">{i}</div><h3>{t}</h3><p>{d}</p><a className="btn primary" href={link} style={{marginTop:10}}>{label}</a></article>)}</div>{kegiatan.length > 0 && <><div style={{marginTop:24}}><h3>Kegiatan Terbaru</h3></div><div className="grid3">{kegiatan.map((item)=><article className="card" key={item.id}><h3>{item.nama_kegiatan}</h3><p><b>{item.penyelenggara}</b> · {item.desa}</p><p>{item.deskripsi || "Kegiatan KUA Panca Lautang."}</p><small>{item.tanggal} · {item.kategori}</small></article>)}</div><div style={{marginTop:20}}><a className="btn primary" href="/kegiatan">Lihat Semua Kegiatan</a></div></>}</div></section>
+
+      <section id="berita" className="section news">
+        <div className="wrap">
+          <div className="sectionHead">
+            <div>
+              <h2>Berita Terbaru KUA Panca Lautang</h2>
+              <p>Berita dan informasi terbaru yang dikelola langsung melalui Admin KUA Panca Lautang.</p>
+            </div>
+          </div>
+
+          {loading ? (
+            <article className="newsCard">
+              <div>
+                <span className="tag">Memuat berita</span>
+                <h3>Sedang mengambil berita terbaru...</h3>
+                <p>Mohon tunggu sebentar.</p>
+              </div>
+            </article>
+          ) : !news || news.length === 0 ? (
+            <article className="newsCard">
+              <div>
+                <span className="tag">Informasi</span>
+                <h3>Belum ada berita</h3>
+                <p>Berita terbaru akan tampil setelah ditambahkan melalui Admin Panel.</p>
+              </div>
+            </article>
+          ) : (
+            <div className="grid3">
+              {news.map((item) => (
+                <article className={`card newsCard ${item.id === news[0]?.id ? "featuredNewsCard" : ""}`} key={item.id}>
+                  {getNewsImage(item) && (
+                    <div style={{margin:'-1px -1px 18px',borderRadius:'16px 16px 0 0',overflow:'hidden',background:'#edf3ef'}}>
+                      <img
+                        src={getNewsImage(item)}
+                        alt={'Dokumentasi: ' + (item.title || 'Berita KUA Panca Lautang')}
+                        loading={item.id === news[0]?.id ? 'eager' : 'lazy'}
+                        style={{width:'100%',height:'190px',objectFit:'cover',display:'block'}}
+                      />
+                    </div>
+                  )}
+
+                  <span className="tag">Berita KUA</span>
+
+                  <h3>{item.title}</h3>
+
+                  {item.published_at && (
+                    <time dateTime={item.published_at} style={{display:'block',marginTop:8,color:'var(--muted)',fontSize:12}}>
+                      {formatNewsDate(item.published_at)}
+                    </time>
+                  )}
+
+                  <p style={{
+                    marginTop:12,
+                    whiteSpace:'normal',
+                    lineHeight:1.75,
+                    display:'-webkit-box',
+                    WebkitLineClamp:4,
+                    WebkitBoxOrient:'vertical',
+                    overflow:'hidden'
+                  }}>
+                    {getNewsExcerpt(item)}
+                  </p>
+
+                  <div style={{marginTop:'16px'}}>
+                    <a
+                      className="newsBtn"
+                      href={`/berita/${item.id}`}
+                    >
+                      Baca berita lengkap
+                    </a>
+                  </div>
+                </article>
+              ))}
+            </div>
+          )}
+        </div>
+      </section>
+
+      <section id="kemenag" className="section">
+  <div className="wrap">
+    <div className="sectionHead">
+      <div>
+        <h2>Berita Terbaru Kementerian Agama</h2>
+        <p>Dua berita terbaru dari Kementerian Agama Republik Indonesia.</p>
+      </div>
+    </div>
+
+    {kemenagNews.length === 0 ? (
+  <div className="card">
+    <h3>Berita Kemenag sedang diperbarui</h3>
+    <p>Silakan coba kembali beberapa saat lagi.</p>
+  </div>
+) : (
+  <div className="kemenagNewsGrid">
+    {kemenagNews.map((item, index) => (
+      <article className="kemenagNewsCard" key={item.url || index}>
+        <div className="kemenagNewsTop">
+          <span className="kemenagNewsTag">KEMENAG RI</span>
+          <span className="kemenagNewsDate">{item.date}</span>
+        </div>
+
+        <div className="kemenagNewsIcon">K</div>
+
+        <h3>{item.title}</h3>
+
+        {item.excerpt && (
+          <p>{item.excerpt}</p>
+        )}
+
+        <a
+          className="kemenagNewsButton"
+          href={item.url}
+          target="_blank"
+          rel="noreferrer"
+        >
+          Baca berita selengkapnya ?
+        </a>
+      </article>
+    ))}
+  </div>
+)}
+       </div>
+       </section>
+
+    <section id="galeri" className="section" style={{paddingTop:0}}>
+  <div className="wrap">
+    <div className="sectionHead">
+      <div>
+        <h2>Galeri</h2>
+        <p>Dokumentasi kegiatan KUA Panca Lautang.</p>
+      </div>
+    </div>
+
+    <div style={{
+      display: 'grid',
+      gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
+      gap: 24
+    }}>
+      {visibleGallery.length > 0 ? (
+        visibleGallery.map((item) => (
+          <div
+            key={item.path || item.name}
+            style={{
+              borderRadius: 22,
+              overflow: 'hidden',
+              background: '#fff'
+            }}
+          ><button
+  type="button"
+  onClick={() => setSelectedGallery(item)}
+  style={{
+    border: 0,
+    padding: 0,
+    margin: 0,
+    background: 'transparent',
+    cursor: 'pointer',
+    width: '100%',
+    display: 'block'
+  }}
+>
+  <img
+    src={item.url}
+    alt={item.name || 'Dokumentasi kegiatan KUA'}
+    style={{
+      width: '100%',
+      height: 260,
+      objectFit: 'cover',
+      display: 'block'
+    }}
+  />
+</button>
+          </div>
+        ))
+      ) : (
+        <div className="card">
+          Belum ada foto galeri
+        </div>
+      )}
+    </div>
+    </div>
+    </section>
+    
+<section id="kontak" className="section">
+  <div className="wrap">
+    <div className="sectionHead">
+      <div>
+        <h2>Kontak</h2>
+        <p>Alamat kantor, kanal komunikasi, dan informasi website KUA Panca Lautang.</p>
+      </div>
+    </div>
+
+    <div className="contact">
+      <div className="contactCard">
+        <div className="icon">LOK</div>
+        <h3>KUA Kecamatan Panca Lautang</h3>
+        <p style={{ color: "var(--muted)", lineHeight: 1.7 }}>
+          Panca Lautang, Kabupaten Sidenreng Rappang, Sulawesi Selatan.
+        </p>
+        <a
+          className="btn primary"
+          
+href="https://www.google.com/maps/search/?api=1&query=KUA%20Panca%20Lautang%2C%20Panca%20Lautang%2C%20Sidenreng%20Rappang%2C%20Sulawesi%20Selatan"
+
+          target="_blank"
+          rel="noreferrer"
+        >
+          Buka di Google Maps
+        </a>
+      </div>
+
+      <div className="contactCard">
+        <div className="icon">WA</div>
+        <h3>Kontak WhatsApp</h3>
+        <p style={{ color: "var(--muted)", lineHeight: 1.7 }}>
+          Untuk pertanyaan informasi dan komunikasi dengan pengelola website:
+        </p>
+        <p style={{ margin: "10px 0" }}>
+          <a className="btn primary" href="https://wa.me/6282132244214" target="_blank" rel="noreferrer">
+            WhatsApp 0821-3224-4214
+          </a>
+        </p>
+        <p style={{ margin: "10px 0" }}>
+          <a className="btn primary" href="https://wa.me/6281355495872" target="_blank" rel="noreferrer">
+            WhatsApp 0813-5549-5872
+          </a>
+        </p>
+        <small style={{ color: "var(--muted)", lineHeight: 1.6 }}>
+          Website: kua-pancalautang.my.id
+        </small>
+      </div>
+    </div>
+
+    <div
+      style={{
+        marginTop: 24,
+        borderRadius: 16,
+        overflow: "hidden",
+        border: "1px solid var(--border, #e2e8f0)",
+      }}
+    >
+      <iframe
+        title="Peta Lokasi KUA Kecamatan Panca Lautang"
+        
+src="https://maps.google.com/maps?q=KUA%20Panca%20Lautang%2C%20Panca%20Lautang%2C%20Sidenreng%20Rappang%2C%20Sulawesi%20Selatan&output=embed"
+
+        width="100%"
+        height="380"
+        style={{ border: 0, display: "block" }}
+        loading="lazy"
+        referrerPolicy="strict-origin-when-cross-origin"
+        allowFullScreen
+      />
+    </div>
+  </div>
+</section>
+</main>
+
+<section
+  id="disclaimer"
+  className="section"
+  aria-labelledby="disclaimer-title"
+  style={{ paddingTop: 0, paddingBottom: 42 }}
+>
+  <div className="wrap">
+    <article
+      className="card"
+      style={{
+        maxWidth: 1120,
+        margin: '0 auto',
+        padding: 'clamp(18px, 3vw, 30px)',
+        border: '1px solid #dce8e1',
+        borderTop: '4px solid #17613f',
+        borderRadius: 20,
+        background: 'linear-gradient(145deg, #ffffff 0%, #f8fbf9 100%)',
+        boxShadow: '0 12px 32px rgba(20, 65, 44, .06)',
+      }}
+    >
+      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', gap: 16, flexWrap: 'wrap', marginBottom: 20 }}>
+        <div>
+          <span style={{ color: '#987126', fontSize: 10, fontWeight: 800, letterSpacing: '.14em' }}>
+            INFORMASI PENGGUNAAN SITUS
+          </span>
+          <h2 id="disclaimer-title" style={{ margin: '5px 0 4px', color: '#174b35', fontSize: 'clamp(22px, 3vw, 28px)' }}>
+            Disclaimer
+          </h2>
+          <p style={{ margin: 0, color: '#53665a', fontSize: 13, lineHeight: 1.65 }}>
+            Ketentuan singkat penggunaan Portal Informasi KUA Kecamatan Panca Lautang.
+          </p>
+        </div>
+        <span style={{ display: 'inline-flex', alignItems: 'center', gap: 7, padding: '8px 12px', borderRadius: 999, background: '#edf5ef', color: '#17613f', fontSize: 11, fontWeight: 700 }}>
+          <span aria-hidden="true">●</span> Informasi dan layanan
+        </span>
+      </div>
+
+      <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(min(100%, 285px), 1fr))', gap: 12, color: '#405448' }}>
+        <section style={{ padding: 16, border: '1px solid #e4ece6', borderRadius: 14, background: '#fff' }}>
+          <h3 style={{ display: 'flex', gap: 9, alignItems: 'center', margin: '0 0 7px', color: '#174b35', fontSize: 14 }}>
+            <span style={{ color: '#987126', fontSize: 11 }}>01</span> Tentang Situs
+          </h3>
+          <p style={{ margin: 0, fontSize: 13, lineHeight: 1.7 }}>
+            Portal ini dikelola oleh Penyuluh Agama Islam KUA Kecamatan Panca Lautang untuk dakwah, edukasi keagamaan, informasi layanan, dan dokumentasi kegiatan masyarakat.
+          </p>
+        </section>
+
+        <section style={{ padding: 16, border: '1px solid #e4ece6', borderRadius: 14, background: '#fff' }}>
+          <h3 style={{ display: 'flex', gap: 9, alignItems: 'center', margin: '0 0 7px', color: '#174b35', fontSize: 14 }}>
+            <span style={{ color: '#987126', fontSize: 11 }}>02</span> Bukan Sistem Administrasi Resmi
+          </h3>
+          <p style={{ margin: 0, fontSize: 13, lineHeight: 1.7 }}>
+            Situs ini bukan pengganti sistem administrasi atau keputusan resmi Kementerian Agama. Untuk pendaftaran nikah, gunakan <a href="https://simkah4.kemenag.go.id" target="_blank" rel="noopener noreferrer" style={{ color: '#126747', fontWeight: 700 }}>SIMKAH Kemenag</a> atau konfirmasi langsung kepada petugas KUA.
+          </p>
+        </section>
+
+        <section style={{ padding: 16, border: '1px solid #e4ece6', borderRadius: 14, background: '#fff' }}>
+          <h3 style={{ display: 'flex', gap: 9, alignItems: 'center', margin: '0 0 7px', color: '#174b35', fontSize: 14 }}>
+            <span style={{ color: '#987126', fontSize: 11 }}>03</span> Keakuratan Informasi
+          </h3>
+          <p style={{ margin: 0, fontSize: 13, lineHeight: 1.7 }}>
+            Informasi diupayakan akurat dan diperbarui secara berkala. Persyaratan, jadwal, tarif, dan prosedur dapat berubah; mohon konfirmasi kepada petugas atau instansi berwenang.
+          </p>
+        </section>
+
+        <section style={{ padding: 16, border: '1px solid #e4ece6', borderRadius: 14, background: '#fff' }}>
+          <h3 style={{ display: 'flex', gap: 9, alignItems: 'center', margin: '0 0 7px', color: '#174b35', fontSize: 14 }}>
+            <span style={{ color: '#987126', fontSize: 11 }}>04</span> Tautan Pihak Ketiga
+          </h3>
+          <p style={{ margin: 0, fontSize: 13, lineHeight: 1.7 }}>
+            Tautan eksternal disediakan sebagai rujukan. Isi, ketersediaan, dan kebijakan privasi situs pihak ketiga berada di luar kendali pengelola.
+          </p>
+        </section>
+
+        <section style={{ padding: 16, border: '1px solid #e4ece6', borderRadius: 14, background: '#fff' }}>
+          <h3 style={{ display: 'flex', gap: 9, alignItems: 'center', margin: '0 0 7px', color: '#174b35', fontSize: 14 }}>
+            <span style={{ color: '#987126', fontSize: 11 }}>05</span> Tanggung Jawab Pengunjung
+          </h3>
+          <p style={{ margin: 0, fontSize: 13, lineHeight: 1.7 }}>
+            Gunakan informasi secara bijak. Untuk keputusan yang berkaitan dengan hak atau administrasi, lakukan verifikasi kepada petugas berwenang sebelum bertindak.
+          </p>
+        </section>
+
+        <section style={{ padding: 16, border: '1px solid #e4ece6', borderRadius: 14, background: '#fff' }}>
+          <h3 style={{ display: 'flex', gap: 9, alignItems: 'center', margin: '0 0 7px', color: '#174b35', fontSize: 14 }}>
+            <span style={{ color: '#987126', fontSize: 11 }}>06</span> Pembaruan dan Koreksi
+          </h3>
+          <p style={{ margin: 0, fontSize: 13, lineHeight: 1.7 }}>
+            Konten dan ketentuan ini dapat diperbarui sewaktu-waktu. Sampaikan pertanyaan atau koreksi melalui bagian <a href="/#kontak" style={{ color: '#126747', fontWeight: 700 }}>Kontak</a> pada situs.
+          </p>
+        </section>
+      </div>
+    </article>
+  </div>
+</section>
+
+{selectedGallery && (
+  <div
+    onClick={() => setSelectedGallery(null)}
+    style={{
+      position: 'fixed',
+      inset: 0,
+      background: 'rgba(0,0,0,0.85)',
+      zIndex: 9999,
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: 20
+    }}
+  >
+    <div
+      onClick={(e) => e.stopPropagation()}
+      style={{
+        maxWidth: 900,
+        width: '100%',
+        background: '#fff',
+        borderRadius: 22,
+        overflow: 'hidden',
+        position: 'relative'
+      }}
+    >
+      <button type="button" onClick={() => { const i = gallery.findIndex(x => x.path === selectedGallery.path); setSelectedGallery(gallery[(i - 1 + gallery.length) % gallery.length]); }} style={{position:"absolute",left:12,top:"50%",zIndex:3,border:0,borderRadius:"50%",width:48,height:48,fontSize:28,cursor:"pointer"}}>&lsaquo;</button>
+      <button type="button" onClick={() => { const i = gallery.findIndex(x => x.path === selectedGallery.path); setSelectedGallery(gallery[(i + 1) % gallery.length]); }} style={{position:"absolute",right:12,top:"50%",zIndex:3,border:0,borderRadius:"50%",width:48,height:48,fontSize:28,cursor:"pointer"}}>&rsaquo;</button>
+      <button
+        type="button"
+        onClick={() => setSelectedGallery(null)}
+        style={{
+          position: 'absolute',
+          top: 12,
+          right: 12,
+          zIndex: 2,
+          border: 0,
+          borderRadius: '50%',
+          width: 40,
+          height: 40,
+          fontSize: 24,
+          cursor: 'pointer'
+        }}
+      >
+        X
+      </button>
+
+      <img
+        src={selectedGallery.url}
+        alt={selectedGallery.name || 'Foto Galeri'}
+        style={{
+          width: '100%',
+          maxHeight: '60vh',
+          objectFit: 'contain',
+          display: 'block',
+          background: '#111'
+        }}
+      />
+
+      <div style={{ padding: 16, background: '#fff', color: '#111', textAlign: 'center' }}>
+        <strong>
+          {(selectedGallery.name || 'Dokumentasi kegiatan KUA Panca Lautang').replace(/^\d+-/, '').replace(/\.[^.]+$/, '').replace(/[-_]+/g, ' ')}
+        </strong>
+      </div>
+    </div>
+  </div>
+)}
+<TanyaAnto />
+  </>;
+}
+
+
+
+
+export default HomeClient;

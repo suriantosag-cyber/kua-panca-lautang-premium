@@ -1,10 +1,23 @@
 
 import KhutbahBugis from "../components/KhutbahBugis";
 
+const pageTitle = "Khutbah Jumat | KUA Panca Lautang";
+const pageDescription =
+  "Kumpulan naskah khutbah Jumat, khutbah pertama, khutbah kedua, dan doa penutup untuk bahan dakwah dan pembinaan keagamaan masyarakat di Kecamatan Panca Lautang.";
+
 export const metadata = {
-  title: "Khutbah Jumat | KUA Panca Lautang",
-  description:
-    "Kumpulan naskah khutbah Jumat KUA Panca Lautang.",
+  title: { absolute: pageTitle },
+  description: pageDescription,
+  openGraph: {
+    title: pageTitle,
+    description: pageDescription,
+    url: "/khutbah-jumat",
+    type: "website",
+  },
+  twitter: {
+    title: pageTitle,
+    description: pageDescription,
+  },
 };
 
 export default function KhutbahJumatPage() {
