@@ -89,6 +89,7 @@ export default function Navbar() {
           aria-label="Navigasi utama"
         >
           <Link href="/" onClick={closeMenu}>Beranda</Link>
+          <Link href="/kajian-keluarga-sakinah" onClick={closeMenu}>Kajian Keluarga Sakinah</Link>
 
           {menus.map((menu) => (
             <div className="kuaNavGroup" key={menu.label}>
