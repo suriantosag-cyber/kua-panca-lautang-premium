@@ -1,4 +1,5 @@
 import KajianMediaPublik from "./KajianMediaPublik";
+import MateriKajianPublik from "./MateriKajianPublik";
 import styles from "./page.module.css";
 
 export const metadata = {
@@ -167,6 +168,8 @@ export default function KajianKeluargaSakinahPage() {
           ))}
         </div>
       </section>
+
+      <MateriKajianPublik />
 
       <section className={`${styles.section} ${styles.mediaSection}`} id="podcast-video">
         <div className={styles.sectionHeading}>
