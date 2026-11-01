@@ -144,7 +144,7 @@ export default async function DetailKegiatanPage({ params }) {
         </article>
       </div>
 
-      <style jsx>{`
+      <style>{`
         .kegiatan-detail {
           max-width: 980px;
           margin: 0 auto;
