@@ -36,6 +36,9 @@ export async function generateMetadata({ params }) {
 
   return {
     metadataBase: new URL('https://kua-pancalautang.my.id'),
+    alternates: {
+      canonical: `/berita/${berita.id}`,
+    },
     title: berita.title,
     description:
       berita.content?.slice(0, 160) ||
