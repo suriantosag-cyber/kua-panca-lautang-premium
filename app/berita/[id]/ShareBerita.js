@@ -1,17 +1,25 @@
 "use client";
 
 export default function ShareBerita({ title }) {
+  const buttonStyle = {
+    display: "inline-flex",
+    alignItems: "center",
+    justifyContent: "center",
+    minHeight: 40,
+    padding: "9px 15px",
+    borderRadius: 999,
+    border: "1px solid #dce6df",
+    background: "#fff",
+    color: "#244b3a",
+    fontSize: 13,
+    fontWeight: 700,
+    cursor: "pointer",
+    transition: "background .2s ease, border-color .2s ease"
+  };
+
   return (
-    <div
-      style={{
-        display: "flex",
-        gap: 10,
-        flexWrap: "wrap",
-        alignItems: "center",
-        margin: "0 0 28px"
-      }}
-    >
-      <strong style={{ marginRight: 4 }}>Bagikan Berita:</strong>
+    <div className="beritaShare" aria-label="Bagikan berita ini">
+      <span className="beritaShareLabel">Bagikan:</span>
       <button
         type="button"
         onClick={() => {
@@ -22,7 +30,7 @@ export default function ShareBerita({ title }) {
             "noopener,noreferrer"
           );
         }}
-        style={{ padding: "10px 16px", borderRadius: 999, border: "none", background: "#25D366", color: "#fff", fontWeight: 700, cursor: "pointer" }}
+        style={{ ...buttonStyle, background: "#eaf7ef", borderColor: "#cce9d5", color: "#17643d" }}
       >
         WhatsApp
       </button>
@@ -36,9 +44,9 @@ export default function ShareBerita({ title }) {
             "noopener,noreferrer"
           );
         }}
-        style={{ padding: "10px 16px", borderRadius: 999, border: "none", background: "#1877F2", color: "#fff", fontWeight: 700, cursor: "pointer" }}
+        style={buttonStyle}
       >
-        f Facebook
+        Facebook
       </button>
       <button
         type="button"
@@ -50,7 +58,7 @@ export default function ShareBerita({ title }) {
             "noopener,noreferrer"
           );
         }}
-        style={{ padding: "10px 16px", borderRadius: 999, border: "none", background: "#000", color: "#fff", fontWeight: 700, cursor: "pointer" }}
+        style={buttonStyle}
       >
         X
       </button>
@@ -64,9 +72,9 @@ export default function ShareBerita({ title }) {
             alert("Gagal menyalin tautan.");
           }
         }}
-        style={{ padding: "10px 16px", borderRadius: 999, border: "1px solid #ddd", background: "#fff", color: "#222", fontWeight: 700, cursor: "pointer" }}
+        style={buttonStyle}
       >
-        Salin Link
+        Salin tautan
       </button>
     </div>
   );
