@@ -104,6 +104,9 @@
           <p style={{ color: '#cbd5e1', margin: '0 0 10px', lineHeight: 1.7 }}>
             Ketentuan penggunaan dan penjelasan mengenai informasi pada website.
           </p>
+          <a href="/kebijakan-privasi" style={linkStyle}>
+            Kebijakan Privasi
+          </a>
           <a href="/#disclaimer" style={linkStyle}>
             Disclaimer
           </a>
