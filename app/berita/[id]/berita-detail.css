@@ -220,3 +220,28 @@
   .beritaRelatedCard { transition: none; }
   .beritaRelatedCard:hover { transform: none; }
 }
+
+.beritaShare {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 9px;
+  max-width: 1040px;
+  margin: 0 auto 26px;
+}
+.beritaShareLabel {
+  margin-right: 4px;
+  color: #65766e;
+  font-size: 13px;
+  font-weight: 700;
+}
+.beritaShare button:hover {
+  border-color: #a9c7b5 !important;
+  background: #f2f7f3 !important;
+}
+@media (max-width: 640px) {
+  .beritaShare { justify-content: flex-start; margin-bottom: 22px; }
+  .beritaShareLabel { flex-basis: 100%; }
+  .beritaShare button { min-height: 38px !important; padding: 8px 13px !important; }
+}
