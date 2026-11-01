@@ -488,42 +488,86 @@ src="https://maps.google.com/maps?q=KUA%20Panca%20Lautang%2C%20Panca%20Lautang%2
 <section
   id="disclaimer"
   className="section"
-  style={{ paddingTop: "0" }}
+  aria-labelledby="disclaimer-title"
+  style={{ paddingTop: 0, paddingBottom: 48 }}
 >
   <div className="wrap">
-    <div
+    <article
       className="card"
       style={{
-        borderLeft: "4px solid #64748b",
-        background: "#f8fafc",
-        padding: "24px",
+        maxWidth: 1040,
+        margin: '0 auto',
+        padding: 'clamp(22px, 4vw, 38px)',
+        border: '1px solid #dce8e1',
+        borderTop: '4px solid #17613f',
+        borderRadius: 20,
+        background: '#fff',
+        boxShadow: '0 12px 32px rgba(20, 65, 44, .06)',
       }}
     >
-      <h2 style={{ marginTop: 0, fontSize: "20px" }}>
-        DISCLAIMER
-      </h2>
-      <p style={{ lineHeight: 1.8, color: "#475569" }}>
-        Situs web ini merupakan Portal Informasi Swadaya yang
-        dikelola oleh Penyuluh Agama Islam KUA Kecamatan Panca
-        Lautang sebagai media dakwah, penyebaran informasi, dan
-        dokumentasi kegiatan masyarakat.
-      </p>
-      <p style={{ lineHeight: 1.8, color: "#475569", marginBottom: 0 }}>
-        Situs ini bukan pengganti sistem administrasi resmi
-        Kementerian Agama. Untuk pendaftaran nikah resmi dan
-        keperluan administrasi hukum negara, silakan mengakses{" "}
-        <a
-          href="https://simkah4.kemenag.go.id"
-          target="_blank"
-          rel="noreferrer"
-          style={{ fontWeight: 600, color: "#0f766e" }}
-        >
-          SIMKAH Kementerian Agama Republik Indonesia
-        </a>{" "}
-        atau menghubungi Kantor Kementerian Agama Kabupaten
-        Sidenreng Rappang (Sidrap).
-      </p>
-    </div>
+      <div style={{ marginBottom: 22 }}>
+        <span style={{ color: '#987126', fontSize: 11, fontWeight: 800, letterSpacing: '.14em' }}>
+          INFORMASI PENGGUNAAN SITUS
+        </span>
+        <h2 id="disclaimer-title" style={{ margin: '8px 0 10px', color: '#174b35', fontSize: 'clamp(23px, 3vw, 30px)' }}>
+          Disclaimer
+        </h2>
+        <p style={{ maxWidth: 820, margin: 0, color: '#53665a', lineHeight: 1.8 }}>
+          Ketentuan dan penjelasan mengenai penggunaan informasi yang tersedia di Portal Informasi KUA Kecamatan Panca Lautang.
+        </p>
+      </div>
+
+      <div style={{ display: 'grid', gap: 20, color: '#405448', lineHeight: 1.85 }}>
+        <div>
+          <h3 style={{ margin: '0 0 7px', color: '#174b35', fontSize: 16 }}>1. Kedudukan dan Tujuan Situs</h3>
+          <p style={{ margin: 0 }}>
+            Situs web ini merupakan Portal Informasi Swadaya yang dikelola oleh Penyuluh Agama Islam KUA Kecamatan Panca Lautang sebagai media dakwah, edukasi keagamaan, penyebaran informasi layanan, dan dokumentasi kegiatan masyarakat. Konten disediakan untuk membantu masyarakat memperoleh informasi yang relevan dan mudah diakses.
+          </p>
+        </div>
+
+        <div>
+          <h3 style={{ margin: '0 0 7px', color: '#174b35', fontSize: 16 }}>2. Bukan Sistem Administrasi Resmi</h3>
+          <p style={{ margin: 0 }}>
+            Situs ini bukan pengganti sistem administrasi resmi Kementerian Agama Republik Indonesia, bukan kanal untuk menetapkan keabsahan dokumen, dan bukan pengganti keputusan pejabat yang berwenang. Untuk pendaftaran nikah resmi dan keperluan administrasi hukum negara, silakan menggunakan <a href="https://simkah4.kemenag.go.id" target="_blank" rel="noopener noreferrer" style={{ color: '#126747', fontWeight: 700 }}>SIMKAH Kementerian Agama Republik Indonesia</a> atau menghubungi KUA maupun Kantor Kementerian Agama Kabupaten Sidenreng Rappang sesuai kebutuhan.
+          </p>
+        </div>
+
+        <div>
+          <h3 style={{ margin: '0 0 7px', color: '#174b35', fontSize: 16 }}>3. Keakuratan dan Pembaruan Informasi</h3>
+          <p style={{ margin: 0 }}>
+            Pengelola berupaya menyajikan informasi secara cermat dan memperbaruinya apabila terdapat perubahan. Meskipun demikian, informasi dapat berubah mengikuti peraturan, kebijakan, jadwal, dan kondisi di lapangan. Pengunjung dianjurkan mengonfirmasi persyaratan, jadwal, tarif, serta prosedur pelayanan kepada petugas atau instansi berwenang sebelum mengambil tindakan.
+          </p>
+        </div>
+
+        <div>
+          <h3 style={{ margin: '0 0 7px', color: '#174b35', fontSize: 16 }}>4. Tautan ke Situs Pihak Ketiga</h3>
+          <p style={{ margin: 0 }}>
+            Situs ini dapat memuat tautan menuju situs atau layanan pihak ketiga untuk memudahkan pengunjung. Tautan tersebut disediakan sebagai rujukan. Pengelola tidak mengendalikan isi, ketersediaan, maupun kebijakan privasi situs pihak ketiga; pengunjung perlu membaca ketentuan yang berlaku pada masing-masing situs.
+          </p>
+        </div>
+
+        <div>
+          <h3 style={{ margin: '0 0 7px', color: '#174b35', fontSize: 16 }}>5. Penggunaan Informasi dan Tanggung Jawab</h3>
+          <p style={{ margin: 0 }}>
+            Pengunjung diharapkan menggunakan informasi secara bijak dan melakukan verifikasi apabila informasi tersebut berkaitan dengan hak, kewajiban, atau proses administrasi. Pengelola tidak menjamin bahwa seluruh informasi selalu tersedia tanpa gangguan atau selalu sesuai dengan setiap keadaan individual.
+          </p>
+        </div>
+
+        <div>
+          <h3 style={{ margin: '0 0 7px', color: '#174b35', fontSize: 16 }}>6. Perubahan Ketentuan</h3>
+          <p style={{ margin: 0 }}>
+            Pengelola dapat memperbarui isi situs dan Disclaimer ini sewaktu-waktu untuk menyesuaikan kebutuhan informasi, perbaikan, atau perubahan ketentuan yang berlaku. Versi yang ditampilkan pada halaman ini merupakan versi yang berlaku saat diakses.
+          </p>
+        </div>
+
+        <div style={{ padding: 17, border: '1px solid #e1ebe4', borderRadius: 14, background: '#f6faf7' }}>
+          <h3 style={{ margin: '0 0 7px', color: '#174b35', fontSize: 16 }}>7. Pertanyaan dan Koreksi Informasi</h3>
+          <p style={{ margin: 0 }}>
+            Jika menemukan informasi yang perlu dikoreksi atau memiliki pertanyaan mengenai konten situs, silakan menghubungi pengelola melalui bagian <a href="/#kontak" style={{ color: '#126747', fontWeight: 700 }}>Kontak</a> pada website ini.
+          </p>
+        </div>
+      </div>
+    </article>
   </div>
 </section>
 
