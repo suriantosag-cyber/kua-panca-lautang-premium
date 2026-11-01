@@ -393,6 +393,7 @@ export default function KegiatanClient({ initialKegiatan = [] }) {
                       <div className="kegiatan-card-actions">
                         <a className="btn primary" href={`/kegiatan/${item.id}`}>Baca selengkapnya</a>
                         <button type="button" className="btn" onClick={() => handleBagikan(item)} aria-label={`Bagikan ${item.nama_kegiatan}`}>Bagikan</button>
+                        <button type="button" className="btn" onClick={() => handleSalinTautan(item)}>Salin tautan</button>
                       </div>
                     </div>
                   </article>
