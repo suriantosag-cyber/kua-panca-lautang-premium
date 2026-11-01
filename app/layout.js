@@ -20,10 +20,6 @@ export const metadata = {
     'kua-pancalautang.my.id',
   ],
 
-  alternates: {
-    canonical: '/',
-  },
-
   openGraph: {
     title: 'KUA Panca Lautang | Kantor Urusan Agama Kecamatan Panca Lautang',
     description:
