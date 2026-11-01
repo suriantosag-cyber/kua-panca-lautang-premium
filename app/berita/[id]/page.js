@@ -48,7 +48,7 @@ setBeritaLainnya(j?.data || []);
   return (
     <main className="beritaDetailPage" style={{ maxWidth: 1200, margin: '0 auto', padding: '40px 20px 80px' }}>
       <a
-        href="/#berita-kua"
+        href="/#berita"
         style={{
           display: 'inline-block',
           marginBottom: 28,
@@ -332,11 +332,11 @@ return null;
         .slice(0, 4)
         .map((item) => {
           const foto =
-            Array.isArray(item.article_blocks)
+            (Array.isArray(item.article_blocks)
               ? item.article_blocks.find(
                   (block) => block.type === 'image' && block.url
                 )?.url
-              : item.image_url;
+              : null) || item.image_url;
 
           return (
             <a
