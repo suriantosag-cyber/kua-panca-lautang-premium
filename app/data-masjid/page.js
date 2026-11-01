@@ -262,11 +262,15 @@ export default function DataMasjidPage() {
                                 <span aria-hidden="true">⌖</span>
                                 <p>{item.alamat || 'Alamat belum diisi'}{item.desa ? `, ${item.desa}` : ''}</p>
                               </div>
-                              {(item.nomor_simas || item.nomor_sertifikat || item.luas_tanah || item.keterangan) && (
+                              {(item.nomor_simas || item.nomor_sertifikat || item.luas_tanah || item.tipologi || item.status_tanah || item.luas_bangunan || item.tahun_berdiri || item.keterangan) && (
                                 <div className="dm-details">
                                   {item.nomor_simas && <div className="dm-detailRow"><span>Nomor SIMAS</span><strong>{item.nomor_simas}</strong></div>}
                                   {item.nomor_sertifikat && <div className="dm-detailRow"><span>Sertifikat</span><strong>{item.nomor_sertifikat}</strong></div>}
                                   {item.luas_tanah && <div className="dm-detailRow"><span>Luas tanah</span><strong>{item.luas_tanah}</strong></div>}
+                                  {item.tipologi && <div className="dm-detailRow"><span>Tipologi</span><strong>{item.tipologi}</strong></div>}
+                                  {item.status_tanah && <div className="dm-detailRow"><span>Status tanah</span><strong>{item.status_tanah}</strong></div>}
+                                  {item.luas_bangunan && <div className="dm-detailRow"><span>Luas bangunan</span><strong>{item.luas_bangunan}</strong></div>}
+                                  {item.tahun_berdiri && <div className="dm-detailRow"><span>Tahun berdiri</span><strong>{item.tahun_berdiri}</strong></div>}
                                   {item.keterangan && <p className="dm-description">{item.keterangan}</p>}
                                 </div>
                               )}
