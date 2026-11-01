@@ -1,8 +1,21 @@
 
+const pageTitle = 'Pusat Unduhan';
+const pageDescription =
+  'Akses lembar persiapan nikah, panduan prosedur dan persyaratan resmi, portal SIMKAH, FAQ Bimas Islam, serta tautan layanan digital KUA Kecamatan Panca Lautang.';
+
 export const metadata = {
-  title: 'Pusat Unduhan',
-  description:
-    'Tautan dokumen persiapan dan sumber resmi persyaratan layanan KUA Panca Lautang.',
+  title: pageTitle,
+  description: pageDescription,
+  openGraph: {
+    title: 'Pusat Unduhan dan Panduan Layanan | KUA Panca Lautang',
+    description: pageDescription,
+    url: '/unduhan',
+    type: 'website',
+  },
+  twitter: {
+    title: 'Pusat Unduhan dan Panduan Layanan | KUA Panca Lautang',
+    description: pageDescription,
+  },
 };
 
 const downloads = [
