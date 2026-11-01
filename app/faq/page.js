@@ -34,9 +34,23 @@ const faqItems = [
   },
 ];
 
+const pageTitle = 'FAQ — Pertanyaan Umum';
+const pageDescription =
+  'Temukan jawaban tentang pendaftaran nikah, persyaratan dokumen, biaya resmi PNBP, Kartu Nikah Digital, dan pelacakan permohonan layanan di KUA Kecamatan Panca Lautang.';
+
 export const metadata = {
-  title: 'FAQ — Pertanyaan Umum',
-  description: 'Jawaban atas pertanyaan umum tentang layanan perkawinan dan administrasi KUA Panca Lautang.',
+  title: pageTitle,
+  description: pageDescription,
+  openGraph: {
+    title: 'FAQ — Pertanyaan Umum | KUA Panca Lautang',
+    description: pageDescription,
+    url: '/faq',
+    type: 'website',
+  },
+  twitter: {
+    title: 'FAQ — Pertanyaan Umum | KUA Panca Lautang',
+    description: pageDescription,
+  },
 };
 
 export default function FAQPage() {
