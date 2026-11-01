@@ -69,7 +69,7 @@ export default function MateriKajianPublik() {
       <div className={styles.articleGrid}>
         {items.map((item, index) => {
           const slug = buatSlug(item.title || String(item.id));
-          const url = `${window.location.origin}/kajian-keluarga-sakinah#materi-${slug}`;
+          const url = `https://kua-pancalautang.my.id/kajian-keluarga-sakinah#materi-${slug}`;
           const encodedUrl = encodeURIComponent(url);
           const shareText = encodeURIComponent(`${item.title} — KUA Panca Lautang`);
           return (
