@@ -1,5 +1,7 @@
 import './globals.css';
 import Navbar from './components/Navbar';
+import MediaSosialFooter from './components/MediaSosialFooter';
+
 export const metadata = {
   metadataBase: new URL('https://kua-pancalautang.my.id'),
 
@@ -49,13 +51,15 @@ export const metadata = {
   },
 };
 
+
 export default function RootLayout({ children }) {
   return (
     <html lang="id">
-     <body>
-  <Navbar />
-  {children}
-</body>
-  </html>
+      <body>
+        <Navbar />
+        {children}
+        <MediaSosialFooter />
+      </body>
+    </html>
   );
 }
