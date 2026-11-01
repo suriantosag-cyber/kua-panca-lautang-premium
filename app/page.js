@@ -98,7 +98,7 @@ const [selectedGallery, setSelectedGallery] = useState(null);
 
       <JadwalNikah />
 
-      <section id="profil" className="section">
+      <section id="profil" className="section" style={{ paddingTop: 30 }}>
         <div className="wrap profile">
           <div className="profileMain"><div className="avatar">PAI</div><h3>Profil Penyuluh</h3><p>Ruang informasi untuk memperkenalkan Penyuluh Agama Islam, bidang pembinaan, layanan masyarakat, dan aktivitas penyuluhan di wilayah Panca Lautang.</p><a className="btn primary" href="#kontak">Lihat informasi layanan</a></div>
 
