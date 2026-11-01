@@ -116,23 +116,13 @@ export default function KegiatanClient({ initialKegiatan = [] }) {
           </div>
         </div>
 
-        <div className="card" style={{ marginBottom: '24px' }}>
-          <h2>Kirim Kegiatan</h2>
-          <p>
-            Masyarakat, penyuluh, desa, kelurahan, organisasi, dan mitra KUA
-            dapat mengirimkan informasi kegiatan untuk diverifikasi oleh Admin
-            KUA Panca Lautang.
-          </p>
-
-          <div style={{ marginTop: '20px' }}>
-            <p><strong>Alur kegiatan:</strong></p>
-            <ol>
-              <li>Kegiatan dikirim melalui halaman ini.</li>
-              <li>Admin KUA melakukan pemeriksaan.</li>
-              <li>
-                Kegiatan yang disetujui akan ditampilkan kepada masyarakat.
-              </li>
-            </ol>
+        <div className="card kegiatan-submit" style={{ marginBottom: '24px' }}>
+          <div>
+            <h2>Kirim Kegiatan</h2>
+            <p>
+              Kirim dokumentasi kegiatan untuk diperiksa dan diverifikasi Admin KUA.
+              Kegiatan yang disetujui akan ditampilkan kepada masyarakat.
+            </p>
           </div>
 
           <button
@@ -349,15 +339,16 @@ export default function KegiatanClient({ initialKegiatan = [] }) {
           </div>
         )}
 
-        <div className="card">
-          <h2>Kegiatan Terbaru</h2>
+        <section className="kegiatan-list">
+          <div className="kegiatan-list-heading">
+            <div>
+              <h2>Kegiatan Terbaru</h2>
+              <p>Kegiatan yang telah diverifikasi dan disetujui Admin KUA Panca Lautang.</p>
+            </div>
+            <span>{kegiatan.length} kegiatan</span>
+          </div>
 
-          <p>
-            Kegiatan yang telah diverifikasi dan disetujui Admin KUA
-            Panca Lautang.
-          </p>
-
-          <div style={{ marginTop: '20px' }}>
+          <div>
             {kegiatanLoading ? (
               <p>Memuat kegiatan...</p>
             ) : kegiatan.length === 0 ? (
@@ -376,115 +367,148 @@ export default function KegiatanClient({ initialKegiatan = [] }) {
                 </p>
               </div>
             ) : (
-              <div style={{ display: 'grid', gap: '18px' }}>
+              <div className="kegiatan-grid">
                 {kegiatan.map((item) => (
-                  <article
-                    key={item.id}
-                    style={{
-                      padding: '20px',
-                      borderRadius: '14px',
-                      background: '#f8fafc',
-                      border: '1px solid #e2e8f0'
-                    }}
-                  >
-                    <h3 style={{ marginTop: 0 }}>
-                      {item.nama_kegiatan}
-                    </h3>
-
-                    {item.foto_url && (
+                  <article className="kegiatan-card" key={item.id}>
+                    {item.foto_url ? (
                       <img
+                        className="kegiatan-card-image"
                         src={item.foto_url}
                         alt={`Foto kegiatan ${item.nama_kegiatan}`}
                         loading="lazy"
-                        style={{
-                          display: 'block',
-                          width: '100%',
-                          maxWidth: '640px',
-                          maxHeight: '420px',
-                          objectFit: 'contain',
-                          objectPosition: 'left center',
-                          borderRadius: '12px',
-                          marginBottom: '16px',
-                          background: '#f1f5f9'
-                        }}
                       />
+                    ) : (
+                      <div className="kegiatan-card-placeholder">Dokumentasi Kegiatan</div>
                     )}
 
-                    <p>
-                      <strong>Penyelenggara:</strong>{' '}
-                      {item.penyelenggara || '-'}
-                    </p>
-
-                    <p>
-                      <strong>Desa/Kelurahan:</strong> {item.desa || '-'}
-                    </p>
-
-                    <p>
-                      <strong>Tanggal:</strong> {item.tanggal || '-'}
-                    </p>
-
-                    <p>
-                      <strong>Kategori:</strong> {item.kategori || '-'}
-                    </p>
-
-                    {item.lokasi_lengkap && (
-                      <p>
-                        <strong>Lokasi lengkap:</strong>{' '}
-                        {item.lokasi_lengkap}
+                    <div className="kegiatan-card-content">
+                      <span className="kegiatan-card-category">{item.kategori || 'Kegiatan KUA'}</span>
+                      <h3>{item.nama_kegiatan}</h3>
+                      <p className="kegiatan-card-meta">
+                        {item.tanggal || 'Tanggal belum dicantumkan'}
+                        {item.desa ? ` · ${item.desa}` : ''}
                       </p>
-                    )}
+                      {item.deskripsi && <p className="kegiatan-card-excerpt">{item.deskripsi}</p>}
 
-                    {item.jam_mulai && (
-                      <p>
-                        <strong>Jam:</strong> {item.jam_mulai}
-                        {item.jam_selesai
-                          ? `–${item.jam_selesai}`
-                          : ''}
-                      </p>
-                    )}
-
-                    {item.deskripsi && (
-                      <p>
-                        <strong>Deskripsi:</strong> {item.deskripsi}
-                      </p>
-                    )}
-
-                    <p style={{ marginBottom: 0 }}>
-                      <strong>Narahubung:</strong>{' '}
-                      {item.narahubung || '-'}
-                    </p>
-
-                    <div
-                      style={{
-                        display: 'flex',
-                        flexWrap: 'wrap',
-                        gap: '10px',
-                        marginTop: '16px'
-                      }}
-                    >
-                      <button
-                        type="button"
-                        className="btn primary"
-                        onClick={() => handleBagikan(item)}
-                      >
-                        Bagikan via WhatsApp
-                      </button>
-
-                      <button
-                        type="button"
-                        className="btn"
-                        onClick={() => handleSalinTautan(item)}
-                      >
-                        Salin Tautan
-                      </button>
+                      <div className="kegiatan-card-actions">
+                        <a className="btn primary" href={`/kegiatan/${item.id}`}>Baca selengkapnya</a>
+                        <button type="button" className="btn" onClick={() => handleBagikan(item)} aria-label={`Bagikan ${item.nama_kegiatan}`}>Bagikan</button>
+                      </div>
                     </div>
                   </article>
                 ))}
               </div>
             )}
           </div>
-        </div>
+        </section>
       </div>
+
+      <style jsx>{`
+        .kegiatan-submit {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 18px;
+        }
+        .kegiatan-submit h2, .kegiatan-list-heading h2 { margin: 0 0 6px; }
+        .kegiatan-submit p, .kegiatan-list-heading p { margin: 0; color: #64748b; }
+        .kegiatan-list { margin-top: 8px; }
+        .kegiatan-list-heading {
+          display: flex;
+          align-items: center;
+          justify-content: space-between;
+          gap: 12px;
+          margin-bottom: 16px;
+        }
+        .kegiatan-list-heading span {
+          flex: 0 0 auto;
+          padding: 6px 10px;
+          border-radius: 999px;
+          background: #eef5f0;
+          color: #24583d;
+          font-size: 12px;
+          font-weight: 700;
+        }
+        .kegiatan-grid {
+          display: grid;
+          grid-template-columns: repeat(2, minmax(0, 1fr));
+          gap: 16px;
+        }
+        .kegiatan-card {
+          min-width: 0;
+          overflow: hidden;
+          border: 1px solid #e2e8f0;
+          border-radius: 16px;
+          background: #fff;
+          box-shadow: 0 4px 16px rgba(15, 23, 42, .05);
+        }
+        .kegiatan-card-image, .kegiatan-card-placeholder {
+          display: block;
+          width: 100%;
+          aspect-ratio: 16 / 9;
+          object-fit: cover;
+          background: #f1f5f9;
+        }
+        .kegiatan-card-placeholder {
+          display: grid;
+          place-items: center;
+          color: #64748b;
+          font-size: 13px;
+        }
+        .kegiatan-card-content { padding: 14px; }
+        .kegiatan-card-category {
+          display: inline-block;
+          margin-bottom: 7px;
+          color: #28704b;
+          font-size: 11px;
+          font-weight: 700;
+          text-transform: uppercase;
+          letter-spacing: .04em;
+        }
+        .kegiatan-card h3 {
+          margin: 0 0 8px;
+          font-size: 16px;
+          line-height: 1.4;
+        }
+        .kegiatan-card-meta {
+          margin: 0 0 9px;
+          color: #64748b;
+          font-size: 12px;
+        }
+        .kegiatan-card-excerpt {
+          display: -webkit-box;
+          overflow: hidden;
+          margin: 0 0 12px;
+          color: #475569;
+          font-size: 13px;
+          line-height: 1.5;
+          -webkit-box-orient: vertical;
+          -webkit-line-clamp: 3;
+        }
+        .kegiatan-card-actions {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 8px;
+          margin-top: 12px;
+        }
+        .kegiatan-card-actions :global(.btn) {
+          padding: 8px 11px;
+          font-size: 12px;
+        }
+        @media (min-width: 900px) {
+          .kegiatan-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px; }
+          .kegiatan-card-content { padding: 17px; }
+        }
+        @media (max-width: 520px) {
+          .kegiatan-grid { gap: 10px; }
+          .kegiatan-card-content { padding: 10px; }
+          .kegiatan-card h3 { font-size: 14px; }
+          .kegiatan-card-actions { flex-direction: column; }
+          .kegiatan-card-actions :global(.btn) { width: 100%; text-align: center; }
+          .kegiatan-submit { align-items: flex-start; flex-direction: column; }
+          .kegiatan-list-heading { align-items: flex-start; }
+        }
+      `}</style>
     </main>
   );
 }
