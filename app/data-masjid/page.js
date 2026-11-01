@@ -105,6 +105,27 @@ export default function DataMasjidPage() {
             </div>
           </header>
 
+          <section className="dm-directoryInfo" aria-labelledby="dm-info-title">
+            <h2 id="dm-info-title">Tentang Direktori Rumah Ibadah</h2>
+            <p>
+              Direktori ini menyajikan informasi masjid dan mushalla yang telah
+              dipublikasikan oleh pengelola KUA Kecamatan Panca Lautang. Pengunjung
+              dapat menelusuri nama, jenis rumah ibadah, desa, alamat, serta data
+              pendukung yang tersedia.
+            </p>
+            <ul>
+              <li><strong>Status publikasi</strong> menunjukkan bahwa data ditampilkan pada direktori website.</li>
+              <li><strong>Status SIMAS</strong> menunjukkan keterangan verifikasi yang tercatat pada data; label belum terverifikasi bukan berarti rumah ibadah tidak sah.</li>
+              <li><strong>Peta lokasi</strong> menampilkan penanda untuk data yang memiliki koordinat geografis valid.</li>
+            </ul>
+            <p>
+              Sebagian rincian dapat belum tersedia atau masih memerlukan pemutakhiran.
+              Untuk pembaruan data dan konfirmasi administrasi, silakan menghubungi
+              pengelola KUA. Direktori ini merupakan media informasi dan bukan pengganti
+              pencatatan atau verifikasi pada sistem resmi Kementerian Agama.
+            </p>
+          </section>
+
           <section className="dm-stats" aria-label="Statistik rumah ibadah">
             <button type="button"
               className={`dm-stat dm-statMasjid ${jenisFilter === 'masjid' ? 'is-active' : ''}`}
