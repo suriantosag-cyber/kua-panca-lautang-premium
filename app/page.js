@@ -420,7 +420,7 @@ const [selectedGallery, setSelectedGallery] = useState(null);
     <div className="sectionHead">
       <div>
         <h2>Kontak</h2>
-        <p>Informasi kontak resmi dapat dilengkapi setelah data layanan final.</p>
+        <p>Alamat kantor, kanal komunikasi, dan informasi website KUA Panca Lautang.</p>
       </div>
     </div>
 
@@ -444,19 +444,24 @@ href="https://www.google.com/maps/search/?api=1&query=KUA%20Panca%20Lautang%2C%2
       </div>
 
       <div className="contactCard">
-        <div className="icon">WEB</div>
-        <h3>Website</h3>
+        <div className="icon">WA</div>
+        <h3>Kontak WhatsApp</h3>
         <p style={{ color: "var(--muted)", lineHeight: 1.7 }}>
-          kua-pancalautang.my.id
+          Untuk pertanyaan informasi dan komunikasi dengan pengelola website:
         </p>
-        <a
-          className="btn primary"
-          href="https://kua-pancalautang.my.id"
-          target="_blank"
-          rel="noreferrer"
-        >
-          Buka domain
-        </a>
+        <p style={{ margin: "10px 0" }}>
+          <a className="btn primary" href="https://wa.me/6282132244214" target="_blank" rel="noreferrer">
+            WhatsApp 0821-3224-4214
+          </a>
+        </p>
+        <p style={{ margin: "10px 0" }}>
+          <a className="btn primary" href="https://wa.me/6281355495872" target="_blank" rel="noreferrer">
+            WhatsApp 0813-5549-5872
+          </a>
+        </p>
+        <small style={{ color: "var(--muted)", lineHeight: 1.6 }}>
+          Website: kua-pancalautang.my.id
+        </small>
       </div>
     </div>
 
