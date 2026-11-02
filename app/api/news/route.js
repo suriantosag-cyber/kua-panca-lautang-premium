@@ -60,6 +60,16 @@ export async function POST(request) {
       );
     }
 
+        const imageBlocks = Array.isArray(body.article_blocks)
+      ? body.article_blocks.filter((block) => block?.type === 'image' && block.url)
+      : [];
+    if (imageBlocks.some((block) => !block.alt_text?.trim() || block.alt_text.trim().length > 300)) {
+      return Response.json(
+        { ok: false, error: 'Setiap foto berita wajib memiliki Alt Text (maksimal 300 karakter).' },
+        { status: 400 }
+      );
+    }
+
     const supabase = getSupabaseAdmin();
 
     const { data, error } = await supabase
@@ -112,6 +122,16 @@ export async function PUT(request) {
     if (!body.title || !body.title.trim()) {
       return Response.json(
         { ok: false, error: 'Judul berita wajib diisi.' },
+        { status: 400 }
+      );
+    }
+
+        const imageBlocks = Array.isArray(body.article_blocks)
+      ? body.article_blocks.filter((block) => block?.type === 'image' && block.url)
+      : [];
+    if (imageBlocks.some((block) => !block.alt_text?.trim() || block.alt_text.trim().length > 300)) {
+      return Response.json(
+        { ok: false, error: 'Setiap foto berita wajib memiliki Alt Text (maksimal 300 karakter).' },
         { status: 400 }
       );
     }
