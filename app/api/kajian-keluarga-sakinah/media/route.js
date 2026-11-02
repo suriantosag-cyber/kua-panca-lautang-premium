@@ -109,7 +109,7 @@ export async function POST(request) {
       file_name: file?.name || null,
       file_type: fileType,
       published,
-    }).select("id,title,description,file,image_url,file_path,file_type,published,created_at").single();
+    }).select("id,title,description,image_url,file_path,file_type,published,created_at").single();
     if (error) {
       if (uploadedPath) await supabase.storage.from(BUCKET).remove([uploadedPath]);
       return jsonError(error.message, 500);
