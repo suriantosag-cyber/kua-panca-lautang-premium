@@ -225,7 +225,7 @@ setBeritaLainnya(j?.data || []);
               <div key={index} style={{ margin: '32px 0' }}>
                 <img
   src={block.url}
-  alt={block.alt_text || ""}
+  alt={block.alt_text?.trim() || `Foto berita: ${berita.title}`}
   onMouseEnter={(e) => {
     e.currentTarget.style.transform = 'scale(1.03)';
     e.currentTarget.style.boxShadow =
