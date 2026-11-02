@@ -63,9 +63,14 @@ export async function POST(request) {
         const imageBlocks = Array.isArray(body.article_blocks)
       ? body.article_blocks.filter((block) => block?.type === 'image' && block.url)
       : [];
-    if (imageBlocks.some((block) => !block.alt_text?.trim() || block.alt_text.trim().length > 300)) {
+    // Alt Text is required by the admin upload flow for new images.
+    // Keep legacy image blocks without Alt Text editable; reject only invalid supplied values.
+    if (imageBlocks.some((block) =>
+      block.alt_text != null &&
+      (typeof block.alt_text !== 'string' || block.alt_text.length > 300)
+    )) {
       return Response.json(
-        { ok: false, error: 'Setiap foto berita wajib memiliki Alt Text (maksimal 300 karakter).' },
+        { ok: false, error: 'Alt Text foto berita maksimal 300 karakter.' },
         { status: 400 }
       );
     }
@@ -129,9 +134,14 @@ export async function PUT(request) {
         const imageBlocks = Array.isArray(body.article_blocks)
       ? body.article_blocks.filter((block) => block?.type === 'image' && block.url)
       : [];
-    if (imageBlocks.some((block) => !block.alt_text?.trim() || block.alt_text.trim().length > 300)) {
+    // Alt Text is required by the admin upload flow for new images.
+    // Keep legacy image blocks without Alt Text editable; reject only invalid supplied values.
+    if (imageBlocks.some((block) =>
+      block.alt_text != null &&
+      (typeof block.alt_text !== 'string' || block.alt_text.length > 300)
+    )) {
       return Response.json(
-        { ok: false, error: 'Setiap foto berita wajib memiliki Alt Text (maksimal 300 karakter).' },
+        { ok: false, error: 'Alt Text foto berita maksimal 300 karakter.' },
         { status: 400 }
       );
     }
