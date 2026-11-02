@@ -225,7 +225,7 @@ setBeritaLainnya(j?.data || []);
               <div key={index} style={{ margin: '32px 0' }}>
                 <img
   src={block.url}
-  alt={`Foto berita ${index + 1}`}
+  alt={block.alt_text || ""}
   onMouseEnter={(e) => {
     e.currentTarget.style.transform = 'scale(1.03)';
     e.currentTarget.style.boxShadow =
@@ -354,7 +354,11 @@ return null;
               {foto && (
                 <img
                   src={foto}
-                  alt={item.title}
+                  alt={
+                    Array.isArray(item.article_blocks)
+                      ? item.article_blocks.find((block) => block.type === 'image' && block.url === foto)?.alt_text || item.title
+                      : item.title
+                  }
                   style={{
                     width: '100%',
                     height: 120,
