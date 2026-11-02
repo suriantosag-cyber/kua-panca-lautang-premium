@@ -44,7 +44,7 @@ export async function GET(request) {
     }
     const { data, error } = await getAdminClient()
       .from("content_items")
-      .select("id,title,description,content,type,file,image_url,file_path,file_name,file_type,published,created_at,updated_at")
+      .select("id,title,description,image_url,file_path,file_name,file_type,published,created_at,updated_at")
       .eq("type", TYPE)
       .not("file_type", "is", null)
       .order("created_at", { ascending: false });
@@ -55,8 +55,8 @@ export async function GET(request) {
       description: item.description || "",
       category: "Dokumentasi Kajian",
       file_type: item.file_type || "image",
-      file_url: item.image_url || item.file || "",
-      source_url: item.file_type === "youtube" ? (item.file || item.image_url || "") : "",
+      file_url: item.image_url || "",
+      source_url: item.file_type === "youtube" ? (item.image_url || "") : "",
       file_path: item.file_path || "",
       published: item.published !== false,
       created_at: item.created_at,
@@ -103,9 +103,8 @@ export async function POST(request) {
     }
     const supabase = getAdminClient();
     const { data, error } = await supabase.from("content_items").insert({
-      type: TYPE, title, description, content: description,
-      file: fileType === "youtube" ? fileUrl : null,
-      image_url: fileType === "youtube" ? null : fileUrl,
+      type: TYPE, title, description,
+      image_url: fileUrl,
       file_path: filePath || null,
       file_name: file?.name || null,
       file_type: fileType,
@@ -115,7 +114,7 @@ export async function POST(request) {
       if (uploadedPath) await supabase.storage.from(BUCKET).remove([uploadedPath]);
       return jsonError(error.message, 500);
     }
-    return Response.json({ ok: true, data: { ...data, file_url: data.image_url || data.file || "", source_url: data.file_type === "youtube" ? data.file : "" } });
+    return Response.json({ ok: true, data: { ...data, file_url: data.image_url || "", source_url: data.file_type === "youtube" ? data.image_url : "" } });
   } catch (error) {
     if (uploadedPath) {
       try { await getAdminClient().storage.from(BUCKET).remove([uploadedPath]); } catch {}
