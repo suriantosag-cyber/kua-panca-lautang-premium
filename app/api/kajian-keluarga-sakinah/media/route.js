@@ -1,7 +1,7 @@
 import { createClient } from "@supabase/supabase-js";
 import { verifyAdminRequest } from "../../../../lib/admin-auth";
 
-const TYPE = "kajian-media";
+const TYPE = "kajian-keluarga-sakinah";
 const BUCKET = "website-files";
 const FOLDER = "kajian-media";
 const MAX_IMAGE_SIZE = 8 * 1024 * 1024;
@@ -46,6 +46,7 @@ export async function GET(request) {
       .from("content_items")
       .select("id,title,description,content,type,file,image_url,file_path,file_name,file_type,published,created_at,updated_at")
       .eq("type", TYPE)
+      .not("file_type", "is", null)
       .order("created_at", { ascending: false });
     if (error) return jsonError(error.message, 500);
     const items = (data || []).filter((item) => isAdmin || item.published !== false).map((item) => ({
@@ -131,14 +132,14 @@ export async function DELETE(request) {
     if (!body.id) return jsonError("ID media tidak ditemukan.");
     const supabase = getAdminClient();
     const { data: item, error: readError } = await supabase.from("content_items")
-      .select("id,file_path,type").eq("id", body.id).eq("type", TYPE).single();
+      .select("id,file_path,type").eq("id", body.id).eq("type", TYPE).not("file_type", "is", null).single();
     if (readError || !item) return jsonError("Media kajian tidak ditemukan.", 404);
     if (item.file_path) {
       if (!item.file_path.startsWith(`${FOLDER}/`)) return jsonError("Lokasi file tidak valid.", 400);
       const { error: storageError } = await supabase.storage.from(BUCKET).remove([item.file_path]);
       if (storageError) return jsonError(storageError.message, 500);
     }
-    const { error } = await supabase.from("content_items").delete().eq("id", body.id).eq("type", TYPE);
+    const { error } = await supabase.from("content_items").delete().eq("id", body.id).eq("type", TYPE).not("file_type", "is", null);
     if (error) return jsonError(error.message, 500);
     return Response.json({ ok: true });
   } catch (error) {
