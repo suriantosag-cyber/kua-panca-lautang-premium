@@ -111,128 +111,83 @@ const [selectedGallery, setSelectedGallery] = useState(null);
   </div>
 
   
-<div className="list">
-  <div className="listItem">
-    <div className="icon">01</div>
-    <div>
-      <b>Pendaftaran Nikah dan Rujuk</b>
-      <span>
-        Panduan awal untuk calon pengantin dan masyarakat yang
-        membutuhkan informasi pencatatan pernikahan.
+<div className="serviceGrid">
+  <article className="serviceCard serviceCardFeatured">
+    <div className="serviceCardHeader">
+      <span className="serviceIcon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M8 3h6l4 4v14H6V3h2Z"/><path d="M14 3v5h5M9 13h6M9 17h6M9 9h1"/></svg>
       </span>
-
-      <div style={{ marginTop: 12, display: "flex", gap: 8, flexWrap: "wrap" }}>
-        <a
-          className="btn primary"
-          href="https://simkah4.kemenag.go.id/"
-          target="_blank"
-          rel="noreferrer"
-        >
-          Buka SIMKAH Resmi
-        </a>
-      </div>
-
-      <div
-        style={{
-          marginTop: 16,
-          padding: 16,
-          background: "#f0f8f4",
-          borderRadius: 14
-        }}
-      >
-        <b>Checklist Persiapan Dokumen</b>
-        <ul style={{ margin: "10px 0 0 18px", padding: 0, fontSize: 13, lineHeight: 1.8 }}>
-          <li>KTP dan Kartu Keluarga calon pengantin.</li>
-          <li>Surat pengantar atau dokumen persyaratan dari desa/kelurahan sesuai prosedur.</li>
-          <li>Akta kelahiran atau dokumen pendukung jika dipersyaratkan.</li>
-          <li>Pasfoto sesuai ketentuan yang berlaku.</li>
-          <li>Dokumen tambahan sesuai keadaan, misalnya akta cerai atau surat kematian pasangan terdahulu jika relevan.</li>
-          <li>Surat rekomendasi nikah jika diperlukan karena lokasi pencatatan berbeda wilayah.</li>
-        </ul>
-        <p style={{ margin: "12px 0 0", fontSize: 12, lineHeight: 1.7, color: "#38534a" }}>
-          Daftar ini merupakan panduan awal, bukan daftar final untuk semua kondisi.
-          Konfirmasikan persyaratan, dokumen rujuk, dan batas waktu pendaftaran
-          kepada petugas KUA sebelum mengurus berkas.
-        </p>
-      </div>
-
-      <div style={{ marginTop: 16 }}>
-        <b>Alur Singkat</b>
-        <ol style={{ margin: "8px 0 0 18px", padding: 0, fontSize: 13, lineHeight: 1.8 }}>
-          <li>Siapkan dokumen dan konfirmasikan persyaratan kepada petugas.</li>
-          <li>Ikuti petunjuk pendaftaran melalui SIMKAH atau KUA sesuai prosedur.</li>
-          <li>Lengkapi dokumen dan ikuti pemeriksaan berkas dari petugas.</li>
-          <li>Ikuti jadwal dan arahan layanan yang telah dikonfirmasi.</li>
-        </ol>
-      </div>
+      <div><p className="serviceKicker">LAYANAN ADMINISTRASI</p><h3>Pendaftaran Nikah dan Rujuk</h3></div>
     </div>
-  </div>
+    <p className="serviceDescription">Panduan awal bagi calon pengantin dan masyarakat untuk memahami proses pencatatan pernikahan dan rujuk.</p>
+    <a className="btn primary" href="https://simkah4.kemenag.go.id/" target="_blank" rel="noreferrer">Buka SIMKAH Resmi</a>
+    <div className="serviceInfoPanel">
+      <h4>Checklist Persiapan Dokumen</h4>
+      <ul>
+        <li>KTP dan Kartu Keluarga calon pengantin.</li>
+        <li>Surat pengantar atau dokumen persyaratan dari desa/kelurahan sesuai prosedur.</li>
+        <li>Akta kelahiran atau dokumen pendukung jika dipersyaratkan.</li>
+        <li>Pasfoto sesuai ketentuan yang berlaku.</li>
+        <li>Dokumen tambahan sesuai keadaan, misalnya akta cerai atau surat kematian pasangan terdahulu jika relevan.</li>
+        <li>Surat rekomendasi nikah jika diperlukan karena lokasi pencatatan berbeda wilayah.</li>
+      </ul>
+      <p>Daftar ini merupakan panduan awal, bukan daftar final untuk semua kondisi. Konfirmasikan persyaratan, dokumen rujuk, dan batas waktu pendaftaran kepada petugas KUA sebelum mengurus berkas.</p>
+    </div>
+    <div className="serviceSteps">
+      <h4>Alur Singkat</h4>
+      <ol>
+        <li>Siapkan dokumen dan konfirmasikan persyaratan kepada petugas.</li>
+        <li>Ikuti petunjuk pendaftaran melalui SIMKAH atau KUA sesuai prosedur.</li>
+        <li>Lengkapi dokumen dan ikuti pemeriksaan berkas dari petugas.</li>
+        <li>Ikuti jadwal dan arahan layanan yang telah dikonfirmasi.</li>
+      </ol>
+    </div>
+  </article>
 
-  <div className="listItem">
-    <div className="icon">02</div>
-    <div>
-      <b>Konsultasi dan Pembinaan Keagamaan</b>
-      <span>
-        Informasi konsultasi keagamaan, pembinaan masjid dan majelis taklim,
-        serta edukasi zakat, wakaf, dan kehidupan keluarga.
+  <article className="serviceCard">
+    <div className="serviceCardHeader">
+      <span className="serviceIcon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M12 21s7-3.5 7-9V5l-7-3-7 3v7c0 5.5 7 9 7 9Z"/><path d="M9 12h6M12 9v6"/></svg>
       </span>
-      <div style={{ marginTop: 10 }}>
-        <a className="btn primary" href="#kontak">
-          Lihat Informasi Kontak
-        </a>
-      </div>
+      <div><p className="serviceKicker">KONSULTASI</p><h3>Konsultasi dan Pembinaan Keagamaan</h3></div>
     </div>
-  </div>
+    <p className="serviceDescription">Informasi konsultasi keagamaan, pembinaan masjid dan majelis taklim, serta edukasi zakat, wakaf, dan kehidupan keluarga.</p>
+    <a className="btn primary serviceAction" href="#kontak">Lihat Informasi Kontak</a>
+  </article>
 
-  <div className="listItem">
-    <div className="icon">03</div>
-    <div>
-      <b>Bimbingan Perkawinan dan Keluarga Sakinah</b>
-      <span>
-        Pelajari persiapan calon pengantin, komunikasi pasangan,
-        tanggung jawab keluarga, dan pengelolaan rumah tangga.
+  <article className="serviceCard">
+    <div className="serviceCardHeader">
+      <span className="serviceIcon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><path d="M16 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="10" cy="7" r="4"/><path d="M20 8v6M17 11h6"/></svg>
       </span>
-      <div style={{ marginTop: 10 }}>
-        <a className="btn primary" href="/bimbingan-perkawinan">
-          Buka Panduan Bimbingan
-        </a>
-      </div>
+      <div><p className="serviceKicker">KELUARGA SAKINAH</p><h3>Bimbingan Perkawinan dan Keluarga Sakinah</h3></div>
     </div>
-  </div>
+    <p className="serviceDescription">Pelajari persiapan calon pengantin, komunikasi pasangan, tanggung jawab keluarga, dan pengelolaan rumah tangga.</p>
+    <a className="btn primary serviceAction" href="/bimbingan-perkawinan">Buka Panduan Bimbingan</a>
+  </article>
 
-  <div className="listItem">
-    <div className="icon">04</div>
-    <div>
-      <b>Bimbingan Remaja Usia Sekolah (BRUS)</b>
-      <span>
-        Ruang edukasi bagi remaja untuk memperkuat akhlak,
-        pergaulan sehat, tanggung jawab, dan kesiapan merencanakan masa depan.
+  <article className="serviceCard">
+    <div className="serviceCardHeader">
+      <span className="serviceIcon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="8" r="3.5"/><path d="M5 21a7 7 0 0 1 14 0M19 4l1.5 1.5L22 4"/></svg>
       </span>
-      <div style={{ marginTop: 10 }}>
-        <a className="btn primary" href="/brus">
-          Buka Materi BRUS
-        </a>
-      </div>
+      <div><p className="serviceKicker">EDUKASI REMAJA</p><h3>Bimbingan Remaja Usia Sekolah (BRUS)</h3></div>
     </div>
-  </div>
+    <p className="serviceDescription">Ruang edukasi bagi remaja untuk memperkuat akhlak, pergaulan sehat, tanggung jawab, dan kesiapan merencanakan masa depan.</p>
+    <a className="btn primary serviceAction" href="/brus">Buka Materi BRUS</a>
+  </article>
 
-  <div className="listItem">
-    <div className="icon">05</div>
-    <div>
-      <b>Profil dan Layanan Penyuluh Agama</b>
-      <span>
-        Informasi mengenai peran penyuluh, kegiatan pembinaan,
-        dan wilayah layanan akan ditampilkan setelah data petugas
-        diverifikasi.
+  <article className="serviceCard">
+    <div className="serviceCardHeader">
+      <span className="serviceIcon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="8" r="3"/><path d="M5 21v-1a7 7 0 0 1 14 0v1M19 8h3M20.5 6.5v3"/></svg>
       </span>
-      <div style={{ marginTop: 10 }}>
-        <a className="btn primary" href="/profil">
-          Lihat Profil KUA
-        </a>
-      </div>
+      <div><p className="serviceKicker">PENYULUHAN</p><h3>Profil dan Layanan Penyuluh Agama</h3></div>
     </div>
-  </div>
-</div>
+    <p className="serviceDescription">Informasi mengenai peran penyuluh, kegiatan pembinaan, dan wilayah layanan akan ditampilkan setelah data petugas diverifikasi.</p>
+    <a className="btn primary serviceAction" href="/profil">Lihat Profil KUA</a>
+  </article>
+</div></div>
       </div>
     </div>
   </section>
