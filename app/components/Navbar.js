@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState } from 'react';
@@ -21,6 +20,7 @@ const menus = [
       ['Jadwal Akad Nikah', '/jadwal-nikah'],
       ['Bimbingan Perkawinan', '/bimbingan-perkawinan'],
       ['Kemasjidan, Zakat dan Wakaf', '/profil'],
+      ['Kalkulator Zakat', '/layanan-zakat'],
       ['Layanan Halal (SEHATI)', '/layanan-halal'],
       ['Konsultasi Keagamaan', '/#kontak'],
     ],
