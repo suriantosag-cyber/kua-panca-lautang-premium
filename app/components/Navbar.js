@@ -1,4 +1,3 @@
-
 'use client';
 
 import { useState } from 'react';
@@ -8,35 +7,51 @@ const menus = [
   {
     label: 'Profil',
     items: [
-      ['Profil KUA', '/profil'],
-      ['Visi dan Misi', '/profil'],
-      ['Wilayah Kerja', '/profil'],
-      ['Struktur Organisasi dan Staf', '/profil'],
+      ['Profil KUA', '/profil#profil-kua'],
+      ['Visi dan Misi', '/profil#visi'],
+      ['Wilayah Kerja', '/profil#wilayah-kerja'],
+      ['Struktur Organisasi dan Staf', '/profil#struktur-organisasi'],
     ],
   },
   {
     label: 'Ruang Layanan',
     items: [
-      ['Layanan Perkawinan', '/profil'],
+      ['Layanan Perkawinan', '/profil#layanan-perkawinan'],
       ['Jadwal Akad Nikah', '/jadwal-nikah'],
       ['Bimbingan Perkawinan', '/bimbingan-perkawinan'],
-      ['Kemasjidan, Zakat dan Wakaf', '/profil'],
+      ['Bimbingan Remaja Usia Sekolah (BRUS)', '/brus'],
+      ['Kemasjidan, Zakat dan Wakaf', '/profil#layanan-kemasjidan'],
+      ['Kalkulator Zakat', '/layanan-zakat'],
+      ['Layanan Kemasjidan', '/layanan/kemasjidan'],
       ['Layanan Halal (SEHATI)', '/layanan-halal'],
-      ['Konsultasi Keagamaan', '/#kontak'],
+      ['Konsultasi Keagamaan', '/profil#layanan-sosial'],
+      ['Ajukan Layanan', '/ajukan-layanan'],
+      ['Cek Status Berkas', '/cek-status-berkas'],
     ],
   },
   {
     label: 'Data & Statistik',
     items: [
       ['Data Masjid dan Mushalla', '/data-masjid'],
+      ['Data Wakaf', '/data-wakaf'],
       ['Statistik Layanan', '/'],
       ['Jadwal Akad Nikah', '/jadwal-nikah'],
     ],
   },
   {
+    label: 'Pusat Informasi',
+    items: [
+      ['FAQ - Pertanyaan Umum', '/faq'],
+      ['Tarif Layanan', '/tarif-layanan'],
+      ['Kajian Keluarga Sakinah', '/kajian-keluarga-sakinah'],
+      ['Informasi Haji dan Umrah', '/info-haji-umrah'],
+    ],
+  },
+  {
     label: 'Pusat Unduhan',
     items: [
-      ['Persyaratan Perkawinan', '/profil'],
+      ['Persyaratan Perkawinan', '/profil#persyaratan-perkawinan'],
+      ['Formulir dan Panduan', '/unduhan'],
       ['Materi Dakwah', '/materi-dakwah'],
       ['Khutbah Jumat', '/khutbah-jumat'],
     ],
@@ -79,7 +94,7 @@ export default function Navbar() {
           aria-controls="kua-navigation"
           onClick={() => setMobileOpen((value) => !value)}
         >
-          <span aria-hidden="true">{mobileOpen ? '✕' : '☰'}</span>
+          <span aria-hidden="true">{mobileOpen ? '\u2715' : '\u2630'}</span>
           <span>{mobileOpen ? 'Tutup' : 'Menu'}</span>
         </button>
 
@@ -103,7 +118,7 @@ export default function Navbar() {
                 }
               >
                 {menu.label}
-                <span aria-hidden="true">⌄</span>
+                <span aria-hidden="true">{'\u2304'}</span>
               </button>
 
               <div

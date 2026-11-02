@@ -496,6 +496,8 @@ const result = await response.json();
         <p style={{ color: "#667085" }}>KUA Panca Lautang - Kelola Berita</p>
         <a href="/admin/laporan" style={{ display: "inline-block", margin: "12px 10px 20px 0", padding: "10px 16px", background: "#146c43", color: "#fff", borderRadius: 8, textDecoration: "none", fontWeight: 600 }}>Rekapitulasi Kinerja Tahunan</a>
         <a href="/admin/data-masjid" style={{ display: "inline-block", margin: "12px 0 20px", padding: "10px 16px", background: "#b8860b", color: "#fff", borderRadius: 8, textDecoration: "none", fontWeight: 600 }}>Kelola Data Masjid &amp; Mushalla</a>
+        <a href="/admin/cek-status-berkas" style={{ display: "inline-block", margin: "12px 10px 20px 0", padding: "10px 16px", background: "#1769aa", color: "#fff", borderRadius: 8, textDecoration: "none", fontWeight: 600 }}>Kelola Cek Status Berkas</a>
+        <a href="/admin/kajian-keluarga-sakinah" style={{ display: "inline-block", margin: "12px 10px 20px 0", padding: "10px 16px", background: "#6b4c9a", color: "#fff", borderRadius: 8, textDecoration: "none", fontWeight: 600 }}>Kelola Kajian Keluarga Sakinah</a>
         <section style={{ background: "#fff", padding: 24, borderRadius: 16, boxShadow: "0 5px 20px rgba(0,0,0,.06)", marginTop: 24 }}>
           <h2>Kelola Pengumuman</h2>
           <p style={{ color: "#667085" }}>Ubah pengumuman yang tampil di halaman utama website KUA.</p>

@@ -1,8 +1,14 @@
-﻿'use client';
+'use client';
 
 import { useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
 import { supabaseBrowser } from '../../lib/supabase-browser';
+
+const PetaMasjid = dynamic(() => import('../components/PetaMasjid'), {
+  ssr: false,
+  loading: () => <p>Memuat peta lokasi...</p>,
+});
 
 export default function DataMasjidPage() {
   const [dataMasjid, setDataMasjid] = useState([]);
@@ -17,7 +23,7 @@ export default function DataMasjidPage() {
     async function ambilData() {
       const { data, error } = await supabaseBrowser
         .from('data_masjid')
-        .select('id, nama, jenis, desa, alamat, keterangan, nomor_sertifikat, luas_tanah')
+        .select('id, nama, jenis, desa, alamat, keterangan, nomor_sertifikat, luas_tanah, latitude, longitude')
         .eq('status', 'tampil')
         .order('desa')
         .order('nama');
@@ -183,6 +189,11 @@ export default function DataMasjidPage() {
               </button>
             </p>
           )}
+
+          <section style={{ margin: '28px 0' }}>
+            <h2>Peta Lokasi Masjid dan Mushalla</h2>
+            <PetaMasjid data={dataTersaring} memuat={memuat} />
+          </section>
 
           {memuat ? (
             <p role="status">Memuat data dari database...</p>
