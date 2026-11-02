@@ -1,4 +1,5 @@
 import KajianMediaPublik from "./KajianMediaPublik";
+import MateriKajianPublik from "./MateriKajianPublik";
 import styles from "./page.module.css";
 
 export const metadata = {
@@ -110,11 +111,20 @@ export default function KajianKeluargaSakinahPage() {
   return (
     <main className={styles.page}>
       <section className={styles.hero}>
-        <p className={styles.eyebrow}>PUSAT EDUKASI KELUARGA</p>
+        <p className={styles.eyebrow}>SAHABAT KELUARGA KUA PANCA LAUTANG</p>
         <h1>Kajian Keluarga Sakinah</h1>
+        <h2>Cinta dan Rasa Nyaman: Merawat Hati, Menguatkan Keluarga</h2>
         <p className={styles.lead}>
-          Ruang belajar bersama untuk menumbuhkan keluarga yang tenteram,
-          penuh kasih sayang, saling menghormati, dan bertanggung jawab.
+          Selamat datang di ruang Sahabat KUA Panca Lautang. Di sini, setiap
+          keluarga dan calon pasangan dapat bertanya, berbagi cerita, belajar,
+          serta menemukan inspirasi untuk membangun rumah tangga yang harmonis.
+          Mari merawat cinta dengan komunikasi yang baik, saling memahami,
+          menghargai kekurangan, dan menjalankan tanggung jawab bersama.
+          KUA hadir bukan hanya sebagai tempat mengurus pernikahan, tetapi juga
+          sebagai sahabat dalam perjalanan kehidupan keluarga.
+        </p>
+        <p className={styles.lead}>
+          <strong>Cinta Menyatukan, Rasa Nyaman Menguatkan, Keluarga Sakinah Membahagiakan.</strong>
         </p>
         <div className={styles.heroActions}>
           <a className={styles.primaryLink} href="#artikel-kajian">
@@ -159,6 +169,8 @@ export default function KajianKeluargaSakinahPage() {
         </div>
       </section>
 
+      <MateriKajianPublik />
+
       <section className={`${styles.section} ${styles.mediaSection}`} id="podcast-video">
         <div className={styles.sectionHeading}>
           <p className={styles.eyebrow}>BELAJAR DALAM BERBAGAI FORMAT</p>
@@ -173,7 +185,7 @@ export default function KajianKeluargaSakinahPage() {
           {media.map((item) => (
             <article className={styles.mediaCard} key={item.videoId}>
               <span className={styles.mediaIcon} aria-hidden="true">
-                {item.jenis === "Podcast Penyuluh" ? "♪" : "▶"}
+                {item.jenis === "Podcast Penyuluh" ? "🎙" : "▶"}
               </span>
               <p className={styles.category}>{item.jenis}</p>
               <h3>{item.judul}</h3>

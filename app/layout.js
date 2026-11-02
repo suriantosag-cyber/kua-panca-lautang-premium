@@ -6,12 +6,12 @@ export const metadata = {
   metadataBase: new URL('https://kua-pancalautang.my.id'),
 
   title: {
-    default: 'KUA Panca Lautang | Kantor Urusan Agama Kecamatan Panca Lautang',
+    default: 'Portal Resmi KUA Kecamatan Panca Lautang - Kab. Sidrap',
     template: '%s | KUA Panca Lautang',
   },
 
   description:
-    'Website resmi Kantor Urusan Agama Kecamatan Panca Lautang, Kabupaten Sidenreng Rappang, Sulawesi Selatan. Informasi layanan administrasi KUA, jadwal nikah, bimbingan perkawinan, kegiatan, materi dakwah, dan informasi keagamaan.',
+    'Layanan pendaftaran nikah, bimbingan perkawinan, konsultasi keagamaan, zakat, wakaf, dan penyuluhan agama Islam di Kecamatan Panca Lautang, Kabupaten Sidenreng Rappang (Sidrap), Sulawesi Selatan.',
 
   keywords: [
     'KUA Panca Lautang',
@@ -25,9 +25,9 @@ export const metadata = {
   },
 
   openGraph: {
-    title: 'KUA Panca Lautang | Kantor Urusan Agama Kecamatan Panca Lautang',
+    title: 'Portal Resmi KUA Kecamatan Panca Lautang - Kab. Sidrap',
     description:
-      'Website resmi KUA Panca Lautang untuk informasi layanan, jadwal nikah, bimbingan perkawinan, kegiatan, dan informasi keagamaan.',
+      'Layanan pendaftaran nikah, bimbingan perkawinan, konsultasi keagamaan, zakat, wakaf, dan penyuluhan agama Islam di Panca Lautang, Sidenreng Rappang.',
     url: 'https://kua-pancalautang.my.id/',
     siteName: 'KUA Panca Lautang',
     locale: 'id_ID',
@@ -46,7 +46,7 @@ export const metadata = {
     card: 'summary_large_image',
     title: 'KUA Panca Lautang | Kantor Urusan Agama Kecamatan Panca Lautang',
     description:
-      'Website resmi KUA Panca Lautang: layanan, jadwal nikah, kegiatan, dan informasi masyarakat.',
+      'Layanan pendaftaran nikah, bimbingan perkawinan, konsultasi keagamaan, zakat, wakaf, dan penyuluhan agama Islam di Panca Lautang, Sidenreng Rappang.',
     images: ['/kantor-kua.jpeg'],
   },
 };

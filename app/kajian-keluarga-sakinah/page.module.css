@@ -1,4 +1,4 @@
-﻿.page {
+.page {
   --green: #104b38;
   --green-dark: #083526;
   --green-light: #e9f4ec;
@@ -538,5 +538,70 @@
   .primaryLink:hover,
   .secondaryLink:hover {
     transform: none;
+  }
+}
+
+.shareArea {
+  margin-top: 22px;
+  padding-top: 16px;
+  border-top: 1px solid #edf0e9;
+}
+.shareLabel {
+  margin: 0 0 10px;
+  color: #52665a;
+  font-size: 12px;
+  font-weight: 850;
+}
+.shareButtons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.shareButton,
+.shareWhatsApp {
+  display: inline-flex;
+  min-height: 36px;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 11px;
+  border: 1px solid #dce8df;
+  border-radius: 9px;
+  color: #17563b;
+  background: #f7faf6;
+  cursor: pointer;
+  font: inherit;
+  font-size: 11px;
+  font-weight: 800;
+  text-decoration: none;
+  transition: background .18s ease, transform .18s ease;
+}
+.shareWhatsApp {
+  border-color: #176b43;
+  color: #fff;
+  background: #176b43;
+}
+.shareButton:hover,
+.shareWhatsApp:hover {
+  transform: translateY(-1px);
+  background: #eaf3eb;
+}
+.shareWhatsApp:hover {
+  background: #104b32;
+}
+.shareHint {
+  margin: 9px 0 0;
+  color: #7a887e;
+  font-size: 10px;
+  line-height: 1.6;
+}
+@media (max-width: 650px) {
+  .shareButtons {
+    gap: 7px;
+  }
+  .shareButton,
+  .shareWhatsApp {
+    min-height: 38px;
+    padding: 8px 10px;
+    font-size: 11px;
   }
 }

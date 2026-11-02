@@ -1,4 +1,3 @@
-
 import { createClient } from "@supabase/supabase-js";
 import { NextResponse } from "next/server";
 import { verifyAdminRequest } from "../../../lib/admin-auth";
@@ -7,6 +6,7 @@ export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
 
 const TYPE = "kajian-keluarga-sakinah";
+const BUCKET = "website-files";
 
 function getSupabaseAdmin() {
   const url =
@@ -30,6 +30,17 @@ function responseError(message, status = 400) {
   return NextResponse.json(
     { ok: false, error: message },
     { status }
+  );
+}
+
+function cleanText(value, maxLength = 500) {
+  if (typeof value !== "string") return "";
+  return value.trim().slice(0, maxLength);
+}
+
+function validUUID(value) {
+  return /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(
+    value
   );
 }
 
@@ -60,12 +71,42 @@ function validYouTubeUrl(value) {
   }
 }
 
-function cleanText(value, maxLength = 500) {
-  if (typeof value !== "string") return "";
-  return value.trim().slice(0, maxLength);
+function validateArticlePayload(body) {
+  const title = cleanText(body.title, 200);
+  const content =
+    typeof body.content === "string" ? body.content.trim() : "";
+  const category =
+    cleanText(body.category, 100) || "Keluarga Sakinah";
+  const excerpt = cleanText(body.excerpt, 5000);
+  const published = body.published === true;
+
+  if (!title) {
+    return { error: "Judul materi wajib diisi." };
+  }
+
+  if (!content) {
+    return { error: "Isi materi wajib diisi." };
+  }
+
+  if (content.length > 50000) {
+    return { error: "Isi materi terlalu panjang (maksimal 50.000 karakter)." };
+  }
+
+  return {
+    payload: {
+      type: TYPE,
+      title,
+      category,
+      excerpt,
+      content,
+      published,
+      status: published ? "published" : "draft",
+      updated_at: new Date().toISOString(),
+    },
+  };
 }
 
-function validatePayload(body) {
+function validateMediaPayload(body) {
   const title = cleanText(body.title, 200);
   const description = cleanText(body.description, 5000);
   const category = cleanText(body.category, 100);
@@ -151,23 +192,37 @@ function validatePayload(body) {
   return { payload };
 }
 
+function isMediaPayload(body) {
+  return Object.prototype.hasOwnProperty.call(body, "file_type");
+}
+
+async function requireAdmin(request) {
+  const auth = await verifyAdminRequest(request);
+
+  if (!auth.ok) {
+    return {
+      ok: false,
+      response: responseError(auth.error, auth.status),
+    };
+  }
+
+  return { ok: true };
+}
+
 export async function GET(request) {
   try {
-    const supabase = getSupabaseAdmin();
+    const url = new URL(request.url);
     const authorization = request.headers.get("authorization") || "";
-    const wantsAdmin = authorization.startsWith("Bearer ");
-
-    let isAdmin = false;
+    const wantsAdmin =
+      url.searchParams.get("admin") === "1" ||
+      authorization.startsWith("Bearer ");
 
     if (wantsAdmin) {
-      const auth = await verifyAdminRequest(request);
-
-      if (!auth.ok) {
-        return responseError(auth.error, auth.status);
-      }
-
-      isAdmin = true;
+      const auth = await requireAdmin(request);
+      if (!auth.ok) return auth.response;
     }
+
+    const supabase = getSupabaseAdmin();
 
     let query = supabase
       .from("content_items")
@@ -175,40 +230,48 @@ export async function GET(request) {
       .eq("type", TYPE)
       .order("created_at", { ascending: false });
 
-    if (!isAdmin) {
+    if (!wantsAdmin) {
       query = query.eq("published", true);
     }
 
     const { data, error } = await query;
 
     if (error) {
-      console.error("Kajian media GET:", error.message);
-      return responseError("Gagal mengambil data media.", 500);
+      console.error("Kajian GET:", error.message);
+      return responseError("Gagal mengambil data kajian.", 500);
     }
 
-    return NextResponse.json({ ok: true, data: data || [] });
+    return NextResponse.json({
+      ok: true,
+      data: data || [],
+    });
   } catch (error) {
-    console.error("Kajian media GET:", error.message);
+    console.error("Kajian GET:", error.message);
     return responseError("Terjadi kesalahan pada server.", 500);
   }
 }
 
 export async function POST(request) {
-  const auth = await verifyAdminRequest(request);
-
-  if (!auth.ok) {
-    return responseError(auth.error, auth.status);
-  }
+  const auth = await requireAdmin(request);
+  if (!auth.ok) return auth.response;
 
   try {
     const body = await request.json();
-    const validation = validatePayload(body);
+
+    if (!body || typeof body !== "object" || Array.isArray(body)) {
+      return responseError("Format data tidak valid.");
+    }
+
+    const validation = isMediaPayload(body)
+      ? validateMediaPayload(body)
+      : validateArticlePayload(body);
 
     if (validation.error) {
       return responseError(validation.error);
     }
 
     const supabase = getSupabaseAdmin();
+
     const { data, error } = await supabase
       .from("content_items")
       .insert(validation.payload)
@@ -216,8 +279,8 @@ export async function POST(request) {
       .single();
 
     if (error) {
-      console.error("Kajian media POST:", error.message);
-      return responseError("Gagal menyimpan media.", 500);
+      console.error("Kajian POST:", error.message);
+      return responseError("Gagal menyimpan data kajian.", 500);
     }
 
     return NextResponse.json(
@@ -225,29 +288,31 @@ export async function POST(request) {
       { status: 201 }
     );
   } catch (error) {
-    console.error("Kajian media POST:", error.message);
+    console.error("Kajian POST:", error.message);
     return responseError("Terjadi kesalahan pada server.", 500);
   }
 }
 
 export async function PUT(request) {
-  const auth = await verifyAdminRequest(request);
-
-  if (!auth.ok) {
-    return responseError(auth.error, auth.status);
-  }
+  const auth = await requireAdmin(request);
+  if (!auth.ok) return auth.response;
 
   try {
     const body = await request.json();
-    const id = cleanText(body.id, 50);
 
-    if (
-      !/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id)
-    ) {
-      return responseError("ID media tidak valid.");
+    if (!body || typeof body !== "object" || Array.isArray(body)) {
+      return responseError("Format data tidak valid.");
     }
 
-    const validation = validatePayload(body);
+    const id = cleanText(body.id, 50);
+
+    if (!validUUID(id)) {
+      return responseError("ID data kajian tidak valid.");
+    }
+
+    const validation = isMediaPayload(body)
+      ? validateMediaPayload(body)
+      : validateArticlePayload(body);
 
     if (validation.error) {
       return responseError(validation.error);
@@ -264,36 +329,34 @@ export async function PUT(request) {
       .maybeSingle();
 
     if (error) {
-      console.error("Kajian media PUT:", error.message);
-      return responseError("Gagal memperbarui media.", 500);
+      console.error("Kajian PUT:", error.message);
+      return responseError("Gagal memperbarui data kajian.", 500);
     }
 
     if (!data) {
-      return responseError("Media tidak ditemukan.", 404);
+      return responseError("Data kajian tidak ditemukan.", 404);
     }
 
-    return NextResponse.json({ ok: true, data });
+    return NextResponse.json({
+      ok: true,
+      data,
+    });
   } catch (error) {
-    console.error("Kajian media PUT:", error.message);
+    console.error("Kajian PUT:", error.message);
     return responseError("Terjadi kesalahan pada server.", 500);
   }
 }
 
 export async function DELETE(request) {
-  const auth = await verifyAdminRequest(request);
-
-  if (!auth.ok) {
-    return responseError(auth.error, auth.status);
-  }
+  const auth = await requireAdmin(request);
+  if (!auth.ok) return auth.response;
 
   try {
     const body = await request.json();
-    const id = cleanText(body.id, 50);
+    const id = cleanText(body?.id, 50);
 
-    if (
-      !/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id)
-    ) {
-      return responseError("ID media tidak valid.");
+    if (!validUUID(id)) {
+      return responseError("ID data kajian tidak valid.");
     }
 
     const supabase = getSupabaseAdmin();
@@ -306,12 +369,12 @@ export async function DELETE(request) {
       .maybeSingle();
 
     if (readError) {
-      console.error("Kajian media DELETE read:", readError.message);
-      return responseError("Gagal memeriksa media.", 500);
+      console.error("Kajian DELETE read:", readError.message);
+      return responseError("Gagal memeriksa data kajian.", 500);
     }
 
     if (!item) {
-      return responseError("Media tidak ditemukan.", 404);
+      return responseError("Data kajian tidak ditemukan.", 404);
     }
 
     const { error: deleteError } = await supabase
@@ -321,8 +384,8 @@ export async function DELETE(request) {
       .eq("type", TYPE);
 
     if (deleteError) {
-      console.error("Kajian media DELETE:", deleteError.message);
-      return responseError("Gagal menghapus data media.", 500);
+      console.error("Kajian DELETE:", deleteError.message);
+      return responseError("Gagal menghapus data kajian.", 500);
     }
 
     if (
@@ -330,12 +393,12 @@ export async function DELETE(request) {
       item.file_path.startsWith(`${TYPE}/`)
     ) {
       const { error: storageError } = await supabase.storage
-        .from("website-files")
+        .from(BUCKET)
         .remove([item.file_path]);
 
       if (storageError) {
         console.error(
-          "Kajian media storage cleanup:",
+          "Kajian storage cleanup:",
           storageError.message
         );
       }
@@ -343,7 +406,7 @@ export async function DELETE(request) {
 
     return NextResponse.json({ ok: true });
   } catch (error) {
-    console.error("Kajian media DELETE:", error.message);
+    console.error("Kajian DELETE:", error.message);
     return responseError("Terjadi kesalahan pada server.", 500);
   }
 }
