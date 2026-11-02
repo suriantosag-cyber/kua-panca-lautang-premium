@@ -367,7 +367,7 @@ const [selectedGallery, setSelectedGallery] = useState(null);
 >
   <img
     src={item.url}
-    alt={item.name || 'Dokumentasi kegiatan KUA'}
+    alt={item.alt_text || 'Dokumentasi kegiatan KUA'}
     style={{
       width: '100%',
       height: 260,
@@ -548,7 +548,7 @@ src="https://maps.google.com/maps?q=KUA%20Panca%20Lautang%2C%20Panca%20Lautang%2
 
       <img
         src={selectedGallery.url}
-        alt={selectedGallery.name || 'Foto Galeri'}
+        alt={selectedGallery.alt_text || 'Foto Galeri'}
         style={{
           width: '100%',
           maxHeight: '60vh',
