@@ -27,6 +27,7 @@ export async function GET(request) {
       .from("content_items")
       .select("id,title,excerpt,content,category,published,status,created_at,updated_at")
       .eq("type", TYPE)
+      .is("file_type", null)
       .order("created_at", { ascending: false });
 
     if (!isAdmin) query = query.eq("published", true);
@@ -94,6 +95,7 @@ export async function PUT(request) {
       })
       .eq("id", body.id)
       .eq("type", TYPE)
+      .is("file_type", null)
       .select("id,title,excerpt,content,category,published,status,created_at,updated_at")
       .single();
 
@@ -116,7 +118,8 @@ export async function DELETE(request) {
       .from("content_items")
       .delete()
       .eq("id", body.id)
-      .eq("type", TYPE);
+      .eq("type", TYPE)
+      .is("file_type", null);
 
     if (error) return jsonError(error.message, 500);
     return Response.json({ ok: true });
