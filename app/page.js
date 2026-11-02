@@ -187,7 +187,7 @@ const [selectedGallery, setSelectedGallery] = useState(null);
     <p className="serviceDescription">Informasi mengenai peran penyuluh, kegiatan pembinaan, dan wilayah layanan akan ditampilkan setelah data petugas diverifikasi.</p>
     <a className="btn primary serviceAction" href="/profil">Lihat Profil KUA</a>
   </article>
-</div></div>
+</div>
       </div>
     </div>
   </section>
