@@ -2021,3 +2021,62 @@
     height: 23px;
   }
 }
+
+/* Collapsible document checklist on the homepage */
+.serviceChecklist {
+  margin-top: 18px;
+  border: 1px solid #dcebe2;
+  border-radius: 14px;
+  background: #f8fbf9;
+  overflow: hidden;
+}
+.serviceChecklist summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  padding: 15px 17px;
+  color: var(--brand, #145c43);
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.5;
+  cursor: pointer;
+  list-style: none;
+}
+.serviceChecklist summary::-webkit-details-marker {
+  display: none;
+}
+.serviceChecklist summary::after {
+  content: "+";
+  flex: 0 0 auto;
+  display: grid;
+  place-items: center;
+  width: 25px;
+  height: 25px;
+  border: 1px solid #c8ded1;
+  border-radius: 50%;
+  font-size: 19px;
+  font-weight: 400;
+  line-height: 1;
+}
+.serviceChecklist[open] summary::after {
+  content: "−";
+}
+.serviceChecklist summary:focus-visible {
+  outline: 3px solid rgba(20, 92, 67, .25);
+  outline-offset: -3px;
+}
+.serviceChecklist .serviceInfoPanel {
+  margin: 0;
+  padding: 16px 18px 18px;
+  border: 0;
+  border-top: 1px solid #e1eee6;
+  border-radius: 0;
+}
+@media (max-width: 760px) {
+  .serviceChecklist summary {
+    padding: 14px;
+    font-size: 13px;
+  }
+}
+
