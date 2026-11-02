@@ -1883,3 +1883,141 @@
   .privacy-actions { flex-direction: column; }
   .privacy-actions a { justify-content: center; }
 }
+
+
+/* Ruang Layanan: clean institutional card layout */
+.serviceGrid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 20px;
+  margin-top: 22px;
+  align-items: stretch;
+}
+.serviceCard {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  padding: 25px;
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: var(--card);
+  box-shadow: 0 8px 24px rgba(18, 63, 49, .055);
+  transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease;
+}
+.serviceCard:hover {
+  border-color: rgba(13, 107, 80, .3);
+  box-shadow: 0 14px 32px rgba(18, 63, 49, .09);
+  transform: translateY(-2px);
+}
+.serviceCardFeatured {
+  grid-column: 1 / -1;
+}
+.serviceCardHeader {
+  display: flex;
+  align-items: flex-start;
+  gap: 15px;
+  margin-bottom: 12px;
+}
+.serviceIcon {
+  display: grid;
+  place-items: center;
+  flex: 0 0 48px;
+  width: 48px;
+  height: 48px;
+  color: var(--brand);
+  background: #edf6f1;
+  border: 1px solid #dcebe2;
+  border-radius: 14px;
+}
+.serviceIcon svg {
+  display: block;
+  width: 25px;
+  height: 25px;
+}
+.serviceKicker {
+  margin: 1px 0 5px;
+  color: var(--brand);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .11em;
+}
+.serviceCard h3 {
+  margin: 0;
+  color: var(--ink);
+  font-size: 18px;
+  line-height: 1.4;
+}
+.serviceDescription {
+  margin: 0 0 18px;
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.8;
+}
+.serviceCard .btn {
+  align-self: flex-start;
+  margin-top: auto;
+}
+.serviceCardFeatured .btn {
+  margin-top: 0;
+}
+.serviceInfoPanel {
+  margin-top: 20px;
+  padding: 20px;
+  border: 1px solid #e1eee6;
+  border-radius: 15px;
+  background: #f5faf7;
+}
+.serviceInfoPanel h4,
+.serviceSteps h4 {
+  margin: 0 0 10px;
+  color: var(--ink);
+  font-size: 14px;
+}
+.serviceInfoPanel ul,
+.serviceSteps ol {
+  margin: 0;
+  padding-left: 20px;
+  color: #425b50;
+  font-size: 13px;
+  line-height: 1.85;
+}
+.serviceInfoPanel p {
+  margin: 12px 0 0;
+  color: #526b60;
+  font-size: 12px;
+  line-height: 1.8;
+}
+.serviceSteps {
+  margin-top: 19px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+}
+.serviceSteps ol {
+  color: var(--muted);
+}
+@media (max-width: 760px) {
+  .serviceGrid {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+  .serviceCardFeatured {
+    grid-column: auto;
+  }
+  .serviceCard {
+    padding: 20px;
+    border-radius: 17px;
+  }
+  .serviceCardHeader {
+    gap: 12px;
+  }
+  .serviceIcon {
+    flex-basis: 43px;
+    width: 43px;
+    height: 43px;
+    border-radius: 12px;
+  }
+  .serviceIcon svg {
+    width: 23px;
+    height: 23px;
+  }
+}
