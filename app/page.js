@@ -121,18 +121,21 @@ const [selectedGallery, setSelectedGallery] = useState(null);
     </div>
     <p className="serviceDescription">Panduan awal bagi calon pengantin dan masyarakat untuk memahami proses pencatatan pernikahan dan rujuk.</p>
     <a className="btn primary" href="https://simkah4.kemenag.go.id/" target="_blank" rel="noreferrer">Buka SIMKAH Resmi</a>
-    <div className="serviceInfoPanel">
-      <h4>Checklist Persiapan Dokumen</h4>
-      <ul>
-        <li>KTP dan Kartu Keluarga calon pengantin.</li>
-        <li>Surat pengantar atau dokumen persyaratan dari desa/kelurahan sesuai prosedur.</li>
-        <li>Akta kelahiran atau dokumen pendukung jika dipersyaratkan.</li>
-        <li>Pasfoto sesuai ketentuan yang berlaku.</li>
-        <li>Dokumen tambahan sesuai keadaan, misalnya akta cerai atau surat kematian pasangan terdahulu jika relevan.</li>
-        <li>Surat rekomendasi nikah jika diperlukan karena lokasi pencatatan berbeda wilayah.</li>
-      </ul>
-      <p>Daftar ini merupakan panduan awal, bukan daftar final untuk semua kondisi. Konfirmasikan persyaratan, dokumen rujuk, dan batas waktu pendaftaran kepada petugas KUA sebelum mengurus berkas.</p>
-    </div>
+    <details className="serviceChecklist">
+      <summary>Lihat Detail Persyaratan Dokumen</summary>
+      <div className="serviceInfoPanel">
+        <h4>Checklist Persiapan Dokumen</h4>
+        <ul>
+          <li>KTP dan Kartu Keluarga calon pengantin.</li>
+          <li>Surat pengantar atau dokumen persyaratan dari desa/kelurahan sesuai prosedur.</li>
+          <li>Akta kelahiran atau dokumen pendukung jika dipersyaratkan.</li>
+          <li>Pasfoto sesuai ketentuan yang berlaku.</li>
+          <li>Dokumen tambahan sesuai keadaan, misalnya akta cerai atau surat kematian pasangan terdahulu jika relevan.</li>
+          <li>Surat rekomendasi nikah jika diperlukan karena lokasi pencatatan berbeda wilayah.</li>
+        </ul>
+        <p>Daftar ini merupakan panduan awal, bukan daftar final untuk semua kondisi. Konfirmasikan persyaratan, dokumen rujuk, dan batas waktu pendaftaran kepada petugas KUA sebelum mengurus berkas.</p>
+      </div>
+    </details>
     <div className="serviceSteps">
       <h4>Alur Singkat</h4>
       <ol>
