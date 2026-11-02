@@ -88,6 +88,7 @@ export async function GET() {
           name: item.name,
           path,
           url: publicUrl.publicUrl,
+          alt_text: item.metadata?.alt_text || '',
           created_at: item.created_at,
         };
       });
@@ -197,6 +198,7 @@ export async function POST(request) {
     const supabase = getSupabaseAdmin();
 const formData = await request.formData();
     const file = formData.get('file');
+    const altText = String(formData.get('alt_text') || '').trim();
 
     if (!file || typeof file.arrayBuffer !== 'function') {
       return json(
@@ -216,6 +218,10 @@ const formData = await request.formData();
       );
     }
 
+    if (altText.length > 300) {
+      return json({ ok: false, error: 'Alt Text maksimal 300 karakter.' }, { status: 400 });
+    }
+
     const safeName = originalName.replace(/[^a-zA-Z0-9._-]/g, '-');
     const fileName = `${Date.now()}-${safeName}`;
     const path = `${GALLERY_FOLDER}/${fileName}`;
@@ -226,6 +232,7 @@ const formData = await request.formData();
       .from(BUCKET)
       .upload(path, buffer, {
         contentType: file.type || 'application/octet-stream',
+        metadata: altText ? { alt_text: altText } : {},
         upsert: false
       });
 
@@ -245,7 +252,8 @@ const formData = await request.formData();
       data: {
         name: fileName,
         path,
-        url: publicUrl.publicUrl
+        url: publicUrl.publicUrl,
+        alt_text: altText
       }
     });
   } catch (error) {
