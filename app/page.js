@@ -187,6 +187,20 @@ const [selectedGallery, setSelectedGallery] = useState(null);
     <p className="serviceDescription">Informasi mengenai peran penyuluh, kegiatan pembinaan, dan wilayah layanan akan ditampilkan setelah data petugas diverifikasi.</p>
     <a className="btn primary serviceAction" href="/profil">Lihat Profil KUA</a>
   </article>
+
+  <article className="serviceCard">
+    <div className="serviceCardHeader">
+      <span className="serviceIcon" aria-hidden="true">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
+          <rect x="5" y="3" width="14" height="18" rx="2"/>
+          <path d="M8 7h8M8 11h2M14 11h2M8 15h2M14 15h2M8 18h2M14 18h2"/>
+        </svg>
+      </span>
+      <div><p className="serviceKicker">LAYANAN ZAKAT</p><h3>Kalkulator Zakat</h3></div>
+    </div>
+    <p className="serviceDescription">Hitung simulasi zakat penghasilan, emas, tabungan, perdagangan, pertanian, dan zakat fitrah dengan panduan nisab serta ketentuan yang perlu diverifikasi.</p>
+    <a className="btn primary serviceAction" href="/layanan-zakat">Buka Kalkulator Zakat</a>
+  </article>
 </div>
       </div>
     </div>
