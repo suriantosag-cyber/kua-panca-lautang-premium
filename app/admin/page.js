@@ -28,6 +28,7 @@ export default function AdminPage() {
 const [kegiatan, setKegiatan] = useState([]);
   const [kegiatanLoading, setKegiatanLoading] = useState(false);
   const [galleryFile, setGalleryFile] = useState(null);
+  const [galleryAltText, setGalleryAltText] = useState("");
   const [galleryLoading, setGalleryLoading] = useState(false);
   const [editingGallery, setEditingGallery] = useState(null);
 
@@ -115,6 +116,10 @@ const [kegiatan, setKegiatan] = useState([]);
       alert("Pilih foto terlebih dahulu.");
       return;
     }
+    if (!galleryAltText.trim()) {
+      alert("Alt Text wajib diisi dengan deskripsi singkat gambar.");
+      return;
+    }
 
     setGalleryLoading(true);
     setMessage("");
@@ -122,6 +127,7 @@ const [kegiatan, setKegiatan] = useState([]);
     try {
       const formData = new FormData();
       formData.append("file", galleryFile);
+      formData.append("alt_text", galleryAltText.trim());
 
       const response = await adminFetch("/api/gallery", {
         method: "POST",
@@ -137,6 +143,7 @@ const [kegiatan, setKegiatan] = useState([]);
 
       setMessage("Foto berhasil diunggah.");
       setGalleryFile(null);
+      setGalleryAltText("");
 
       const input = document.getElementById("gallery-file");
       if (input) input.value = "";
@@ -992,12 +999,25 @@ const result = await response.json();
         <h2>Galeri Dokumentasi</h2>
 
         <div style={{ marginTop: 16 }}>
+          <label htmlFor="gallery-file" style={{ display: "block", fontWeight: 600, marginBottom: 6 }}>Pilih foto dokumentasi / poster</label>
           <input
             id="gallery-file"
             type="file"
             accept="image/*"
             onChange={(e) => setGalleryFile(e.target.files?.[0] || null)}
           />
+          <label htmlFor="gallery-alt-text" style={{ display: "block", fontWeight: 600, marginTop: 14, marginBottom: 6 }}>Alternative Text (Alt Text) <span style={{ color: "#b42318" }}>*</span></label>
+          <input
+            id="gallery-alt-text"
+            type="text"
+            value={galleryAltText}
+            onChange={(e) => setGalleryAltText(e.target.value)}
+            maxLength={300}
+            required
+            placeholder="Contoh: Kegiatan Bimbingan Remaja Usia Sekolah KUA Panca Lautang di DDI Wanio"
+            style={{ width: "100%", maxWidth: 620, padding: 11, border: "1px solid #d0d5dd", borderRadius: 8 }}
+          />
+          <p style={{ color: "#667085", fontSize: 13, marginTop: 6 }}>Jelaskan isi atau tujuan gambar secara singkat. Alt Text akan dibacakan oleh pembaca layar.</p>
 
           <button
             type="button"
@@ -1037,7 +1057,7 @@ const result = await response.json();
               <div key={item.path}>
                 <img
                   src={item.url}
-                  alt={item.name}
+                  alt={item.alt_text || ""}
                   style={{
                     width: "100%",
                     height: 160,
