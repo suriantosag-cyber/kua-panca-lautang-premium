@@ -185,7 +185,7 @@ export default function KajianKeluargaSakinahPage() {
           {media.map((item) => (
             <article className={styles.mediaCard} key={item.videoId}>
               <span className={styles.mediaIcon} aria-hidden="true">
-                {item.jenis === "Podcast Penyuluh" ? "♪" : "▶"}
+                {item.jenis === "Podcast Penyuluh" ? "🎙" : "▶"}
               </span>
               <p className={styles.category}>{item.jenis}</p>
               <h3>{item.judul}</h3>

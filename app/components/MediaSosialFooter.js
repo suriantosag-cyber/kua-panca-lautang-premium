@@ -1,4 +1,4 @@
-﻿export default function MediaSosialFooter() {
+export default function MediaSosialFooter() {
   const linkStyle = {
     display: 'inline-block',
     color: '#bfdbfe',
@@ -123,7 +123,19 @@
           fontSize: '13px',
         }}
       >
-        © {new Date().getFullYear()} KUA Kecamatan Panca Lautang
+        <p style={{ margin: '0 0 10px' }}>
+          © {new Date().getFullYear()} KUA Kecamatan Panca Lautang
+        </p>
+        <a
+          href="/kebijakan-privasi"
+          style={{
+            color: '#bfdbfe',
+            textDecoration: 'none',
+            fontWeight: 600,
+          }}
+        >
+          Kebijakan Privasi
+        </a>
       </div>
     </footer>
   );

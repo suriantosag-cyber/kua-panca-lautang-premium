@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 import TanyaAnto from './components/TanyaAnto';
 import JadwalNikah from './components/JadwalNikah';
 import StatistikLayanan from './components/StatistikLayanan';
@@ -110,7 +110,7 @@ const [selectedGallery, setSelectedGallery] = useState(null);
     </div>
   </div>
 
-  
+
 <div className="serviceGrid">
   <article className="serviceCard serviceCardFeatured">
     <div className="serviceCardHeader">
@@ -386,7 +386,7 @@ const [selectedGallery, setSelectedGallery] = useState(null);
     </div>
     </div>
     </section>
-    
+
 <section id="kontak" className="section">
   <div className="wrap">
     <div className="sectionHead">
@@ -405,7 +405,7 @@ const [selectedGallery, setSelectedGallery] = useState(null);
         </p>
         <a
           className="btn primary"
-          
+
 href="https://www.google.com/maps/search/?api=1&query=KUA%20Panca%20Lautang%2C%20Panca%20Lautang%2C%20Sidenreng%20Rappang%2C%20Sulawesi%20Selatan"
 
           target="_blank"
@@ -442,7 +442,7 @@ href="https://www.google.com/maps/search/?api=1&query=KUA%20Panca%20Lautang%2C%2
     >
       <iframe
         title="Peta Lokasi KUA Kecamatan Panca Lautang"
-        
+
 src="https://maps.google.com/maps?q=KUA%20Panca%20Lautang%2C%20Panca%20Lautang%2C%20Sidenreng%20Rappang%2C%20Sulawesi%20Selatan&output=embed"
 
         width="100%"
@@ -499,7 +499,7 @@ src="https://maps.google.com/maps?q=KUA%20Panca%20Lautang%2C%20Panca%20Lautang%2
   </div>
 </section>
 
-    
+
 {selectedGallery && (
   <div
     onClick={() => setSelectedGallery(null)}
@@ -569,5 +569,3 @@ src="https://maps.google.com/maps?q=KUA%20Panca%20Lautang%2C%20Panca%20Lautang%2
 <TanyaAnto />
   </>;
 }
-
-

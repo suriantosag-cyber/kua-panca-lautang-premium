@@ -7,7 +7,7 @@ function buatSlug(value) {
   return value
     .toLowerCase()
     .normalize("NFD")
-    .replace(/[\\u0300-\\u036f]/g, "")
+    .replace(/[\u0300-\u036f]/g, "")
     .replace(/[^a-z0-9]+/g, "-")
     .replace(/^-|-$/g, "");
 }
@@ -67,7 +67,7 @@ export default function MateriKajianPublik() {
         <p>Materi yang disusun dan diterbitkan langsung oleh pengelola KUA Panca Lautang.</p>
       </div>
       <div className={styles.articleGrid}>
-        {items.map((item, index) => {
+        {items.filter((item) => !item.file_type).map((item, index) => {
           const slug = buatSlug(item.title || String(item.id));
           const url = `https://kua-pancalautang.my.id/kajian-keluarga-sakinah#materi-${slug}`;
           const encodedUrl = encodeURIComponent(url);

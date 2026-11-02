@@ -1,7 +1,13 @@
-﻿app/**/*.bak
+app/**/*.bak
 app/**/*.backup*
 app/**/*.backup-*
 app/**/*.backup
 app/**/page.*.bak
 app/**/page.*.backup*
 kemenag-debug.html
+
+# Backup pemulihan lokal
+backup-pemulihan-*/
+lib/**/*.backup*
+lib/**/*.bak
+backup-*/
