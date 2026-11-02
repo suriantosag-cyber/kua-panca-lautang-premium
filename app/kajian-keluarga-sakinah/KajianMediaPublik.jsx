@@ -41,7 +41,7 @@ export default function KajianMediaPublik() {
     async function loadMedia() {
       try {
         const response = await fetch(
-          "/api/kajian-keluarga-sakinah",
+          "/api/kajian-keluarga-sakinah/media",
           { cache: "no-store" }
         );
 
@@ -96,7 +96,7 @@ export default function KajianMediaPublik() {
             {item.file_type === "image" && item.file_url && (
               <img
                 src={item.file_url}
-                alt={item.title}
+                alt={item.file_type === "image" ? (item.description?.trim() || `Foto dokumentasi: ${item.title}`) : ""}
                 loading="lazy"
                 className="aspect-video w-full object-cover"
               />
