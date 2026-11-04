@@ -320,6 +320,40 @@ export default function MateriDakwahPage() {
   </div>
 </section>
 <KhutbahBugis />
+
+        <article className="mdCard mdReferences">
+          <div className="mdSectionTitle">
+            <span>07</span>
+            <div>
+              <h2>Rujukan Belajar</h2>
+              <p>
+                Gunakan sumber berikut untuk membaca dalil dan memperdalam
+                pemahaman. Panduan ringkas di halaman ini merupakan bahan
+                pengantar, bukan pengganti pembelajaran bersama guru agama.
+              </p>
+            </div>
+          </div>
+          <ul className="mdReferenceList">
+            <li>
+              <a href="https://quran.kemenag.go.id/quran/per-ayat/surah/5?to=120" target="_blank" rel="noreferrer">
+                Al-Qur’an Kemenag — Surah Al-Mā’idah ayat 6
+              </a>
+              <span>Rujukan ayat tentang bersuci, wudu, dan tayamum.</span>
+            </li>
+            <li>
+              <a href="https://kemenag.go.id/opini/salat-lima-waktu-dalam-al-qur039annbsp-11zili" target="_blank" rel="noreferrer">
+                Kementerian Agama RI — Salat Lima Waktu dalam Al-Qur’an
+              </a>
+              <span>Bacaan pendamping mengenai salat lima waktu dan dalil Al-Qur’an.</span>
+            </li>
+          </ul>
+          <p className="mdReferenceNote">
+            Jika terdapat perbedaan rincian praktik atau pendapat fikih,
+            tanyakan kepada pembimbing agama yang kompeten dan ikuti
+            bimbingan sesuai mazhab atau tuntunan yang dipelajari.
+          </p>
+        </article>
+
         <footer className="mdFooter">
           <strong>Terus belajar, terus memperbaiki ibadah.</strong>
           <p>
@@ -449,6 +483,12 @@ export default function MateriDakwahPage() {
           .mdKhutbahGroup { margin: 20px 12px; padding: 16px; }
           .mdKhutbahGrid { grid-template-columns: 1fr; }
         }
+        .mdReferences { margin-top: 18px; }
+        .mdReferenceList { padding-left: 22px; margin: 0; line-height: 1.7; }
+        .mdReferenceList li { margin: 12px 0; }
+        .mdReferenceList a { color: #087653; font-weight: 750; text-decoration: underline; text-underline-offset: 3px; }
+        .mdReferenceList span { display: block; color: #607468; font-size: 13px; margin-top: 3px; }
+        .mdReferenceNote { margin: 18px 0 0; padding: 13px 15px; border-radius: 10px; background: #f2f8f3; color: #536b5b; font-size: 13px; line-height: 1.7; }
         .mdFooter p { font-size:14px; }
         .mdFooter a { color:#087653; font-weight:750; text-decoration:none; }
         @media(max-width:600px) { .mdHero { padding:24px 20px 30px; } .mdIntro,.mdCard { padding:18px; } .mdIntro { flex-direction:column; } h2 { font-size:20px; } }

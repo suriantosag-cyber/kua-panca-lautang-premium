@@ -1,9 +1,30 @@
-﻿import KajianMediaPublik from "./KajianMediaPublik";
+import KajianMediaPublik from "./KajianMediaPublik";
 import styles from "./page.module.css";
+
 export const metadata = {
-  title: "Kajian Keluarga Sakinah | KUA Panca Lautang",
+  title: {
+    absolute: "Kajian Keluarga Sakinah: Materi dan Edukasi Keluarga | KUA Panca Lautang",
+  },
   description:
-    "Artikel edukasi keluarga sakinah, pengasuhan Islami, komunikasi pasangan, serta panduan membangun rumah tangga yang harmonis dari KUA Panca Lautang.",
+    "Baca artikel edukasi keluarga sakinah, pengasuhan Islami, komunikasi suami istri, penyelesaian konflik, dan panduan membangun rumah tangga harmonis. Dilengkapi video edukasi dan materi bimbingan keluarga dari KUA Panca Lautang.",
+  alternates: {
+    canonical: "/kajian-keluarga-sakinah",
+  },
+  openGraph: {
+    type: "website",
+    locale: "id_ID",
+    url: "https://kua-pancalautang.my.id/kajian-keluarga-sakinah",
+    siteName: "KUA Panca Lautang",
+    title: "Kajian Keluarga Sakinah: Edukasi dan Bimbingan Keluarga",
+    description:
+      "Temukan artikel, video edukasi, dan panduan membangun keluarga sakinah, harmonis, serta penuh kasih sayang dari KUA Panca Lautang.",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Kajian Keluarga Sakinah | Edukasi Keluarga KUA Panca Lautang",
+    description:
+      "Artikel dan video edukasi tentang komunikasi pasangan, pengasuhan Islami, serta membangun rumah tangga harmonis.",
+  },
 };
 
 const kajian = [
@@ -206,6 +227,3 @@ export default function KajianKeluargaSakinahPage() {
     </main>
   );
 }
-
-
-
