@@ -680,8 +680,14 @@ const result = await response.json();
                           onChange={async (e) => {
                             const file = e.target.files?.[0];
                             if (!file) return;
+                            if (!block.alt_text?.trim()) {
+                              setMessage("Alt Text wajib diisi sebelum mengunggah foto artikel.");
+                              e.target.value = "";
+                              return;
+                            }
                             const formData = new FormData();
                             formData.append("file", file);
+                            formData.append("alt_text", block.alt_text.trim());
                             try {
                               const response = await adminFetch("/api/gallery", {
   method: "POST",
@@ -693,17 +699,31 @@ const result = await response.json();
                                 setMessage(result.error || "Gagal upload foto artikel.");
                                 return;
                               }
-                              updateArticleBlock(index, { url: result.data?.url || "" });
+                              updateArticleBlock(index, { url: result.data?.url || "", alt_text: result.data?.alt_text || block.alt_text.trim() });
                               setMessage("Foto artikel berhasil diupload.");
                             } catch {
                               setMessage("Gagal terhubung ke server foto.");
                             }
                           }}
                         />
+                        <label style={{ display: "block", marginTop: 12, fontWeight: 600 }}>
+                          Alt Text Foto Artikel <span style={{ color: "#b42318" }}>*</span>
+                        </label>
+                        <input
+                          type="text"
+                          value={block.alt_text || ""}
+                          onChange={(e) => updateArticleBlock(index, { alt_text: e.target.value })}
+                          maxLength={300}
+                          placeholder="Jelaskan isi foto secara singkat"
+                          style={{ width: "100%", padding: 10, marginTop: 6, border: "1px solid #d0d5dd", borderRadius: 8 }}
+                        />
+                        <p style={{ color: "#667085", fontSize: 12, marginTop: 5 }}>
+                          Isi deskripsi foto sebelum memilih atau menempel gambar (maksimal 300 karakter).
+                        </p>
                         {block.url && (
                           <img
                             src={block.url}
-                            alt="Foto artikel"
+                            alt={block.alt_text || ""}
                             style={{ width: "100%", maxHeight: 300, objectFit: "cover", borderRadius: 12, marginTop: 12 }}
                           />
                         )}
@@ -719,9 +739,14 @@ const result = await response.json();
 
       const file = item.getAsFile();
       if (!file) return;
+      if (!block.alt_text?.trim()) {
+        setMessage("Isi Alt Text foto terlebih dahulu sebelum menempel gambar.");
+        return;
+      }
 
       const formData = new FormData();
       formData.append("file", file);
+      formData.append("alt_text", block.alt_text.trim());
 
       try {
         const response = await adminFetch("/api/gallery", {
@@ -738,6 +763,7 @@ const result = await response.json();
 
         updateArticleBlock(index, {
           url: result.data?.url || "",
+          alt_text: result.data?.alt_text || block.alt_text.trim(),
         });
 
         setMessage("Foto dari clipboard berhasil ditempel.");
