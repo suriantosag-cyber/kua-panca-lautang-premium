@@ -1,13 +1,27 @@
-
 import KhutbahBugis from "../components/KhutbahBugis";
+import { createSupabaseServerClient } from "../../lib/supabase-server";
 
 export const metadata = {
   title: "Khutbah Jumat | KUA Panca Lautang",
   description:
-    "Kumpulan naskah khutbah Jumat KUA Panca Lautang.",
+    "Kumpulan naskah khutbah Jumat Bahasa Bugis Latin KUA Panca Lautang.",
 };
 
-export default function KhutbahJumatPage() {
+export const dynamic = "force-dynamic";
+export const revalidate = 0;
+
+export default async function KhutbahJumatPage() {
+  const supabase = await createSupabaseServerClient();
+
+  const { data, error } = await supabase
+    .from("khutbah_jumat")
+    .select(
+      "id,week_start,title,theme,language,khutbah_pertama,khutbah_kedua,doa_penutup,referensi,published_at"
+    )
+    .order("week_start", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+
   return (
     <main
       style={{
@@ -33,7 +47,10 @@ export default function KhutbahJumatPage() {
         </a>
       </header>
 
-      <KhutbahBugis />
+      <KhutbahBugis
+        khutbah={error ? null : data}
+        gagalMemuat={Boolean(error)}
+      />
     </main>
   );
 }

@@ -1,157 +1,108 @@
-
 "use client";
 
 import { useState } from "react";
 
-const naskahBugis = `KHUTBAH JUMAT
-TEMA: JANGAN TERLENA OLEH DUNIA, JANGAN LUPA AKHIRAT
-
-NASIHAT UNTUK DIRI, KELUARGA, DAN MASYARAKAT
-Bahasa Bugis dengan penjelasan Indonesia seperlunya
-
-========================================
-KHUTBAH PERTAMA
-========================================
-
-إِنَّ الْحَمْدَ لِلَّهِ، نَحْمَدُهُ وَنَسْتَعِينُهُ وَنَسْتَغْفِرُهُ، وَنَعُوذُ بِاللَّهِ مِنْ شُرُورِ أَنْفُسِنَا وَمِنْ سَيِّئَاتِ أَعْمَالِنَا.
-
-الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ، وَبِهِ نَسْتَعِينُ عَلَى أُمُورِ الدُّنْيَا وَالدِّينِ.
-
-أَشْهَدُ أَنْ لَا إِلَهَ إِلَّا اللَّهُ وَحْدَهُ لَا شَرِيكَ لَهُ، وَأَشْهَدُ أَنَّ مُحَمَّدًا عَبْدُهُ وَرَسُولُهُ.
-
-اللَّهُمَّ صَلِّ وَسَلِّمْ عَلَى سَيِّدِنَا مُحَمَّدٍ، وَعَلَى آلِهِ وَصَحْبِهِ أَجْمَعِينَ.
-
-Jamaah Jumat rahimakumullah,
-
-Marilah tapancaji tau mappadeceng atitta, tapuji Puang Allah Taala, nasaba' iya mappabbere ki' umur, kesehatan, rezeki, sibawa kesempatan untuk berkumpul ri masigi'e pada esso Jumat e.
-
-Marilah tapada-pada mappasitinaja takwa ri Puang Allah Taala, mappogau' parentana sibawa menjauhi pappaseng-pappaseng yang dilarang-Nya. Nasaba' takwae bukan hanya ada ri lidah, tetapi harus terlihat ri gau' ta, ri atitta, sibawa ri caratta memperlakukan tau laingnge.
-
-Jamaah yang dimuliakan Allah,
-
-Tema khutbah ta esso e ialah: jangan sampai kita terlalu sibuk mengejar lino, sehingga lupa mempersiapkan diri untuk akhirat.
-
-Dunia ini perlu. Kita perlu bekerja, mencari nafkah, membiayai anak, membantu orang tua, dan memenuhi kebutuhan keluarga. Islam tidak melarang kita bekerja keras. Tetapi jangan sampai pekerjaan membuat kita lupa kepada Allah yang memberi kekuatan untuk bekerja.
-
-Coba tapikkiri'i, jamaah.
-
-Pagi-pagi kita bangun, memikirkan pekerjaan. Kita memikirkan sawah, kebun, dagangan, kantor, kendaraan, utang, dan kebutuhan rumah tangga. Sepanjang hari pikiran kita sibuk. Kadang-kadang sampai malam pun masih memikirkan pekerjaan untuk hari berikutnya.
-
-Semua itu bisa menjadi ibadah apabila dilakukan dengan cara yang halal dan niat yang baik. Akan tetapi, bagaimana kalau karena mengejar rezeki, salat kita tunda terus? Bagaimana kalau badan kita selalu ada di rumah, tetapi pikiran dan hati kita tidak pernah bersama keluarga? Bagaimana kalau kita sanggup bekerja berjam-jam, tetapi merasa berat ketika berdiri menghadap Puang Allah Taala beberapa menit?
-
-Jamaah Jumat rahimakumullah,
-
-Puang Allah Taala berfirman dalam Al-Qur'an:
-
-يَا أَيُّهَا الَّذِينَ آمَنُوا لَا تُلْهِكُمْ أَمْوَالُكُمْ وَلَا أَوْلَادُكُمْ عَنْ ذِكْرِ اللَّهِ ۚ وَمَنْ يَفْعَلْ ذَٰلِكَ فَأُولَٰئِكَ هُمُ الْخَاسِرُونَ
-
-Artinya:
-"Wahai orang-orang yang beriman, janganlah harta bendamu dan anak-anakmu melalaikan kamu dari mengingat Allah. Siapa yang berbuat demikian, mereka itulah orang-orang yang rugi."
-
-(QS. Al-Munafiqun: 9)
-
-Ayat ini mengingatkan kita bahwa harta dan keluarga adalah nikmat, tetapi jangan sampai menjadi alasan untuk melupakan Allah.
-
-Jamaah yang dirahmati Allah,
-
-Makkeda tau Bugis, pentingngi siri' sibawa lempu'. Kita menjaga kehormatan, kejujuran, dan tanggung jawab. Tetapi mari kita bertanya kepada diri sendiri: apakah kehormatan kita hanya diukur dari banyaknya harta, bagusnya rumah, atau tingginya kedudukan?
-
-Apakah kita juga menjaga kejujuran ketika tidak ada orang melihat? Apakah kita menepati janji? Apakah kita memperlakukan pasangan dengan baik? Apakah kita mendidik anak dengan kasih sayang dan teladan?
-
-Sebab kehormatan seorang muslim bukan hanya terlihat dari pakaian dan kedudukannya. Kehormatan juga terlihat dari akhlaknya.
-
-Jamaah Jumat rahimakumullah,
-
-Ada tiga perkara yang perlu kita ingat.
-
-Pertama, jangan menunda salat tanpa alasan yang benar.
-
-Narekko adzan makkeda, marilah kita menyambut panggilan Allah sesuai kemampuan dan keadaan kita. Jangan selalu berkata, "Sebentar lagi." Sebab pekerjaan tidak pernah benar-benar habis. Selesai satu pekerjaan, datang pekerjaan lain. Kalau kita terus menunggu sampai semua urusan selesai, bisa jadi waktu salat berlalu.
-
-Kedua, jangan lupa keluarga ketika mencari nafkah.
-
-Anak-anak tidak hanya membutuhkan uang dan barang. Mereka membutuhkan perhatian, bimbingan, dan contoh yang baik. Ajari mereka berdoa, salat, menghormati orang tua, berkata jujur, dan meminta maaf ketika salah.
-
-Jangan hanya bertanya kepada anak, "Sudah belajar atau belum?" Tanyakan juga, "Sudah salat? Ada masalah apa hari ini? Apa yang bisa kita bantu?"
-
-Orang tua juga perlu memberi contoh. Sulit mengajak anak mencintai salat jika anak tidak pernah melihat orang tuanya menjaga salat.
-
-Ketiga, jangan sampai teknologi mengambil seluruh waktu kita.
-
-Telepon genggam bisa membantu pekerjaan dan silaturahmi. Namun jika setiap waktu kita habiskan untuk melihat layar, membaca kabar yang tidak bermanfaat, atau membicarakan keburukan orang lain, kita perlu memperbaiki kebiasaan.
-
-Coba hitung, berapa banyak waktu kita gunakan untuk melihat telepon, dan berapa banyak waktu kita gunakan untuk membaca Al-Qur'an, mengingat Allah, berbicara baik dengan keluarga, atau membantu tetangga?
-
-Bukan berarti telepon harus dibuang. Yang perlu diperbaiki ialah cara kita menggunakannya.
-
-Jamaah yang dimuliakan Allah,
-
-Jangan mudah menyebarkan berita yang belum jelas kebenarannya. Jangan mempermalukan orang lain hanya karena berbeda pendapat. Jangan menggunakan media sosial untuk menyebarkan fitnah, hinaan, dan permusuhan.
-
-Sebelum berbicara, pikirkan apakah ucapan kita membawa manfaat. Sebelum mengirim pesan, pikirkan apakah pesan itu benar dan tidak menyakiti orang lain. Sebelum menilai seseorang, ingatlah bahwa kita sendiri masih memiliki kekurangan.
-
-Mappadecengngi atitta, mappadecengngi gau'ta. Perbaiki hati, perbaiki perbuatan.
-
-Jamaah Jumat rahimakumullah,
-
-Kita semua punya kekurangan. Ada yang masih sering terlambat salat, ada yang mudah marah, ada yang kurang memperhatikan keluarga, dan ada yang pernah menyakiti orang lain. Jangan menjadikan kekurangan itu alasan untuk berputus asa.
-
-Pintu untuk memperbaiki diri tetap terbuka selama Allah memberi kita kesempatan hidup. Mulailah dari satu langkah yang nyata: jaga salat berikutnya, minta maaf kepada orang yang pernah kita sakiti, tunaikan amanah, dan hentikan kebiasaan buruk sedikit demi sedikit.
-
-Jangan menunggu menjadi orang yang sempurna baru mulai berbuat baik. Mulailah memperbaiki diri sekarang.
-
-Ingatlah, jamaah, harta yang kita kumpulkan akan ditinggalkan. Rumah yang kita bangun akan ditempati orang lain setelah kita tiada. Kedudukan yang kita banggakan tidak akan kita bawa ke dalam kubur. Yang kita harapkan ialah rahmat Allah dan amal saleh yang kita kerjakan dengan ikhlas.
-
-Karena itu, marilah bekerja dengan sungguh-sungguh, tetapi jangan melupakan salat. Sayangi keluarga, tetapi jangan melupakan kewajiban kepada Allah. Bergaullah dengan masyarakat, tetapi jagalah lisan dan tangan kita dari perbuatan yang merugikan orang lain.
-
-Semoga Puang Allah Taala menjadikan kita orang-orang yang mampu menggunakan nikmat dunia untuk kebaikan akhirat, menjaga salat, menyayangi keluarga, dan memperbaiki akhlak setiap hari.
-
-أَقُولُ قَوْلِي هَذَا وَأَسْتَغْفِرُ اللَّهَ لِي وَلَكُمْ، فَاسْتَغْفِرُوهُ إِنَّهُ هُوَ الْغَفُورُ الرَّحِيمُ.
-
-========================================
-JEDA DUDUK DI ANTARA DUA KHUTBAH
-========================================
-
-Khatib duduk sejenak di antara khutbah pertama dan khutbah kedua.
-
-========================================
-KHUTBAH KEDUA
-========================================
-
-الْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ، وَأَشْهَدُ أَنْ لَا إِلَهَ إِلَّا اللَّهُ، وَأَشْهَدُ أَنَّ مُحَمَّدًا عَبْدُهُ وَرَسُولُهُ.
-
-اللَّهُمَّ صَلِّ وَسَلِّمْ عَلَى سَيِّدِنَا مُحَمَّدٍ، وَعَلَى آلِهِ وَصَحْبِهِ أَجْمَعِينَ.
-
-Jamaah Jumat rahimakumullah,
-
-Marilah tapada-pada meningkatkan takwa kepada Puang Allah Taala. Nasihat hari ini bukan hanya untuk orang lain, tetapi terutama untuk diri kita sendiri.
-
-Narekko engka kesalahan ta, mari taperrui. Kalau salat kita belum terjaga, mari kita perbaiki. Kalau ada keluarga yang belum kita perhatikan, mari kita dekati dengan kasih sayang. Kalau ada tetangga yang membutuhkan bantuan, bantulah sesuai kemampuan.
-
-Jangan menunggu kaya untuk bersedekah. Jangan menunggu lapang untuk berbuat baik. Jangan menunggu tua untuk mendekat kepada Allah.
-
-Gunakan kesehatan sebelum datang sakit, gunakan kesempatan sebelum datang kesibukan, dan gunakan umur sebelum datang ajal.
-
-Semoga Puang Allah Taala memberi kita hati yang lembut, rezeki yang halal, keluarga yang saleh dan salehah, serta kekuatan untuk istiqamah dalam kebaikan.
-
-DOA PENUTUP
-
-اللَّهُمَّ اغْفِرْ لِلْمُسْلِمِينَ وَالْمُسْلِمَاتِ، وَالْمُؤْمِنِينَ وَالْمُؤْمِنَاتِ، الْأَحْيَاءِ مِنْهُمْ وَالْأَمْوَاتِ.
-
-اللَّهُمَّ أَصْلِحْ لَنَا دِينَنَا الَّذِي هُوَ عِصْمَةُ أَمْرِنَا، وَأَصْلِحْ لَنَا دُنْيَانَا الَّتِي فِيهَا مَعَاشُنَا، وَأَصْلِحْ لَنَا آخِرَتَنَا الَّتِي إِلَيْهَا مَعَادُنَا.
-
-رَبَّنَا آتِنَا فِي الدُّنْيَا حَسَنَةً وَفِي الْآخِرَةِ حَسَنَةً وَقِنَا عَذَابَ النَّارِ.
-
-وَصَلَّى اللَّهُ عَلَى سَيِّدِنَا مُحَمَّدٍ وَعَلَى آلِهِ وَصَحْبِهِ وَسَلَّمَ، وَالْحَمْدُ لِلَّهِ رَبِّ الْعَالَمِينَ.
-
-`;
-
-export default function KhutbahBugis() {
+function formatTanggal(tanggal) {
+  if (!tanggal) return "-";
+
+  const bagian = tanggal.split("-");
+  if (bagian.length !== 3) return tanggal;
+
+  const date = new Date(`${tanggal}T00:00:00Z`);
+
+  return date.toLocaleDateString("id-ID", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+    timeZone: "UTC",
+  });
+}
+
+function formatReferensi(referensi) {
+  if (!Array.isArray(referensi)) return [];
+
+  return referensi.map((item, index) => {
+    if (typeof item === "string") {
+      return { id: index, text: item };
+    }
+
+    if (item && typeof item === "object") {
+      const text =
+        item.keterangan ||
+        item.referensi ||
+        item.title ||
+        item.nama ||
+        item.name ||
+        item.sumber ||
+        item.source;
+
+      return {
+        id: index,
+        text: typeof text === "string" ? text : null,
+      };
+    }
+
+    return { id: index, text: null };
+  }).filter((item) => item.text);
+}
+
+export default function KhutbahBugis({
+  khutbah,
+  gagalMemuat = false,
+}) {
   const [pesan, setPesan] = useState("");
+
+  if (gagalMemuat) {
+    return (
+      <section className="khutbah-bugis">
+        <h2>Khutbah Jumat</h2>
+        <p role="status">
+          Naskah khutbah belum dapat dimuat. Silakan coba kembali beberapa saat lagi.
+        </p>
+      </section>
+    );
+  }
+
+  if (!khutbah) {
+    return (
+      <section className="khutbah-bugis">
+        <h2>Khutbah Jumat</h2>
+        <p>
+          Belum ada naskah khutbah Jumat yang diterbitkan.
+          Silakan kunjungi kembali halaman ini pada kesempatan berikutnya.
+        </p>
+      </section>
+    );
+  }
+
+  const referensi = formatReferensi(khutbah.referensi);
+
+  const naskahLengkap = [
+    khutbah.title,
+    `TEMA: ${khutbah.theme}`,
+    `BAHASA: ${khutbah.language || "Bugis Latin"}`,
+    `MINGGU: ${formatTanggal(khutbah.week_start)}`,
+    "",
+    "KHUTBAH PERTAMA",
+    "",
+    khutbah.khutbah_pertama,
+    "",
+    "KHUTBAH KEDUA",
+    "",
+    khutbah.khutbah_kedua,
+    "",
+    "DOA PENUTUP",
+    "",
+    khutbah.doa_penutup,
+    "",
+    ...(referensi.length
+      ? ["REFERENSI", ...referensi.map((item) => `- ${item.text}`)]
+      : []),
+  ].filter((item) => item !== null && item !== undefined).join("\n");
 
   async function salinNaskah() {
     try {
-      await navigator.clipboard.writeText(naskahBugis);
+      await navigator.clipboard.writeText(naskahLengkap);
       setPesan("Naskah berhasil disalin.");
     } catch {
       setPesan("Penyalinan otomatis gagal. Silakan salin teks secara manual.");
@@ -160,7 +111,8 @@ export default function KhutbahBugis() {
 
   function bagikanWhatsApp() {
     const url = window.location.href;
-    const teks = `Naskah Khutbah Jumat\nBaca di sini:\n${url}`;
+    const teks = `Naskah Khutbah Jumat\n${khutbah.title}\nBaca di sini:\n${url}`;
+
     window.open(
       `https://wa.me/?text=${encodeURIComponent(teks)}`,
       "_blank",
@@ -168,40 +120,79 @@ export default function KhutbahBugis() {
     );
   }
 
+  function renderNaskah(teks) {
+    return teks.split(/\r?\n/).map((baris, index) => {
+      const arab = /[\u0600-\u06FF]/.test(baris);
+
+      const judul =
+        /^KHUTBAH|^DOA PENUTUP|^REFERENSI|^TEMA:|^BAHASA:|^MINGGU:/.test(
+          baris
+        );
+
+      return (
+        <p
+          key={index}
+          className={[
+            arab ? "baris-arab" : "baris-naskah",
+            judul ? "baris-judul" : "",
+          ].join(" ")}
+        >
+          {baris || "\u00A0"}
+        </p>
+      );
+    });
+  }
+
   return (
     <section className="khutbah-bugis">
       <header className="khutbah-header">
-        <h2>Khutbah Jumat</h2>
-        <p>Nasihat untuk diri, keluarga, dan masyarakat</p>
+        <h2>{khutbah.title}</h2>
+        <p className="khutbah-tema">{khutbah.theme}</p>
+        <p>
+          Bahasa: {khutbah.language || "Bugis Latin"}
+        </p>
+        <p>
+          Pekan khutbah: {formatTanggal(khutbah.week_start)}
+        </p>
         <p className="khutbah-catatan">
-          Naskah draf untuk ditinjau sebelum digunakan secara resmi.
+          Naskah yang telah diterbitkan oleh pengelola KUA Panca Lautang.
         </p>
       </header>
 
       <div className="khutbah-actions">
-        <button type="button" onClick={salinNaskah}>Salin Naskah Lengkap</button>
-        <button type="button" onClick={() => window.print()}>Cetak</button>
-        <button type="button" onClick={bagikanWhatsApp}>Bagikan WhatsApp</button>
+        <button type="button" onClick={salinNaskah}>
+          Salin Naskah Lengkap
+        </button>
+        <button type="button" onClick={() => window.print()}>
+          Cetak
+        </button>
+        <button type="button" onClick={bagikanWhatsApp}>
+          Bagikan WhatsApp
+        </button>
       </div>
 
       {pesan && <p role="status">{pesan}</p>}
 
       <article className="khutbah-content">
-        {naskahBugis.split("\n").map((baris, i) => {
-          const arab = /[\u0600-\u06FF]/.test(baris);
-          const judul = /^KHUTBAH|^DOA PENUTUP|^JEDA DUDUK|^TEMA:|^NASIHAT UNTUK|^=+/.test(baris);
-          return (
-            <p
-              key={i}
-              className={[
-                arab ? "baris-arab" : "baris-naskah",
-                judul ? "baris-judul" : "",
-              ].join(" ")}
-            >
-              {baris || "\u00A0"}
-            </p>
-          );
-        })}
+        <h3>Khutbah Pertama</h3>
+        {renderNaskah(khutbah.khutbah_pertama)}
+
+        <h3>Khutbah Kedua</h3>
+        {renderNaskah(khutbah.khutbah_kedua)}
+
+        <h3>Doa Penutup</h3>
+        {renderNaskah(khutbah.doa_penutup)}
+
+        {referensi.length > 0 && (
+          <div className="khutbah-referensi">
+            <h3>Referensi</h3>
+            <ul>
+              {referensi.map((item) => (
+                <li key={item.id}>{item.text}</li>
+              ))}
+            </ul>
+          </div>
+        )}
       </article>
 
       <style jsx>{`
@@ -214,11 +205,37 @@ export default function KhutbahBugis() {
           background: #fff;
           color: #183b2a;
         }
-        .khutbah-header { margin-bottom: 20px; }
-        .khutbah-header h2 { margin: 0 0 8px; color: #17633a; }
-        .khutbah-header p { margin: 6px 0; line-height: 1.6; }
-        .khutbah-catatan { color: #666; font-size: 14px; }
-        .khutbah-actions { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 16px; }
+
+        .khutbah-header {
+          margin-bottom: 20px;
+        }
+
+        .khutbah-header h2 {
+          margin: 0 0 8px;
+          color: #17633a;
+        }
+
+        .khutbah-header p {
+          margin: 6px 0;
+          line-height: 1.6;
+        }
+
+        .khutbah-tema {
+          font-weight: 700;
+        }
+
+        .khutbah-catatan {
+          color: #666;
+          font-size: 14px;
+        }
+
+        .khutbah-actions {
+          display: flex;
+          flex-wrap: wrap;
+          gap: 10px;
+          margin-bottom: 16px;
+        }
+
         button {
           padding: 10px 16px;
           border: 0;
@@ -228,13 +245,23 @@ export default function KhutbahBugis() {
           cursor: pointer;
           font-weight: 600;
         }
-        button:hover { background: #104b2b; }
+
+        button:hover {
+          background: #104b2b;
+        }
+
         .khutbah-content {
           padding: 18px;
           border-radius: 10px;
           background: #f7faf7;
           overflow-wrap: anywhere;
         }
+
+        .khutbah-content h3 {
+          margin: 24px 0 12px;
+          color: #17633a;
+        }
+
         .baris-naskah {
           margin: 0;
           white-space: pre-wrap;
@@ -243,11 +270,13 @@ export default function KhutbahBugis() {
           line-height: 1.9;
           color: #20362c;
         }
+
         .baris-judul {
           margin-top: 14px;
           font-weight: 750;
           color: #17633a;
         }
+
         .baris-arab {
           margin: 18px 0;
           direction: rtl;
@@ -257,16 +286,40 @@ export default function KhutbahBugis() {
           line-height: 2;
           color: #183b2a;
         }
-        @media (max-width: 600px) {
-          .khutbah-bugis { padding: 14px; }
-          .khutbah-content { padding: 12px; }
-          .baris-naskah { font-size: 16px; }
-          .baris-arab { font-size: 24px; }
+
+        .khutbah-referensi li {
+          margin-bottom: 8px;
+          line-height: 1.7;
         }
+
+        @media (max-width: 600px) {
+          .khutbah-bugis {
+            padding: 14px;
+          }
+
+          .khutbah-content {
+            padding: 12px;
+          }
+
+          .baris-naskah {
+            font-size: 16px;
+          }
+
+          .baris-arab {
+            font-size: 24px;
+          }
+        }
+
         @media print {
-          :global(body *) { visibility: hidden !important; }
+          :global(body *) {
+            visibility: hidden !important;
+          }
+
           :global(.khutbah-bugis),
-          :global(.khutbah-bugis *) { visibility: visible !important; }
+          :global(.khutbah-bugis *) {
+            visibility: visible !important;
+          }
+
           :global(.khutbah-bugis) {
             position: absolute;
             left: 0;
@@ -278,10 +331,30 @@ export default function KhutbahBugis() {
             border: 0;
             color: #000;
           }
-          .khutbah-header, .khutbah-actions, [role="status"] { display: none !important; }
-          .khutbah-content { padding: 0; background: #fff; overflow: visible; }
-          .baris-naskah { color: #000; font-size: 12pt; line-height: 1.7; }
-          .baris-arab { color: #000; font-size: 22pt; line-height: 1.8; }
+
+          .khutbah-header,
+          .khutbah-actions,
+          [role="status"] {
+            display: none !important;
+          }
+
+          .khutbah-content {
+            padding: 0;
+            background: #fff;
+            overflow: visible;
+          }
+
+          .baris-naskah {
+            color: #000;
+            font-size: 12pt;
+            line-height: 1.7;
+          }
+
+          .baris-arab {
+            color: #000;
+            font-size: 22pt;
+            line-height: 1.8;
+          }
         }
       `}</style>
     </section>
