@@ -2,7 +2,7 @@ import KhutbahBugis from "../components/KhutbahBugis";
 import { createSupabaseServerClient } from "../../lib/supabase-server";
 
 export const metadata = {
-  title: "Khutbah Jumat | KUA Panca Lautang",
+  title: "Khutbah Jumat",
   description:
     "Kumpulan naskah khutbah Jumat Bahasa Bugis Latin KUA Panca Lautang.",
   alternates: {
