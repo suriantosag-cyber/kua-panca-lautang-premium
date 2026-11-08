@@ -5,6 +5,16 @@ export const metadata = {
   title: "Khutbah Jumat | KUA Panca Lautang",
   description:
     "Kumpulan naskah khutbah Jumat Bahasa Bugis Latin KUA Panca Lautang.",
+  alternates: {
+    canonical: "/khutbah-jumat",
+  },
+  openGraph: {
+    title: "Khutbah Jumat | KUA Panca Lautang",
+    description:
+      "Kumpulan naskah khutbah Jumat Bahasa Bugis Latin KUA Panca Lautang.",
+    url: "/khutbah-jumat",
+    type: "website",
+  },
 };
 
 export const dynamic = "force-dynamic";
