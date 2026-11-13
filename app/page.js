@@ -1,4 +1,4 @@
-﻿'use client';
+'use client';
 import TanyaAnto from './components/TanyaAnto';
 import JadwalNikah from './components/JadwalNikah';
 import StatistikLayanan from './components/StatistikLayanan';
@@ -98,264 +98,157 @@ const [selectedGallery, setSelectedGallery] = useState(null);
 
       <JadwalNikah />
 
-      <section id="profil" className="section">
-        <div className="wrap profile">
-          <div className="profileMain"><div className="avatar">PAI</div><h3>Profil Penyuluh</h3><p>Ruang informasi untuk memperkenalkan Penyuluh Agama Islam, bidang pembinaan, layanan masyarakat, dan aktivitas penyuluhan di wilayah Panca Lautang.</p><a className="btn primary" href="#kontak">Lihat informasi layanan</a></div>
+            <section id="profil" className="section" style={{padding:"42px 0"}}>
+        <div className="wrap">
+          <div className="sectionHead">
+            <div>
+              <h2>Layanan KUA</h2>
+              <p>Akses informasi dan layanan KUA Panca Lautang dengan mudah.</p>
+            </div>
+          </div>
 
-<div className="card">
-  <div className="sectionHead">
-    <div>
-      <h2>Ruang Layanan KUA</h2>
-      <p>Layanan administrasi dan pembinaan keagamaan untuk masyarakat Panca Lautang.</p>
-    </div>
-  </div>
+          <div style={{
+            display:"grid",
+            gridTemplateColumns:"repeat(auto-fit,minmax(min(100%,240px),1fr))",
+            gap:16
+          }}>
+            <article className="card">
+              <div className="icon">01</div>
+              <h3>Pendaftaran Nikah dan Rujuk</h3>
+              <p>Panduan awal administrasi dan pencatatan pernikahan.</p>
+              <a className="btn primary" href="https://simkah4.kemenag.go.id/"
+                 target="_blank" rel="noreferrer" style={{marginTop:14}}>
+                Buka SIMKAH Resmi
+              </a>
+              <details style={{marginTop:14}}>
+                <summary style={{cursor:"pointer",fontWeight:700}}>
+                  Persyaratan dan alur pendaftaran
+                </summary>
+                <div style={{fontSize:13,lineHeight:1.8}}>
+                  <b>Checklist dokumen</b>
+                  <ul>
+                    <li>KTP dan Kartu Keluarga calon pengantin.</li>
+                    <li>Surat pengantar atau dokumen persyaratan desa/kelurahan.</li>
+                    <li>Akta kelahiran atau dokumen pendukung jika dipersyaratkan.</li>
+                    <li>Pasfoto sesuai ketentuan.</li>
+                    <li>Akta cerai atau surat kematian pasangan terdahulu jika relevan.</li>
+                    <li>Surat rekomendasi nikah jika diperlukan.</li>
+                  </ul>
+                  <p>Persyaratan merupakan panduan awal. Konfirmasikan dokumen dan batas waktu kepada petugas KUA.</p>
+                  <b>Alur singkat</b>
+                  <ol>
+                    <li>Siapkan dokumen dan konfirmasikan persyaratan.</li>
+                    <li>Ikuti pendaftaran melalui SIMKAH atau KUA.</li>
+                    <li>Lengkapi dan periksa berkas.</li>
+                    <li>Ikuti jadwal dan arahan petugas.</li>
+                  </ol>
+                </div>
+              </details>
+            </article>
 
-  
-<div className="list">
-  <div className="listItem">
-    <div className="icon">01</div>
-    <div>
-      <b>Pendaftaran Nikah dan Rujuk</b>
-      <span>
-        Panduan awal untuk calon pengantin dan masyarakat yang
-        membutuhkan informasi pencatatan pernikahan.
-      </span>
+            <article className="card">
+              <div className="icon">02</div>
+              <h3>Konsultasi Keagamaan</h3>
+              <p>Konsultasi, pembinaan masjid, majelis taklim, zakat, wakaf, dan kehidupan keluarga.</p>
+              <a className="btn primary" href="#kontak" style={{marginTop:14}}>
+                Hubungi KUA
+              </a>
+            </article>
 
-      <div style={{ marginTop: 12, display: "flex", gap: 8, flexWrap: "wrap" }}>
-        <a
-          className="btn primary"
-          href="https://simkah4.kemenag.go.id/"
-          target="_blank"
-          rel="noreferrer"
-        >
-          Buka SIMKAH Resmi
-        </a>
-      </div>
+            <article className="card">
+              <div className="icon">03</div>
+              <h3>Bimbingan Keluarga Sakinah</h3>
+              <p>Persiapan calon pengantin, komunikasi pasangan, dan pembinaan keluarga.</p>
+              <a className="btn primary" href="/bimbingan-perkawinan" style={{marginTop:14}}>
+                Buka Panduan
+              </a>
+            </article>
 
-      <div
-        style={{
-          marginTop: 16,
-          padding: 16,
-          background: "#f0f8f4",
-          borderRadius: 14
-        }}
-      >
-        <b>Checklist Persiapan Dokumen</b>
-        <ul style={{ margin: "10px 0 0 18px", padding: 0, fontSize: 13, lineHeight: 1.8 }}>
-          <li>KTP dan Kartu Keluarga calon pengantin.</li>
-          <li>Surat pengantar atau dokumen persyaratan dari desa/kelurahan sesuai prosedur.</li>
-          <li>Akta kelahiran atau dokumen pendukung jika dipersyaratkan.</li>
-          <li>Pasfoto sesuai ketentuan yang berlaku.</li>
-          <li>Dokumen tambahan sesuai keadaan, misalnya akta cerai atau surat kematian pasangan terdahulu jika relevan.</li>
-          <li>Surat rekomendasi nikah jika diperlukan karena lokasi pencatatan berbeda wilayah.</li>
-        </ul>
-        <p style={{ margin: "12px 0 0", fontSize: 12, lineHeight: 1.7, color: "#38534a" }}>
-          Daftar ini merupakan panduan awal, bukan daftar final untuk semua kondisi.
-          Konfirmasikan persyaratan, dokumen rujuk, dan batas waktu pendaftaran
-          kepada petugas KUA sebelum mengurus berkas.
-        </p>
-      </div>
-
-      <div style={{ marginTop: 16 }}>
-        <b>Alur Singkat</b>
-        <ol style={{ margin: "8px 0 0 18px", padding: 0, fontSize: 13, lineHeight: 1.8 }}>
-          <li>Siapkan dokumen dan konfirmasikan persyaratan kepada petugas.</li>
-          <li>Ikuti petunjuk pendaftaran melalui SIMKAH atau KUA sesuai prosedur.</li>
-          <li>Lengkapi dokumen dan ikuti pemeriksaan berkas dari petugas.</li>
-          <li>Ikuti jadwal dan arahan layanan yang telah dikonfirmasi.</li>
-        </ol>
-      </div>
-    </div>
-  </div>
-
-  <div className="listItem">
-    <div className="icon">02</div>
-    <div>
-      <b>Konsultasi dan Pembinaan Keagamaan</b>
-      <span>
-        Informasi konsultasi keagamaan, pembinaan masjid dan majelis taklim,
-        serta edukasi zakat, wakaf, dan kehidupan keluarga.
-      </span>
-      <div style={{ marginTop: 10 }}>
-        <a className="btn primary" href="#kontak">
-          Lihat Informasi Kontak
-        </a>
-      </div>
-    </div>
-  </div>
-
-  <div className="listItem">
-    <div className="icon">03</div>
-    <div>
-      <b>Bimbingan Perkawinan dan Keluarga Sakinah</b>
-      <span>
-        Pelajari persiapan calon pengantin, komunikasi pasangan,
-        tanggung jawab keluarga, dan pengelolaan rumah tangga.
-      </span>
-      <div style={{ marginTop: 10 }}>
-        <a className="btn primary" href="/bimbingan-perkawinan">
-          Buka Panduan Bimbingan
-        </a>
-      </div>
-    </div>
-  </div>
-
-  <div className="listItem">
-    <div className="icon">04</div>
-    <div>
-      <b>Bimbingan Remaja Usia Sekolah (BRUS)</b>
-      <span>
-        Ruang edukasi bagi remaja untuk memperkuat akhlak,
-        pergaulan sehat, tanggung jawab, dan kesiapan merencanakan masa depan.
-      </span>
-      <div style={{ marginTop: 10 }}>
-        <a className="btn primary" href="/brus">
-          Buka Materi BRUS
-        </a>
-      </div>
-    </div>
-  </div>
-
-  <div className="listItem">
-    <div className="icon">05</div>
-    <div>
-      <b>Profil dan Layanan Penyuluh Agama</b>
-      <span>
-        Informasi mengenai peran penyuluh, kegiatan pembinaan,
-        dan wilayah layanan akan ditampilkan setelah data petugas
-        diverifikasi.
-      </span>
-      <div style={{ marginTop: 10 }}>
-        <a className="btn primary" href="/profil">
-          Lihat Profil KUA
-        </a>
-      </div>
-    </div>
-  </div>
-</div>
-      </div>
-    </div>
-  </section>
+            <article className="card">
+              <div className="icon">04</div>
+              <h3>Bimbingan Remaja (BRUS)</h3>
+              <p>Edukasi akhlak, pergaulan sehat, tanggung jawab, dan kesiapan masa depan.</p>
+              <a className="btn primary" href="/brus" style={{marginTop:14}}>
+                Buka Materi BRUS
+              </a>
+            </article>
+          </div>
+        </div>
+      </section>
 
 
       <section id="kegiatan" className="section" style={{paddingTop:0}}><div className="wrap"><div className="sectionHead"><div><h2>Kegiatan</h2><p>Program dan aktivitas penyuluhan untuk masyarakat.</p></div></div><div className="grid3">{features.map(([i,t,d,link,label])=><article className="card" key={t}><div className="icon">{i}</div><h3>{t}</h3><p>{d}</p><a className="btn primary" href={link} style={{marginTop:10}}>{label}</a></article>)}</div>{kegiatan.length > 0 && <><div style={{marginTop:24}}><h3>Kegiatan Terbaru</h3></div><div className="grid3">{kegiatan.map((item)=><article className="card" key={item.id}><h3>{item.nama_kegiatan}</h3><p><b>{item.penyelenggara}</b> · {item.desa}</p><p>{item.deskripsi || "Kegiatan KUA Panca Lautang."}</p><small>{item.tanggal} · {item.kategori}</small></article>)}</div><div style={{marginTop:20}}><a className="btn primary" href="/kegiatan">Lihat Semua Kegiatan</a></div></>}</div></section>
 
       <section id="berita" className="section news">
-        <div className="wrap">
-          <div className="sectionHead">
-            <div>
-              <h2>Berita Terbaru KUA Panca Lautang</h2>
-              <p>Berita dan informasi terbaru yang dikelola langsung melalui Admin KUA Panca Lautang.</p>
-            </div>
-          </div>
-
-          {loading ? (
-            <article className="newsCard">
-              <div>
-                <span className="tag">Memuat berita</span>
-                <h3>Sedang mengambil berita terbaru...</h3>
-                <p>Mohon tunggu sebentar.</p>
-              </div>
-            </article>
-          ) : !news || news.length === 0 ? (
-            <article className="newsCard">
-              <div>
-                <span className="tag">Informasi</span>
-                <h3>Belum ada berita</h3>
-                <p>Berita terbaru akan tampil setelah ditambahkan melalui Admin Panel.</p>
-              </div>
-            </article>
-          ) : (
-            <div className="grid3">
-              {news.map((item) => (
-                <article className={`card newsCard ${item.id === news[0]?.id ? "featuredNewsCard" : ""}`} key={item.id}>
-                  {(item.image_url || item.article_blocks?.find((block) => block.type === 'image')?.url) && (
-                    <div style={{margin:'-1px -1px 18px',borderRadius:'16px 16px 0 0',overflow:'hidden'}}>
-                      <img
-                        src={item.image_url || item.article_blocks?.find((block) => block.type === 'image')?.url}
-                        alt={item.title || 'Foto berita KUA Panca Lautang'}
-                        style={{width:'100%',height:'145px',objectFit:'cover',display:'block'}}
-                      />
-                    </div>
-                  )}
-
-                  <span className="tag">Berita KUA</span>
-
-                  <h3>{item.title}</h3>
-
-                  {item.content && (
-                    <p style={{
-                      whiteSpace:'pre-line',
-                      lineHeight:1.7,
-                      display:'-webkit-box',
-                      WebkitLineClamp:4,
-                      WebkitBoxOrient:'vertical',
-                      overflow:'hidden'
-                    }}>
-                      {item.content}
-                    </p>
-                  )}
-
-                  <div style={{marginTop:'16px'}}>
-                    <a
-                      className="newsBtn"
-                      href={`/berita/${item.id}`}
-                    >
-                      Baca berita lengkap
-                    </a>
-                  </div>
-                </article>
-              ))}
-            </div>
-          )}
-        </div>
-      </section>
-
-      <section id="kemenag" className="section">
   <div className="wrap">
     <div className="sectionHead">
       <div>
-        <h2>Berita Terbaru Kementerian Agama</h2>
-        <p>Dua berita terbaru dari Kementerian Agama Republik Indonesia.</p>
+        <h2>Berita &amp; Informasi Terbaru</h2>
+        <p>Informasi terkini dari KUA Panca Lautang dan Kementerian Agama Republik Indonesia.</p>
+        <a href="/berita" className="homeNewsAllLink">Lihat semua berita KUA →</a>
       </div>
     </div>
 
-    {kemenagNews.length === 0 ? (
-  <div className="card">
-    <h3>Berita Kemenag sedang diperbarui</h3>
-    <p>Silakan coba kembali beberapa saat lagi.</p>
-  </div>
-) : (
-  <div className="kemenagNewsGrid">
-    {kemenagNews.map((item, index) => (
-      <article className="kemenagNewsCard" key={item.url || index}>
-        <div className="kemenagNewsTop">
-          <span className="kemenagNewsTag">KEMENAG RI</span>
-          <span className="kemenagNewsDate">{item.date}</span>
-        </div>
-
-        <div className="kemenagNewsIcon">K</div>
-
-        <h3>{item.title}</h3>
-
-        {item.excerpt && (
-          <p>{item.excerpt}</p>
-        )}
-
-        <a
-          className="kemenagNewsButton"
-          href={item.url}
-          target="_blank"
-          rel="noreferrer"
-        >
-          Baca berita selengkapnya ?
-        </a>
+    {((news || []).length === 0 && (kemenagNews || []).length === 0) ? (
+      <article className="homeCombinedNewsCard">
+        <span className="tag">{loading ? "MEMUAT BERITA" : "INFORMASI"}</span>
+        <h3>{loading ? "Sedang mengambil berita terbaru..." : "Belum ada berita terbaru"}</h3>
+        <p>{loading ? "Mohon tunggu sebentar." : "Berita akan tampil setelah tersedia dari sumber terkait."}</p>
       </article>
-    ))}
+    ) : (
+      <div className="homeCombinedNewsGrid">
+        {(news || []).slice(0, 2).map((item) => (
+          <article className="homeCombinedNewsCard" key={`kua-${item.id}`}>
+            {(item.image_url || item.article_blocks?.find((block) => block.type === "image")?.url) && (
+              <div className="homeCombinedNewsImage">
+                <img
+                  src={item.image_url || item.article_blocks?.find((block) => block.type === "image")?.url}
+                  alt={item.title || "Foto berita KUA Panca Lautang"}
+                />
+              </div>
+            )}
+
+            <span className="homeCombinedNewsTag">BERITA KUA</span>
+            <h3>{item.title}</h3>
+
+            {item.content && (
+              <p className="homeCombinedNewsExcerpt">{item.content}</p>
+            )}
+
+            <a className="homeCombinedNewsButton" href={`/berita/${item.id}`}>
+              Baca berita lengkap
+            </a>
+          </article>
+        ))}
+
+        {(kemenagNews || []).slice(0, 2).map((item, index) => (
+          <article className="homeCombinedNewsCard" key={`kemenag-${item.url || index}`}>
+            <div className="homeCombinedNewsMeta">
+              <span className="homeCombinedNewsTag">KEMENAG RI</span>
+              <span>{item.date}</span>
+            </div>
+
+            <div className="homeCombinedNewsIcon">K</div>
+            <h3>{item.title}</h3>
+
+            {item.excerpt && (
+              <p className="homeCombinedNewsExcerpt">{item.excerpt}</p>
+            )}
+
+            <a
+              className="homeCombinedNewsButton"
+              href={item.url}
+              target="_blank"
+              rel="noreferrer"
+            >
+              Baca berita selengkapnya
+            </a>
+          </article>
+        ))}
+      </div>
+    )}
   </div>
-)}
-       </div>
-       </section>
+</section>
 
     <section id="galeri" className="section" style={{paddingTop:0}}>
   <div className="wrap">
@@ -596,6 +489,3 @@ src="https://maps.google.com/maps?q=KUA%20Panca%20Lautang%2C%20Panca%20Lautang%2
 <TanyaAnto />
   </>;
 }
-
-
-
