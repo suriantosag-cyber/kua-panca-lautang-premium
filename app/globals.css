@@ -1918,3 +1918,123 @@ button.dm-stat.is-active{border:2px solid var(--dm-green);padding:23px;backgroun
     padding: 11px 12px;
   }
 }
+
+/* ===== BERITA KUA DAN KEMENAG GABUNGAN ===== */
+.homeCombinedNewsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+  gap: 16px;
+  align-items: stretch;
+}
+
+.homeCombinedNewsCard {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  border: 1px solid #e1ebe5;
+  border-radius: 18px;
+  background: #fff;
+  color: #17352b;
+  box-shadow: 0 6px 22px rgba(18, 63, 49, .07);
+  overflow: hidden;
+}
+
+.homeCombinedNewsImage {
+  margin: -20px -20px 16px;
+  overflow: hidden;
+}
+
+.homeCombinedNewsImage img {
+  display: block;
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+}
+
+.homeCombinedNewsTag {
+  display: inline-flex;
+  align-self: flex-start;
+  padding: 6px 9px;
+  border-radius: 999px;
+  background: #e5f5ee;
+  color: #0d6b50;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: .4px;
+}
+
+.homeCombinedNewsCard h3 {
+  margin: 12px 0;
+  font-size: 16px;
+  line-height: 1.45;
+  color: #17352b;
+}
+
+.homeCombinedNewsExcerpt {
+  margin: 0 0 16px;
+  color: #63756e;
+  font-size: 13px;
+  line-height: 1.65;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 4;
+  overflow: hidden;
+}
+
+.homeCombinedNewsMeta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+  color: #71847c;
+  font-size: 11px;
+}
+
+.homeCombinedNewsIcon {
+  display: grid;
+  place-items: center;
+  width: 42px;
+  height: 42px;
+  margin-top: 16px;
+  border-radius: 12px;
+  background: #e5f5ee;
+  color: #0d6b50;
+  font-size: 22px;
+  font-weight: 800;
+}
+
+.homeCombinedNewsButton {
+  display: inline-block;
+  align-self: flex-start;
+  margin-top: auto;
+  padding: 10px 13px;
+  border-radius: 10px;
+  background: #0d6b50;
+  color: #fff !important;
+  font-size: 12px;
+  font-weight: 800;
+}
+
+@media (max-width: 1100px) {
+  .homeCombinedNewsGrid {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+  }
+}
+
+@media (max-width: 600px) {
+  .homeCombinedNewsGrid {
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr));
+    gap: 14px;
+  }
+
+  .homeCombinedNewsCard {
+    padding: 18px;
+  }
+
+  .homeCombinedNewsImage {
+    margin: -18px -18px 14px;
+  }
+}
+/* ===== AKHIR BERITA KUA DAN KEMENAG GABUNGAN ===== */
